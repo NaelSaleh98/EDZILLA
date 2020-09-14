@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head(title)">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="EDILLZA, e-learning website">
+        <meta name="author" content="Nael Saleh, Omar Salameh">
+        <title th:text="${title}">EDZILLA</title>
+        <!-- Bootstrap core CSS and JS-->
+        <link rel="stylesheet" th:href="@{/libs/bootstrap/css/bootstrap.min.css}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script type="text/javascript" th:src="@{/libs/bootstrap/js/bootstrap.min.js}"></script>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" th:href="@{/css/springit.css}">
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Roboto" >
+        <!-- Font Awesome (for icons) -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    </head>
+    <body>
+        <!-- ON : Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-primary bg-light" th:fragment="navigation">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-graduation-cap"></i>
+                    EDZILLA
+                </a>
+                <button class="navbar-toggler border border-primary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars text-primary"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-home" aria-hidden="true"></i> Home
+                            </a>
+                        </li>
+                        <!-- if user is signed in -->
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/link/submit}">
+                                <i class="fas fa-plus"></i> New Course
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/profile}">
+                                <i class="fas fa-user-circle"></i> Account</a>
+                        </li>
+                        <li class="nav-item ">
+                            <form method="POST" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+                                <button class="nav-link text-primary btn-light"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Sign Out</button>
+                            </form>
+                        </li>
+
+                        <!-- if user is not signed in -->
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" th:href="@{/login}">
+                                <i class="fa fa-sign-in-alt" aria-hidden="true"></i> Sign In</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" th:href="@{/register}">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="jumbotron jumbotron-fluid" th:fragment="jumbotron">
+            <div class="container" align="center">
+                <h2 class="display-4">WELCOME TO EDZILLA</h2>
+                <p class="lead">We care about your security and privacy so don't worry. This simple and beauty interface
+                will help you to learn safely.</p>
+            </div>
+        </div>
+
+        <div class="container" th:fragment="content">
+            <p>This is your main content</p>
+        </div>
+
+    </body>
+</html>

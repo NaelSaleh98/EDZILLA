@@ -13,8 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-@Getter
-@Setter
+@Getter @Setter
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
@@ -26,41 +25,49 @@ public class User implements UserDetails {
     private Long id;
 
     @NonNull
-    @Size(min = 8, max = 20, message = "email size must be between 8 and 20")//default message in arabic
+    @Size(min = 8, max = 20, message = "Email size must be between 8 and 20")//default message in arabic
     @Column(nullable = false, unique = true)
     private String email;
-    @NonNull
 
+    @NonNull
     @Column(length = 100)
+    @NotEmpty(message = "Please enter Password.")
     private String password;
 
     @NonNull
     @Column(nullable = false)
     private boolean enabled;
 
+    // ON
     @Transient
     @NotEmpty(message = "Please enter Password Confirmation.")
     private String confirmPassword;
 
     private String activationCode;
+
 /////more detail about user
+    // ON
     @NonNull
     @NotEmpty(message = "You must enter First Name.")
     private String firstName;
 
+    //ON
     @NonNull
     @NotEmpty(message = "You must enter Last Name.")
     private String lastName;
 
-    @Transient //fullName is derived Property,@Transient-> don't create clomun for fullName in DB
+    //ON
+    @Transient //fullName is derived Property,@Transient-> don't create column for fullName in DB
     @Setter(AccessLevel.NONE)//don't create setter for fullName
     private String fullName;
 
+    //ON : must check if exist
     @NonNull
     @NotEmpty(message = "Please enter alias.")
     @Column(nullable = false, unique = true)
     private String alias;
 
+    //ON
     public String getFullName(){
         return firstName + " " + lastName;
     }

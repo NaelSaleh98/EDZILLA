@@ -12,7 +12,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
-
+// ON
 @Service
 public class MailService {
 
@@ -34,7 +34,7 @@ public class MailService {
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
             message.setTo(to);
-            message.setFrom("noreply@springit.com");
+            message.setFrom("noreply@edzilla.com");
             message.setSubject(subject);
             message.setText(content,isHtml);
             javaMailSender.send(mimeMessage);
@@ -56,13 +56,13 @@ public class MailService {
     @Async
     public void sendActivationEmail(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "email/activation", "Springit User Activation");
+        sendEmailFromTemplate(user, "email/activation", "EDZILLA User Activation");
     }
 
     @Async
     public void sendWelcomeEmail(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "email/welcome", "Welcome new Springit User");
+        sendEmailFromTemplate(user, "email/welcome", "Welcome new EDZILLA User");
     }
 
 }

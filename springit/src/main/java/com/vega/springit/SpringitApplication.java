@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
+import java.util.Locale;
+
 @SpringBootApplication
 @EnableTransactionManagement
 public class SpringitApplication {
@@ -18,7 +20,7 @@ public class SpringitApplication {
 
 	@Bean
 	PrettyTime prettyTime(){
-		return new PrettyTime();
+		return new PrettyTime(new Locale("EN"));
 	}
 
 	// TODO * Configuring this bean should not be needed once Spring Boot's Thymeleaf starter includes configuration

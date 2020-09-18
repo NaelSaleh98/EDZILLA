@@ -34,12 +34,14 @@ public class authController {
         return "auth/profile";
     }
 
+    // ON
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user",new User());
         return "auth/register";
     }
 
+    // ON
     @PostMapping("/register")
     public String registerNewUser(@Valid User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if( bindingResult.hasErrors() ) {
@@ -56,6 +58,7 @@ public class authController {
         }
     }
 
+    // ON
     @GetMapping("/activate/{email}/{activationCode}")
     public String activate(@PathVariable String email, @PathVariable String activationCode) {
         Optional<User> user = userService.findByEmailAndActivationCode(email,activationCode);

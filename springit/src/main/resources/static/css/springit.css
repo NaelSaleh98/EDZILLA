@@ -1,13 +1,25 @@
 .container button{
 outline:none;
 }
-
+.navbar-brand{
+    text-shadow: 0px 3px 3px #ffc107;
+}
 nav .nav-item {
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
     padding-right:10px;
+    text-shadow: 0px 3px 3px #ffc107;
 }
 
+nav .nav-item:not(:last-child) {
+   border-right: 1px solid silver;
+}
+
+@media (max-width: 768px) {
+  nav .nav-item:not(:last-child) {
+    border-right: none;
+  }
+}
 
 button.nav-link {
     border:none;
@@ -21,6 +33,7 @@ background-color:#DDD !important
 body {
     background: #FFF;
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 
 /* Jumbotron */
@@ -112,11 +125,19 @@ a.share {
 /* Registration */
 .reg_h2 {
 text-align:center;
-text-shadow: 0px 0px 3px #000;
+text-shadow: 0px 1px 11px #ffc107;
 }
 @media(min-width: 768px) {
     .field-label-responsive {
         padding-top: .5rem;
         text-align: right;
     }
+}
+.field-label-responsive{
+text-align: center;
+}
+.input-group-addon{
+display: flex;
+align-items: center;
+justify-content: center;
 }

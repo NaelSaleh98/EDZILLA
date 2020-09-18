@@ -25,29 +25,30 @@ public class UserService {
         this.roleService = roleService;
     }
 
+    // ON
     public User register (User user){
         String secret ="{bcrypt}"+encoder.encode(user.getPassword());
         user.setConfirmPassword(secret);
         user.setEnabled(false);
         user.setPassword(secret);
-
         user.addRole(roleService.findByName("ROLE_USER"));
-
         user.setActivationCode(UUID.randomUUID().toString());//set an activation code
         save(user);
-
         sendActivationEmail(user);
         return user;
     }
 
+    // ON
     public void save(User user) {
         userRepository.save(user);
     }
 
+    // ON
    private void  sendActivationEmail(User user) {
    mailService.sendActivationEmail(user);
    }
 
+   // ON
     public void sendWelcomeEmail(User user) {
         mailService.sendWelcomeEmail(user);
     }

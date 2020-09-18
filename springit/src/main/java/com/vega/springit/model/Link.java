@@ -37,6 +37,7 @@ public class Link extends Auditable{
         @URL(message ="please enter a valid URL.")
         private String url;
 
+        //ON
         @ManyToOne
         private User user;
 

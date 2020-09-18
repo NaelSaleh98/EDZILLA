@@ -4,6 +4,7 @@ import com.vega.springit.model.User;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+// ON
 public class PasswordsMatchValidator implements ConstraintValidator<PasswordsMatch, User> {
 
     @Override

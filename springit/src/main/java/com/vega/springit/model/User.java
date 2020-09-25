@@ -25,13 +25,14 @@ public class User implements UserDetails {
     private Long id;
 
     @NonNull
-    @Size(min = 8, max = 20, message = "Email size must be between 8 and 20")//default message in arabic
+    @NotEmpty(message = "You must enter Email.")
+    @Size(min = 8, max = 22, message = "Email size must be between 8 and 22.")//default message in arabic
     @Column(nullable = false, unique = true)
     private String email;
 
     @NonNull
     @Column(length = 100)
-    @NotEmpty(message = "Please enter Password.")
+    @NotEmpty(message = "You must enter Password.")
     private String password;
 
     @NonNull
@@ -40,7 +41,7 @@ public class User implements UserDetails {
 
     // ON
     @Transient
-    @NotEmpty(message = "Please enter Password Confirmation.")
+    @NotEmpty(message = "You must enter Password Confirmation.")
     private String confirmPassword;
 
     private String activationCode;
@@ -48,11 +49,15 @@ public class User implements UserDetails {
 /////more detail about user
     // ON
     @NonNull
+    @Size(max = 22, message = "First Name should contain less than 22 letters.")//default message in arabic
+    @Column(length = 22)
     @NotEmpty(message = "You must enter First Name.")
     private String firstName;
 
     //ON
     @NonNull
+    @Size(max = 22, message = "First Name should contain less than 22 letters.")//default message in arabic
+    @Column(length = 22)
     @NotEmpty(message = "You must enter Last Name.")
     private String lastName;
 
@@ -63,8 +68,9 @@ public class User implements UserDetails {
 
     //ON : must check if exist
     @NonNull
-    @NotEmpty(message = "Please enter alias.")
-    @Column(nullable = false, unique = true)
+    @Size(min = 4 , max = 44, message = "First Name should contain less than 44 letters.")//default message in arabic
+    @NotEmpty(message = "You must enter Alias.")
+    @Column(nullable = false, unique = true , length = 44)
     private String alias;
 
     //ON

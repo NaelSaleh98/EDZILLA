@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Objects;
 
 
 @Getter
@@ -25,7 +24,7 @@ public class Comment extends Auditable{
     private String body;
 
     @ManyToOne
-    private Link link;
+    private Course course;
 
     public String getPrettyTime() {
         PrettyTime pt = BeanUtil.getBean(PrettyTime.class);
@@ -40,14 +39,14 @@ public class Comment extends Auditable{
     public Comment() {
     }
 
-    public Comment(Long id, String body, Link link) {
+    public Comment(Long id, String body, Course course) {
         this.id = id;
         this.body = body;
-        this.link = link;
+        this.course = course;
     }
 
-    public Comment(String body, Link link) {
+    public Comment(String body, Course course) {
         this.body = body;
-        this.link = link;
+        this.course = course;
     }
 }

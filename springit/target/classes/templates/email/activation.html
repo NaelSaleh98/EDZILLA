@@ -8,7 +8,7 @@
 <body>
     <h1>EDZILLA User Activation</h1>
     <p th:text="|Dear ${user.getFullName()}|"></p>
-    <p>Thank you for signing up for a free account with us at EDZILLA. Please click on the link below to activate your account.</p>
+    <p>Thank you for signing up for a free account with us at EDZILLA. Please click on the course below to activate your account.</p>
     <a th:href="${baseURL} + '/activate/' + ${user.getEmail()} + '/' + ${user.getActivationCode()}">Activate Account</a>
 </body>
 </html>

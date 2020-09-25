@@ -1,11 +1,11 @@
 package com.vega.springit.bootstrap;
 
 import com.vega.springit.Repository.CommentRepository;
-import com.vega.springit.Repository.LinkRepository;
+import com.vega.springit.Repository.CourseRepository;
 import com.vega.springit.Repository.RoleRepository;
 import com.vega.springit.Repository.UserRepository;
 import com.vega.springit.model.Comment;
-import com.vega.springit.model.Link;
+import com.vega.springit.model.Course;
 import com.vega.springit.model.Role;
 import com.vega.springit.model.User;
 import org.springframework.boot.CommandLineRunner;
@@ -20,15 +20,15 @@ import java.util.Map;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-    private LinkRepository linkRepository;
+    private CourseRepository courseRepository;
     private CommentRepository commentRepository;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
     private Map<String,User> users = new HashMap<>();
 
-    public DatabaseLoader(LinkRepository linkRepository, CommentRepository commentRepository, UserRepository userRepository, RoleRepository roleRepository) {
-        this.linkRepository = linkRepository;
+    public DatabaseLoader(CourseRepository courseRepository, CommentRepository commentRepository, UserRepository userRepository, RoleRepository roleRepository) {
+        this.courseRepository = courseRepository;
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -40,44 +40,44 @@ public class DatabaseLoader implements CommandLineRunner {
         // add users and roles
         addUsersAndRoles();
 
-        Map<String,String> links = new HashMap<>();
-        links.put("Securing Spring Boot APIs and SPAs with OAuth 2.0","https://auth0.com/blog/securing-spring-boot-apis-and-spas-with-oauth2/?utm_source=reddit&utm_medium=sc&utm_campaign=springboot_spa_securing");
-        links.put("Easy way to detect Device in Java Web Application using Spring Mobile - Source code to download from GitHub","https://www.opencodez.com/java/device-detection-using-spring-mobile.htm");
-        links.put("Tutorial series about building microservices with SpringBoot (with Netflix OSS)","https://medium.com/@marcus.eisele/implementing-a-microservice-architecture-with-spring-boot-intro-cdb6ad16806c");
-        links.put("Detailed steps to send encrypted email using Java / Spring Boot - Source code to download from GitHub","https://www.opencodez.com/java/send-encrypted-email-using-java.htm");
-        links.put("Build a Secure Progressive Web App With Spring Boot and React","https://dzone.com/articles/build-a-secure-progressive-web-app-with-spring-boo");
-        links.put("Building Your First Spring Boot Web Application - DZone Java","https://dzone.com/articles/building-your-first-spring-boot-web-application-ex");
-        links.put("Building Microservices with Spring Boot Fat (Uber) Jar","https://jelastic.com/blog/building-microservices-with-spring-boot-fat-uber-jar/");
-        links.put("Spring Cloud GCP 1.0 Released","https://cloud.google.com/blog/products/gcp/calling-java-developers-spring-cloud-gcp-1-0-is-now-generally-available");
-        links.put("Simplest way to Upload and Download Files in Java with Spring Boot - Code to download from Github","https://www.opencodez.com/uncategorized/file-upload-and-download-in-java-spring-boot.htm");
-        links.put("Add Social Login to Your Spring Boot 2.0 app","https://developer.okta.com/blog/2018/07/24/social-spring-boot");
-        links.put("File download example using Spring REST Controller","https://www.jeejava.com/file-download-example-using-spring-rest-controller/");
+        Map<String,String> courses = new HashMap<>();
+        courses.put("Securing Spring Boot APIs and SPAs with OAuth 2.0","Desc");
+        courses.put("Easy way to detect Device in Java Web Application using Spring Mobile - Source code to download from GitHub","Desc");
+        courses.put("Tutorial series about building microservices with SpringBoot (with Netflix OSS)","Desc");
+        courses.put("Detailed steps to send encrypted email using Java / Spring Boot - Source code to download from GitHub","Desc");
+        courses.put("Build a Secure Progressive Web App With Spring Boot and React","Desc");
+        courses.put("Building Your First Spring Boot Web Application - DZone Java","Desc");
+        courses.put("Building Microservices with Spring Boot Fat (Uber) Jar","Desc");
+        courses.put("Spring Cloud GCP 1.0 Released","Desc");
+        courses.put("Simplest way to Upload and Download Files in Java with Spring Boot - Code to download from Github","Desc");
+        courses.put("Add Social Login to Your Spring Boot 2.0 app","Desc");
+        courses.put("File download example using Spring REST Controller","Desc");
 
-        links.forEach((k,v) -> {
+        courses.forEach((k,v) -> {
             User u1 = users.get("user@gmail.com");
             User u2 = users.get("super@gmail.com");
-            Link link = new Link(k,v);
+            Course course = new Course(k,v);
             if(k.startsWith("Build")) {
-                link.setUser(u1);
+                course.setUser(u1);
             } else {
-                link.setUser(u2);
+                course.setUser(u2);
             }
 
-            linkRepository.save(link);
+            courseRepository.save(course);
 
             // we will do something with comments later
-            Comment spring = new Comment("Thank you for this link related to Spring Boot. I love it, great post!",link);
-            Comment security = new Comment("I love that you're talking about Spring Security",link);
-            Comment pwa = new Comment("What is this Progressive Web App thing all about? PWAs sound really cool.",link);
+            Comment spring = new Comment("Thank you for this Course related to Spring Boot. I love it, great post!", course);
+            Comment security = new Comment("I love that you're talking about Spring Security", course);
+            Comment pwa = new Comment("What is this Progressive Web App thing all about? PWAs sound really cool.", course);
             Comment comments[] = {spring,security,pwa};
             for(Comment comment : comments) {
                 commentRepository.save(comment);
-                link.addComment(comment);
+                course.addComment(comment);
             }
         });
 
-        long linkCount = linkRepository.count();
-        System.out.println("Number of links in the database: " + linkCount );
+        long CourseCount = courseRepository.count();
+        System.out.println("Number of Courses in the database: " + CourseCount );
     }
 
     private void addUsersAndRoles() {

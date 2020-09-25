@@ -1,53 +1,208 @@
-.container button{
-outline:none;
+/* Reset  */
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
 }
-.navbar-brand{
-    text-shadow: 0px 3px 3px #ffc107;
-}
-nav .nav-item {
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-    padding-right:10px;
-    text-shadow: 0px 3px 3px #ffc107;
-}
-
-nav .nav-item:not(:last-child) {
-   border-right: 1px solid silver;
-}
-
-@media (max-width: 768px) {
-  nav .nav-item:not(:last-child) {
-    border-right: none;
-  }
-}
-
-button.nav-link {
-    border:none;
-    cursor: pointer;
-}
-.btn-light:hover{
-background-color:#DDD !important
-}
-
-
+/*------------------------------ */
+/* Body */
 body {
-    background: #FFF;
+    background-color: #05386B;
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
 }
+/* Navbar */
+.navbar{
+    background-color:#5CDB95;
+}
+.navbar-brand{
+    color: #05386B;
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    letter-spacing:1px;
+    font-size:22px;
+}
+
+.nav-item {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-transform: uppercase;
+    font-size: 16px;
+    border: 1px outset #379683;
+    border-radius: 50%;
+    margin: 0px 6px;
+    padding: 11px;
+}
+.nav-item:hover {
+    border:none;
+    border: 1px inset #379683;
+}
+@media (max-width:767px) {
+    .nav-item {
+        border:0px solid !important
+    }
+}
+.nav-course{
+    color: #05386B;
+}
+.nav-course:hover{
+    text-decoration:none;
+}
+.nav-item button{
+    background:none;
+}
+button:focus{
+    outline:none;
+}
+.navbar-toggler{
+    border:1px solid #05386B;
+}
+/*------------------------------ */
 
 /* Jumbotron */
 .jumbotron {
-    padding: 80px;
-    padding-bottom: 40px;
+    padding: 66px;
+    background-color:#5CDB95;
+    border-radius:1%;
+    margin-bottom: 0 !important;
 }
 .jumbotron h2 {
-    font-family: 'Oswald', sans-serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-style: italic;
+    color: #05386B;
 }
 .jumbotron p {
     font-size: 15px;
+    color: #EDF5E1;
 }
+.jumbotron abbr{
+    text-decoration:none;
+}
+/*------------------------------ */
 
+/* Registration */
+.register{
+    padding:22px;
+}
+.content-h2 {
+    text-align:center;
+    color: #5CDB95;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+@media(min-width: 768px) {
+    .field-label-responsive {
+        padding-top: .5rem;
+        text-align: right;
+    }
+}
+.field-label-responsive{
+    text-align: center;
+    color: #EDF5E1;
+}
+.input-group-addon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #EDF5E1;
+}
+.register input{
+    border-radius: 3px !important;
+}
+.content-btn button{
+    background-color: #5EE4AF;
+    color: #05386B;
+}
+.content-pad{
+    padding-left: 3.6rem
+}
+.register .alert{
+    background-color:#EDF5E1;
+    color:#05386B;
+}
+/*------------------------------ */
+
+/* Activated */
+.activated{
+    padding:22px;
+}
+.activated .alert{
+    background-color:#EDF5E1;
+    color:#05386B;
+}
+/*------------------------------ */
+
+/* New Course */
+.new-course{
+padding:22px;
+}
+/*------------------------------ */
+
+/* Edit course */
+.main-card{
+    padding:22px;
+}
+.card-info{
+    margin-bottom: 22px;
+    background-color: #5EE4AF;
+    border-radius:3px;
+}
+.card-des{
+    border-left: 1px solid #8EE4AF;
+    border-right: 1px solid #8EE4AF;
+    color:#EDF5E1;
+}
+ .card-header{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+  .card-title{
+    color:#05386B;
+  }
+  .card-header button{
+    background-color: #379683;
+    color: #8EE4AF;
+  }
+  .cards-out{
+    padding-bottom: 44px;
+    margin-top:44px;
+    border-bottom: 1px solid #EDF5E1;
+  }
+  .cards-in{
+    background-color: #5EE4AF;
+    border-radius:3px;
+    padding:22px;
+  }
+  .card-head{
+    text-align:center;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color:#05386B;
+  }
+  .card-description{
+    color:#EDF5E1;
+  }
+  .new-card-parent{
+    display: none;
+    justify-content:center;
+    align-items:center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+  }
+  .new-card-son{
+    background-color:#05386B;
+    padding:22px;
+    border-radius:6px;
+    width:50%;
+  }
+  .new-card-son textarea {
+    resize: none;
+  }
+/*------------------------------ */
 
 /* Links */
 .position {
@@ -115,29 +270,9 @@ a.share {
     padding:0px;
 }
 .comment .permalink {
-    
+
 }
 .comment .like {
     padding-left:10px;
 }
 
-
-/* Registration */
-.reg_h2 {
-text-align:center;
-text-shadow: 0px 1px 11px #ffc107;
-}
-@media(min-width: 768px) {
-    .field-label-responsive {
-        padding-top: .5rem;
-        text-align: right;
-    }
-}
-.field-label-responsive{
-text-align: center;
-}
-.input-group-addon{
-display: flex;
-align-items: center;
-justify-content: center;
-}

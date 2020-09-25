@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -47,20 +49,40 @@ public class authController {
     public String registerNewUser(@Valid User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Optional<User> testEmail = userService.findByEmail(user.getEmail());
         Optional<User> testAlias = userService.findByAlias(user.getAlias());
-
+        List<ObjectError> errorList =  new ArrayList<>();
         if (testEmail.isPresent()){
             ObjectError objectError = new ObjectError("test" , "Email is already exist. Try to Sign in.");
-            logger.info("Validation errors were found while registering a new user.");
-            model.addAttribute("user",user);
-            model.addAttribute("validationErrors", objectError);
-            return "auth/register";
+            errorList.add(objectError);
         }
 
         if (testAlias.isPresent()){
             ObjectError objectError = new ObjectError("test" , "Alias is already exist. Try another one.");
+            errorList.add(objectError);
+        }
+        if(! user.getFirstName().matches("[A-Z][a-z]*")){
+            ObjectError objectError = new ObjectError("test" , "First Name must contain only letters.");
+            errorList.add(objectError);
+        }
+        if(! user.getLastName().matches("[A-Z][a-z]*")){
+            ObjectError objectError = new ObjectError("test" , "Last Name must contain only letters.");
+            errorList.add(objectError);
+        }
+        if(! user.getAlias().matches("^[a-zA-Z][a-zA-Z0-9_]*")){
+            ObjectError objectError = new ObjectError("test" , "Alias field can contain letters & numbers only.");
+            errorList.add(objectError);
+        }
+        if(! user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
+            ObjectError objectError = new ObjectError("test" , "Email should be like: example@gmail.com");
+            errorList.add(objectError);
+        }
+        if(! user.getPassword().matches("^[A-Za-z]\\w{7,14}$")){
+            ObjectError objectError = new ObjectError("test" , "check a password between 7 to 16 characters which contain only characters, numeric digits, underscore and first character must be a letter.");
+            errorList.add(objectError);
+        }
+        if( errorList.size() > 0 ){
             logger.info("Validation errors were found while registering a new user.");
             model.addAttribute("user",user);
-            model.addAttribute("validationErrors", objectError);
+            model.addAttribute("validationErrors", errorList);
             return "auth/register";
         }
 

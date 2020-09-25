@@ -8,32 +8,31 @@
 
 <div class="container" th:fragment="content">
 
-    <!-- links -->
-    <div class="row link" th:each="link : ${links}">
+    <!-- Course -->
+    <div class="row link" th:each="course : ${courses}">
 
         <div class="col-1">
-<!--to add atribute to tag -> th:data-id="${link.id}" ,attribue name:data-id, attrubute value "${link.id}"-->
-            <div><a href="#" class="upvote" th:data-id="${link.id}"><i class="fas fa-arrow-up"></i></a></div>
-            <div><span th:id="|votecount-${link.id}|" class="votecount" th:text="${link.getVoteCount()}">0</span></div>
-            <div><a href="#" class="downvote" th:data-id="${link.id}" th:disabled="true"><i class="fas fa-arrow-down"></i></a></div>
+<!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+            <div><a href="#" class="upvote" th:data-id="${course.id}"><i class="fas fa-arrow-up"></i></a></div>
+            <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+            <div><a href="#" class="downvote" th:data-id="${course.id}" th:disabled="true"><i class="fas fa-arrow-down"></i></a></div>
         </div>
 
         <div class="col-11">
             <p class="title">
-                <a class="title " th:href="@{'/link/' + ${link.id}}" th:text="${link.title}">
+                <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
                     Title Goes Here
                 </a>
-                <span class="domain">(<a th:href="${link.url}" th:text="${link.getDomainName()}" target="_blank">therealdanvega.com</a>)</span>
             </p>
             <!-- ON -->
             <p class="tagline ">submitted
-                <time th:title="${link.getCreationDate()}" th:datetime="${link.getCreationDate()}" class="live-timestamp"
-                      th:text="${link.getPrettyTime()}"></time> by
-                <a th:href="@{'/u/' + ${link.getUser().getAlias()}}"  class="author" th:text="${link.getUser().getAlias()}"></a>
+                <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                      th:text="${course.getPrettyTime()}"></time> by
+                <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
             </p>
-
+            <span class="domain" th:text="${course.description}"></span>
             <p>
-                <a th:href="@{'/link/' + ${link.id} + '#comments'}" class="comments" th:text="|${link.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
                 <a href="/" class="share"><i class="fas fa-share-square"></i> share</a>
             </p>
         </div>
@@ -47,11 +46,11 @@
         let className = allvotes[i].className;
         allvotes[i].addEventListener('click', function (event) {
             const direction = className === 'upvote' ? 1 : -1;
-            const linkID = this.getAttribute("data-id");
-            const voteSum = document.getElementById('votecount-' + linkID);
+            const courseID = this.getAttribute("data-id");
+            const voteSum = document.getElementById('votecount-' + courseID);
             const voteSumValue = voteSum.innerHTML;
             //to make a requist to voteController
-            fetch(`http://localhost:8080/vote/link/${linkID}/direction/${direction}/votecount/${voteSumValue}`)
+            fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
                 .then(response => response.json())
                 .then(data => voteSum.innerHTML = data)
                 .catch(err => console.error(err));

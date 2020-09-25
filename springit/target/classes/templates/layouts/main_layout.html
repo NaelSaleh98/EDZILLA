@@ -20,49 +20,51 @@
     </head>
     <body>
         <!-- ON : Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-primary bg-light sticky-top" th:fragment="navigation">
+        <nav class="navbar navbar-expand-md sticky-top" th:fragment="navigation">
             <div class="container">
+                <!-- Site Logo -->
                 <a class="navbar-brand" href="/">
                     <i class="fas fa-graduation-cap"></i>
                     EDZILLA
                 </a>
-                <button class="navbar-toggler border border-primary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                <!-- Toggler button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars text-primary"></i>
+                    <i class="fas fa-bars" style="color:#05386B"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar Content -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" role="full-horizontal">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">
+                        <li class="nav-item">
+                            <a class="nav-course" href="/">
                                 <i class="fas fa-home" aria-hidden="true"></i> Home
                             </a>
                         </li>
                         <!-- if user is signed in -->
                         <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a class="nav-link" th:href="@{/link/submit}">
+                            <a class="nav-course" th:href="@{/course/submit}">
                                 <i class="fas fa-plus"></i> New Course
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a class="nav-link" th:href="@{/profile}">
+                            <a class="nav-course" th:href="@{/profile}">
                                 <i class="fas fa-user-circle"></i> Account
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="isAuthenticated()">
                             <form method="POST" th:action="@{/logout}" sec:authorize="isAuthenticated()">
-                                <button class="nav-link text-primary btn-light"><i class="fa fa-sign-out-alt"
-                                                                                   aria-hidden="true"></i> Sign Out</button>
+                                <button class="nav-course "><i class="fa fa-sign-out-alt"aria-hidden="true"></i> Sign Out</button>
                             </form>
                         </li>
 
                         <!-- if user is not signed in -->
                         <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link" th:href="@{/login}">
+                            <a class="nav-course" th:href="@{/login}">
                                 <i class="fa fa-sign-in-alt" aria-hidden="true"></i> Sign In
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link" th:href="@{/register}">
+                            <a class="nav-course" th:href="@{/register}">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i> Register
                             </a>
                         </li>
@@ -72,10 +74,10 @@
         </nav>
 
         <!-- ON : Jumbotron -->
-        <div class="jumbotron jumbotron-fluid bg-primary" th:fragment="jumbotron">
+        <div class="jumbotron jumbotron-fluid" th:fragment="jumbotron">
             <div class="container" align="center">
-                <h2 class="display-4 font-italic text-warning">WELCOME TO <abbr title="Education Zilla">EDZILLA</abbr></h2>
-                <p class="lead text-light">Due to the current situation (COVID-19), EDZILLA was born to facilitate the process of
+                <h2 class="display-4">WELCOME TO <abbr title="Education Zilla">EDZILLA</abbr></h2>
+                <p class="lead">Due to the current situation (COVID-19), EDZILLA was born to facilitate the process of
                     learning and simplify it. EDZILLA also cares about users' feedback to improve the quality of services,
                     by providing rating and commenting features in published courses.</p>
             </div>

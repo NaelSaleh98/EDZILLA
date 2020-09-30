@@ -7,6 +7,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -25,11 +26,14 @@ public class Course extends Auditable{
         private Long id;
 
         @NonNull  //make the bellow member as no null(the constructor will return exception if we generate object and pass no argument to the constructor)
-        @NotEmpty(message = "please enter a title.")// default error message
+        @NotEmpty(message = "Please, Enter a Title.")// default error message
+        @Size(max = 256, message = "Please, Title cannot contain more than 256 letters.")
         private String title;
 
         @NonNull//server side protection
-        @NotEmpty(message = "please enter a description.")
+        @NotEmpty(message = "Please, Enter a Description.")
+        @Size(max = 512, message = "Please, Description cannot contain more than 512 letters.")
+        @Column(length = 512)
         private String description;
 
         //ON
@@ -39,8 +43,7 @@ public class Course extends Auditable{
         //<for vote>
         @OneToMany(mappedBy = "course")
         private List<Vote> votes = new ArrayList<>();
-
-                private int voteCount = 0;
+        private int voteCount = 0;
         //</for vote>
 
         @OneToMany(mappedBy = "course")

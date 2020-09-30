@@ -30,7 +30,7 @@
                 <!-- Toggler button -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars" style="color:#05386B"></i>
+                    <i class="fas fa-bars" style="color:#FFF"></i>
                 </button>
                 <!-- Navbar Content -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent" role="full-horizontal">
@@ -53,14 +53,16 @@
                         </li>
                         <li class="nav-item" sec:authorize="isAuthenticated()">
                             <form method="POST" th:action="@{/logout}" sec:authorize="isAuthenticated()">
-                                <button class="nav-course "><i class="fa fa-sign-out-alt"aria-hidden="true"></i> Sign Out</button>
+                                <button  class="nav-course">
+                                    <i class="fa fa-sign-out-alt" aria-hidden="true"></i> Sign Out
+                                </button>
                             </form>
                         </li>
 
                         <!-- if user is not signed in -->
                         <li class="nav-item" sec:authorize="!isAuthenticated()">
                             <a class="nav-course" th:href="@{/login}">
-                                <i class="fa fa-sign-in-alt" aria-hidden="true"></i> Sign In
+                                <i class="fa fa-sign-in-alt" aria-hidden="true"></i> LogIn
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="!isAuthenticated()">

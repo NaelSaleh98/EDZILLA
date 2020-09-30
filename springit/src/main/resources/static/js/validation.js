@@ -1,5 +1,6 @@
 var reg_error = document.getElementById("reg_errors");
-function register_validation(){
+// Register Validation //
+function registerValidation(){
     "use strict";
     var     firstName   = document.getElementById("first-name").value;
     var     lastName    = document.getElementById("last-name").value;
@@ -9,48 +10,45 @@ function register_validation(){
     var confirmPassword = document.getElementById("confirmPassword").value;
 
     var err = "";
-    if (chk_empty(firstName)){
-        err += "<li>You must enter First Name.</li>";
+    if (chk_empty(firstName) || chk_empty(lastName)){
+        err += "<li>Please, Enter your First Name & Last Name.</li>";
     }
-    if(chk_empty(lastName)){
-        err += "<li>You must enter Last Name.</li>";
+    else if ( (!chk_Letters(firstName))  ||  (!chk_Letters(lastName)) ){
+        err += "<li>Please, Your Name should contain only letters.</li>";
     }
-    if ( (!chk_Letters(firstName))  ||  (!chk_Letters(lastName)) ){
-        err += "<li>Name field must contain only letters.</li>";
-    }
-    if ( (firstName.length > 22)    ||  (lastName.length > 22) ){
-        err += "<li>Name field should contain less than 22 letters.</li>";
+    else if ( (firstName.length > 32)    ||  (lastName.length > 32) ){
+        err += "<li>Please, Your Name cannot contain more than 32 letters.</li>";
     }
     if (chk_empty(alias)){
-        err += "<li>You must enter Alias.</li>";
+        err += "<li>Please, Enter your Alias.</li>";
     }
-    if (!chk_Letters_numbers(alias)){
-        err += "<li>Alias field can contain letters & numbers only.</li>";
+    else if (!chk_Letters_numbers(alias)){
+        err += "<li>Please, Alias can contain letters & numbers & underscore only, but cannot end or start with underscore.</li>";
     }
-    if ( (alias.length < 4) || (alias.length > 44) ){
-        err += "<li>Alias size must be between 4 and 44.</li>";
+    else if ( (alias.length < 4) || (alias.length > 64) ){
+        err += "<li>Please, Alias size should be between 4 and 64.</li>";
     }
     if (chk_empty(email)){
-        err += "<li>You must enter Email.</li>";
+        err += "<li>Please, Enter your Email.</li>";
     }
-    if (!chk_email(email)){
-        err += "<li>Enter valid email , Please.</li>";
+    else if (!chk_email(email)){
+        err += "<li>Please, Enter valid Email => user@test.com.</li>";
     }
-    if ( (email.length < 8) || (email.length > 22)){
-        err += "<li>Email size must be between 8 and 22.</li>";
+    else if ( (email.length < 8) || (email.length > 64)){
+        err += "<li>Please, Email size should be between 8 and 64.</li>";
     }
     
-    if (chk_empty(password)){
-        err += "<li>You must enter Password.</li>";
+    if (chk_empty(password) || chk_empty(confirmPassword)){
+        err += "<li>Please, Enter Password & Password Confirmation.</li>";
     }
-    if(chk_empty(confirmPassword)){
-        err += "<li>You must enter Password Confirmation.</li>";
+    else if ( (password.length < 8) || (password.length > 128) ){
+        err += "<li>Please, Password size should be between 8 and 128.</li>";
     }
-    if ( (!chk_password(password)) || (!chk_password(confirmPassword)) ){
-        err += "<li>check a password between 7 to 16 characters which contain only characters, numeric digits, underscore and first character must be a letter.</li>";
+    else if ( (!chk_password(password))){
+        err += "<li>Please, Check that the a password contain <br> At least one digit. <br> At least one lowercase character. <br> At least one uppercase character.</li>";
     }
-    if ( password !== confirmPassword){
-            err += "<li>Password and password confirmation should be the same.</li>";
+    else if ( password !== confirmPassword){
+            err += "<li>Please, Password and Password Confirmation should be the same.</li>";
     }
     if (err == ""){
         return true ;
@@ -80,7 +78,7 @@ function chk_Letters(inputTxt){
 // check if string contain letters and numbers only
 function chk_Letters_numbers(inputTxt){
     "use strict";
-    var reg = /^[a-zA-Z][a-zA-Z0-9_]*/;
+    var reg = /^(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/;
     if(inputTxt.match(reg)) {
         return true;
     }
@@ -88,10 +86,11 @@ function chk_Letters_numbers(inputTxt){
         return false;
      }
 }
+
 // email pattern
 function chk_email(email){
     "use strict";
-    var reg = /^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$/;
+    var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if(email.match(reg)) {
         return true;
     }
@@ -99,10 +98,11 @@ function chk_email(email){
         return false;
      }
 }
+
 // password check
 function chk_password(inputTxt){
     "use strict";
-    var pass=  /^[A-Za-z]\w{7,16}$/;
+    var pass=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     if(inputTxt.match(pass)){
         return true;
     }
@@ -110,3 +110,5 @@ function chk_password(inputTxt){
         return false;
     }
 }
+
+/* ------------------------------- */

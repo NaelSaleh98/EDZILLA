@@ -25,14 +25,15 @@ public class User implements UserDetails {
     private Long id;
 
     @NonNull
-    @NotEmpty(message = "You must enter Email.")
-    @Size(min = 8, max = 22, message = "Email size must be between 8 and 22.")//default message in arabic
-    @Column(nullable = false, unique = true)
+    @NotEmpty(message = "Please, Enter your Email.")
+    @Size(min = 8, max = 64, message = "Please, Email size should be between 8 and 64.")//default message in arabic
+    @Column(nullable = false, unique = true, length = 64)
     private String email;
 
     @NonNull
-    @Column(length = 100)
-    @NotEmpty(message = "You must enter Password.")
+    @NotEmpty(message = "Please, Enter Password.")
+    @Size(min = 8, max = 128, message = "Please, Password size should be between 8 and 128.")
+    @Column(length = 128)
     private String password;
 
     @NonNull
@@ -49,16 +50,16 @@ public class User implements UserDetails {
 /////more detail about user
     // ON
     @NonNull
-    @Size(max = 22, message = "First Name should contain less than 22 letters.")//default message in arabic
-    @Column(length = 22)
-    @NotEmpty(message = "You must enter First Name.")
+    @NotEmpty(message = "Please, Enter your First Name.")
+    @Size(max = 32, message = "Please, Your First Name cannot contain more than 32 letters.")
+    @Column(length = 32)
     private String firstName;
 
     //ON
     @NonNull
-    @Size(max = 22, message = "First Name should contain less than 22 letters.")//default message in arabic
-    @Column(length = 22)
-    @NotEmpty(message = "You must enter Last Name.")
+    @NotEmpty(message = "Please, Enter your Last Name.")
+    @Size(max = 32, message = "Please, Your Last Name cannot contain more than 32 letters.")//default message in arabic
+    @Column(length = 32)
     private String lastName;
 
     //ON
@@ -68,9 +69,9 @@ public class User implements UserDetails {
 
     //ON : must check if exist
     @NonNull
-    @Size(min = 4 , max = 44, message = "First Name should contain less than 44 letters.")//default message in arabic
-    @NotEmpty(message = "You must enter Alias.")
-    @Column(nullable = false, unique = true , length = 44)
+    @NotEmpty(message = "Please, Enter your Alias.")
+    @Size(min = 4 , max = 64, message = "Please, Alias size should be between 4 and 64.")//default message in arabic
+    @Column(nullable = false, unique = true , length = 64)
     private String alias;
 
     //ON

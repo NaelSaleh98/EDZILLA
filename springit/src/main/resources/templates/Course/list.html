@@ -1,62 +1,61 @@
 <!DOCTYPE html >
 <html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{layouts/main_layout :: head(title='Springit - Spring Boot Reddit Clone')}">
+<head th:replace="~{layouts/main_layout :: head(title='EDZILLA')}">
 </head>
 <body>
-<nav th:replace="~{layouts/main_layout :: nav}"></nav>
-<div th:replace="~{layouts/main_layout :: jumbotron}"></div>
+    <nav th:replace="~{layouts/main_layout :: nav}"></nav>
 
-<div class="container" th:fragment="content">
+    <div class="container register" th:fragment="content">
 
-    <!-- Course -->
-    <div class="row link" th:each="course : ${courses}">
+        <!-- Course -->
+        <div class="row link" th:each="course : ${courses}">
 
-        <div class="col-1">
-<!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-            <div><a href="#" class="upvote" th:data-id="${course.id}"><i class="fas fa-arrow-up"></i></a></div>
-            <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
-            <div><a href="#" class="downvote" th:data-id="${course.id}" th:disabled="true"><i class="fas fa-arrow-down"></i></a></div>
+            <div class="col-1">
+    <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+                <div><a href="#" class="upvote" th:data-id="${course.id}"><i class="fas fa-arrow-up"></i></a></div>
+                <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+                <div><a href="#" class="downvote" th:data-id="${course.id}" th:disabled="true"><i class="fas fa-arrow-down"></i></a></div>
+            </div>
+
+            <div class="col-11">
+                <p class="title">
+                    <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
+                        Title Goes Here
+                    </a>
+                </p>
+                <!-- ON -->
+                <p class="tagline ">submitted
+                    <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                          th:text="${course.getPrettyTime()}"></time> by
+                    <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
+                </p>
+                <span class="domain" th:text="${course.description}"></span>
+                <p>
+                    <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                    <a href="/" class="share"><i class="fas fa-share-square"></i> share</a>
+                </p>
+            </div>
         </div>
 
-        <div class="col-11">
-            <p class="title">
-                <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
-                    Title Goes Here
-                </a>
-            </p>
-            <!-- ON -->
-            <p class="tagline ">submitted
-                <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
-                      th:text="${course.getPrettyTime()}"></time> by
-                <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
-            </p>
-            <span class="domain" th:text="${course.description}"></span>
-            <p>
-                <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
-                <a href="/" class="share"><i class="fas fa-share-square"></i> share</a>
-            </p>
-        </div>
     </div>
-
-</div>
-<script sec:authorize="isFullyAuthenticated()">
-//sec:authorize="isFullyAuthenticated()" ->protect from clint side
-    const allvotes = document.querySelectorAll(".upvote, .downvote");
-    for(let i=0; i<allvotes.length; i++) {
-        let className = allvotes[i].className;
-        allvotes[i].addEventListener('click', function (event) {
-            const direction = className === 'upvote' ? 1 : -1;
-            const courseID = this.getAttribute("data-id");
-            const voteSum = document.getElementById('votecount-' + courseID);
-            const voteSumValue = voteSum.innerHTML;
-            //to make a requist to voteController
-            fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
-                .then(response => response.json())
-                .then(data => voteSum.innerHTML = data)
-                .catch(err => console.error(err));
-        });
-    }
-</script>
+    <script sec:authorize="isFullyAuthenticated()">
+    //sec:authorize="isFullyAuthenticated()" ->protect from clint side
+        const allvotes = document.querySelectorAll(".upvote, .downvote");
+        for(let i=0; i<allvotes.length; i++) {
+            let className = allvotes[i].className;
+            allvotes[i].addEventListener('click', function (event) {
+                const direction = className === 'upvote' ? 1 : -1;
+                const courseID = this.getAttribute("data-id");
+                const voteSum = document.getElementById('votecount-' + courseID);
+                const voteSumValue = voteSum.innerHTML;
+                //to make a requist to voteController
+                fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
+                    .then(response => response.json())
+                    .then(data => voteSum.innerHTML = data)
+                    .catch(err => console.error(err));
+            });
+        }
+    </script>
 
 
 </body>

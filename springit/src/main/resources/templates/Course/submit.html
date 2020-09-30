@@ -1,30 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layouts/main_layout :: head(title='Springit - Spring Boot Reddit Clone')}">
+<head th:replace="~{layouts/main_layout :: head(title='EDZILLA - New Course')}">
 </head>
 <body>
 
     <nav th:replace="~{layouts/main_layout :: nav}"></nav>
-    <div th:replace="~{layouts/main_layout :: jumbotron}"></div>
-
-    <div class="container new-course">
-        <form id="frmAddCourse" onsubmit="return chk_des();" method="POST" th:action="@{/course/submit}" th:object="${course}">
+    <div class="container main-container">
+        <form id="frmAddCourse" method="POST" th:action="@{/course/submit}" th:object="${course}">
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <h2 class="content-h2">Submit Course</h2>
                     <hr/>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
-            <div class="row" style="display:none;" id="large-des">
-                <div class="col-md-3"></div>
-                <div class="col-md-6 content-pad">
-                <span class="text-danger align-middle">
-                    <ul>
-                        <li>Description should be small >> less than 255 letters.</li>
-                    </ul>
-                </span>
                 </div>
                 <div class="col-md-3"></div>
             </div>
@@ -40,9 +27,13 @@
                             <input type="text"  class="form-control"
                                    id="title"   placeholder="Course Title"
                                    required autofocus  th:field="*{title}">
-                            <small th:errors="*{title}" style="color:red;"></small>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="text-danger ">
+                        <li th:errors="*{title}"></li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
@@ -54,17 +45,21 @@
                     <div class="form-group">
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-audio-description"></i></div>
-                            <input type="text"  class="form-control"
-                                   id="description" placeholder="Course Description"
-                                   required th:field="*{description}">
-                            <small th:errors="*{description}" style="color:red;"></small>
+                            <textarea  class="form-control" id="description" rows="6"
+                                       maxlength="512"
+                                       name="description"   placeholder="Course Description"
+                                       required th:field="*{description}">
+                            </textarea>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <small class="text-warning">*Brief description ... less than 255 letters.</small>
+                    <ul class="text-danger ">
+                        <li th:errors="*{description}" ></li>
+                    </ul>
                 </div>
             </div>
+            <hr>
             <div class="row content-btn">
                 <div class="col-md-3"></div>
                 <div class="col-md-6 content-pad">
@@ -74,19 +69,5 @@
             </div>
         </form>
     </div>
-<script>
-    function chk_des(){
-        var des = document.getElementById("description");
-        var large = document.getElementById("large-des");
-        if (des.value.length < 255){
-            return true;
-        }
-        else {
-            large.style.display= "flex";
-            console.log("done");
-            return false;
-        }
-    }
-</script>
 </body>
 </html>

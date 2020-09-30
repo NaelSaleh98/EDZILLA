@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layouts/main_layout :: head(title = 'Springit - User Activated')}">
+<head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - User Activated')}">
 
 </head>
 
 <body>
 
     <nav th:replace="~{layouts/main_layout :: nav}"></nav>
-    <div th:replace="~{layouts/main_layout :: jumbotron}"></div>
-
     <div class="container activated">
-        <div class="alert" role="alert">
+        <div class="alert alert-success" role="alert">
             <h4 class="alert-heading text-center">Well done!</h4>
             <hr>
-            You're account has been activated and you can now
-            <a href="#" th:href="@{/login}" >login</a>
-        </div>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 alert alert-success" role="alert">
-                You're account has been activated and you can now <a href="#" th:href="@{/login}" >login</a>
-            </div>
-            <div class="col-md-3"></div>
-
+            <p class="text-center">
+                You're account has been activated and you can now
+                <a href="#" th:href="@{/login}" >login</a>
+            </p>
         </div>
     </div>
 

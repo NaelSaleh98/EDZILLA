@@ -4,170 +4,197 @@
 </head>
 <body>
     <nav th:replace="~{layouts/main_layout :: nav}"></nav>
-    <div th:replace="~{layouts/main_layout :: jumbotron}"></div>
-<div class="container register">
-    <!-- ON -->
+    <div class="container main-container">
+        <!-- ON -->
 
-    <div class="alert" role="alert" th:if="${success}">
-        <h4 class="alert-heading text-center">Well done!</h4>
-        <hr>
-        <p class="text-center">You have successfully registered with us.
-            Please check your email to activate your account.</p>
-    </div>
-
-
-
-    <!-- ON: User Registration form -->
-    <form class="form-horizontal" role="form" method="POST" th:action="@{/register}"
-          th:object="${user}" th:if="!${success}" onsubmit="return register_validation()">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <h2 class="content-h2">Registration Form</h2>
-                <hr>
-            </div>
-            <div class="col-md-3"></div>
+        <div class="alert alert-success" role="alert" th:if="${success}">
+            <h4 class="alert-heading text-center">Well done!</h4>
+            <hr>
+            <p class="text-center">You have successfully registered with us.
+                Please check your email to activate your account.</p>
         </div>
-    <!--if error happened -->
-        <div class="row" th:if="${validationErrors}">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 content-pad">
-                <span class="text-danger ">
-                    <ul th:each="error : ${validationErrors}">
-                        <li th:text="${error.getDefaultMessage()}"></li>
-                    </ul>
-                </span>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-        <div class="row" >
-            <div class="col-md-3"></div>
-            <div class="col-md-6 content-pad">
-                <span class="text-danger " >
-                    <ul id="reg_errors"></ul>
-                </span>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 field-label-responsive">
-                <label for="first-name">First Name</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text"              name="first-name"
-                               class="form-control"     id="first-name"
-                               placeholder="First Name" th:field="*{firstName}"
-                               required autofocus>
-                    </div>
+
+
+
+        <!-- ON: User Registration form -->
+        <form class="form-horizontal" role="form" method="POST" th:action="@{/register}"
+              th:object="${user}" th:if="!${success}" onsubmit="return registerValidation();">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h2 class="content-h2">Registration Form</h2>
+                    <hr>
                 </div>
+                <div class="col-md-3"></div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 field-label-responsive">
-                <label for="last-name">Last Name</label>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text"              name="last-name"
-                               class="form-control"     id="last-name"
-                               placeholder="Last Name"  th:field="*{lastName}"
-                               required >
-                    </div>
+        <!--if error happened -->
+            <div class="row" th:if="${validationErrors}">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 content-pad">
+                    <span class="text-danger">
+                        <ul th:each="error : ${validationErrors}">
+                            <li th:text="${error.getDefaultMessage()}"></li>
+                        </ul>
+                    </span>
                 </div>
+                <div class="col-md-3"></div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 field-label-responsive">
-                <label for="alias">Alias</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text"  name="alias"
-                               class="form-control" id="alias"
-                               placeholder="This will be your name on Courses & comments"
-                               th:field="*{alias}"  required >
-                    </div>
+            <div class="row" >
+                <div class="col-md-3"></div>
+                <div class="col-md-6 content-pad">
+                    <span class="text-danger " >
+                        <ul id="reg_errors"></ul>
+                    </span>
                 </div>
+                <div class="col-md-3"></div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 field-label-responsive">
-                <label for="email">E-mail Address</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                        <input type="email"                     name="email"
-                               class="form-control"             id="email"
-                               placeholder="you@example.com"    th:field="*{email}"
-                               required >
-                    </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="first-name">First Name</label>
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 field-label-responsive">
-                <label for="password">Password</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group ">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-key"></i></div>
-                        <input type="password"          name="password"
-                               class="form-control"     id="password"
-                               placeholder="Password"   th:field="*{password}"
-                               required>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 field-label-responsive">
-                <label for="password">Confirm Password</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-key"></i>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                            <input type="text"              name="first-name"
+                                   class="form-control"     id="first-name"
+                                   placeholder="First Name" th:field="*{firstName}"
+                                   required autofocus>
                         </div>
-                        <input type="password"                  name="confirmPassword"
-                               class="form-control"             id="confirmPassword"
-                               placeholder="Confirm Password"   th:field="*{confirmPassword}"
-                               required>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <small class="d-block reg-terms">*Required.</small>
+                    <small class="d-block reg-terms">Can contain only letters.</small>
+                    <small class="d-block reg-terms">Cannot be more than 32 letters.</small>
+                </div>
             </div>
-        </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="last-name">Last Name</label>
+                </div>
 
-        <div class="row content-btn">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 content-pad">
-                <button type="submit" class="btn form-control"><i class="fa fa-user-plus"></i> Register</button>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                            <input type="text"              name="last-name"
+                                   class="form-control"     id="last-name"
+                                   placeholder="Last Name"  th:field="*{lastName}"
+                                   required >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <small class="d-block reg-terms">*Required.</small>
+                    <small class="d-block reg-terms">Can contain only letters.</small>
+                    <small class="d-block reg-terms">Cannot be more then 32 letters.</small>
+                </div>
             </div>
-            <div class="col-md-3"></div>
-        </div>
-    </form>
-</div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="alias">Alias</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                            <input type="text"  name="alias"
+                                   class="form-control" id="alias"
+                                   placeholder="Alias for Courses and Comments"
+                                   th:field="*{alias}"  required >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <small class="d-block reg-terms">*Required.</small>
+                    <small class="d-block reg-terms">Cannot contain special characters except underscores.</small>
+                    <small class="d-block reg-terms">Size should be between 4 and 64.</small>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="email">E-mail Address</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                            <input type="email"                     name="email"
+                                   class="form-control"             id="email"
+                                   placeholder="you@example.com"    th:field="*{email}"
+                                   required >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <small class="d-block reg-terms">*Required.</small>
+                    <small class="d-block reg-terms">Size should be between 8 and 64.</small>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="password">Password</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-key"></i></div>
+                            <input type="password"          name="password"
+                                   class="form-control"     id="password"
+                                   placeholder="Password"   th:field="*{password}"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <small class="d-block reg-terms">*Required.</small>
+                    <small class="d-block reg-terms">Must contain at least one number, one lowercase letter, one uppercase letter.</small>
+                    <small class="d-block reg-terms">Size should be between 8 and 128.</small>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="password">Confirm Password</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-key"></i>
+                            </div>
+                            <input type="password"                  name="confirmPassword"
+                                   class="form-control"             id="confirmPassword"
+                                   placeholder="Confirm Password"   th:field="*{confirmPassword}"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <small class="d-block reg-terms">*Required.</small>
+                    <small class="d-block reg-terms">Should equal to actual password.</small>
+                </div>
+            </div>
+            <hr>
+            <div class="row content-btn">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 content-pad">
+                    <button type="submit" class="btn form-control"><i class="fa fa-user-plus"></i> Register</button>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </form>
+    </div>
     <script type="text/javascript" th:src="@{/js/validation.js}"></script>
 </body>
 </html>

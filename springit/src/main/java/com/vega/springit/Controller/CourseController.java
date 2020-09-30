@@ -8,6 +8,7 @@ import com.vega.springit.Repository.UserRepository;
 import com.vega.springit.model.Comment;
 import com.vega.springit.model.Course;
 import com.vega.springit.model.CourseCard;
+import com.vega.springit.model.User;
 import com.vega.springit.service.CourseCardService;
 import com.vega.springit.service.CourseService;
 import org.slf4j.Logger;
@@ -114,6 +115,10 @@ public class CourseController {
         } else {
             logger.info("New Comment Saved!");
             comment.setCourse(currentCourseForComment);
+            commentRepository.save(comment);
+            String email = comment.getCreatedBy();
+            Optional<User> user =  userRepository.findByEmail(email);
+            comment.setCreatedBy(user.get().getAlias());
             commentRepository.save(comment);
         }
         return "redirect:/course/" + comment.getCourse().getId();

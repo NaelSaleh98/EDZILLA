@@ -51,32 +51,32 @@ public class authController {
         Optional<User> testAlias = userService.findByAlias(user.getAlias());
         List<ObjectError> errorList =  new ArrayList<>();
         if (testEmail.isPresent()){
-            ObjectError objectError = new ObjectError("test" , "Email is already exist. Try to Sign in.");
+            ObjectError objectError = new ObjectError("test" , "Please, This Email is already exist. Try to Sign in.");
             errorList.add(objectError);
         }
 
         if (testAlias.isPresent()){
-            ObjectError objectError = new ObjectError("test" , "Alias is already exist. Try another one.");
+            ObjectError objectError = new ObjectError("test" , "Please, This Alias is already exist. Try another one.");
             errorList.add(objectError);
         }
-        if(! user.getFirstName().matches("[A-Z][a-z]*")){
-            ObjectError objectError = new ObjectError("test" , "First Name must contain only letters.");
+        if(! user.getFirstName().matches("^[A-Za-z]+$")){
+            ObjectError objectError = new ObjectError("test" , "Please, Your Name should contain only letters.");
             errorList.add(objectError);
         }
-        if(! user.getLastName().matches("[A-Z][a-z]*")){
-            ObjectError objectError = new ObjectError("test" , "Last Name must contain only letters.");
+        else if(! user.getLastName().matches("^[A-Za-z]+$")){
+            ObjectError objectError = new ObjectError("test" , "Please, Your Name should contain only letters.");
             errorList.add(objectError);
         }
-        if(! user.getAlias().matches("^[a-zA-Z][a-zA-Z0-9_]*")){
-            ObjectError objectError = new ObjectError("test" , "Alias field can contain letters & numbers only.");
+        if(! user.getAlias().matches("^(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$")){
+            ObjectError objectError = new ObjectError("test" , "Please, Alias can contain letters & numbers & underscore only, but cannot end or start with underscore.");
             errorList.add(objectError);
         }
-        if(! user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
-            ObjectError objectError = new ObjectError("test" , "Email should be like: example@gmail.com");
+        if(! user.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            ObjectError objectError = new ObjectError("test" , "Please, Enter valid Email => user@test.com.");
             errorList.add(objectError);
         }
-        if(! user.getPassword().matches("^[A-Za-z]\\w{7,14}$")){
-            ObjectError objectError = new ObjectError("test" , "check a password between 7 to 16 characters which contain only characters, numeric digits, underscore and first character must be a letter.");
+        if(! user.getPassword().matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")){
+            ObjectError objectError = new ObjectError("test" , "Please, Check that the a password contain, At least one digit.  At least one lowercase character. At least one uppercase character.");
             errorList.add(objectError);
         }
         if( errorList.size() > 0 ){

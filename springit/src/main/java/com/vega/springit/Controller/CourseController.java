@@ -134,11 +134,11 @@ public class CourseController {
         } else {
             logger.info("New Card Saved!");
             courseCard.setCourse(currentCourseForCard);
-            String oldUrl = courseCard.getVideoUrl();
-            if (oldUrl.equals(null) || oldUrl.equals("")){
-                courseCard.setVideoUrl(oldUrl);
+            String oldVideo = courseCard.getVideoUrl();
+            if (oldVideo.equals("")){
+                courseCard.setVideoUrl("");
             }else{
-                String newUrl =  convertUrl(oldUrl);
+                String newUrl =  convertUrl(oldVideo);
                 courseCard.setVideoUrl(newUrl);
             }
             courseCard.setImagePath("/" + fileName);

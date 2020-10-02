@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/main_layout :: head(title='EDZILLA - New Course')}">
+</head>
+<body>
+
+    <nav th:replace="~{layouts/main_layout :: nav}"></nav>
+    <div class="container main-container">
+        <form id="frmAddCourse" method="POST" th:action="@{/course/submit}" th:object="${course}">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h2 class="content-h2">Submit Course</h2>
+                    <hr/>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="title">Title</label>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-heading"></i></div>
+                            <input type="text"  class="form-control"
+                                   id="title"   placeholder="Course Title"
+                                   required autofocus  th:field="*{title}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="text-danger ">
+                        <li th:errors="*{title}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 field-label-responsive">
+                    <label for="description">Description</label>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-audio-description"></i></div>
+                            <textarea  class="form-control" id="description" rows="6"
+                                       maxlength="512"
+                                       name="description"   placeholder="Course Description"
+                                       required th:field="*{description}">
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="text-danger ">
+                        <li th:errors="*{description}" ></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row content-btn">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 content-pad">
+                    <button type="submit" class="btn form-control"><i class="fa fa-user-plus"></i>New Course</button>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

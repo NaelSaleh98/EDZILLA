@@ -36,6 +36,7 @@ public class Course extends Auditable{
         @Column(length = 512)
         private String description;
 
+
         //ON
         @ManyToOne
         private User user;

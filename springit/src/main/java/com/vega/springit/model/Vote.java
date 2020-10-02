@@ -21,9 +21,13 @@ public class Vote extends Auditable{
     private Long id;
 
     @NonNull
-    private short direction;
+    private short direction;//can be 1 or -1
 
     @NonNull
     @ManyToOne
     private Course course;
+
+    @NonNull
+    @ManyToOne
+    private User user;
 }

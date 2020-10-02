@@ -30,6 +30,7 @@ import java.util.Optional;
 
 @Controller
 public class CourseController {
+
     private  int count = 0;
     static public Course currentCourseForComment;
     static public Course currentCourseForCard;

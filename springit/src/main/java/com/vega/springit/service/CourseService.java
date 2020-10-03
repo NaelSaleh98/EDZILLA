@@ -18,4 +18,6 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public  List<Course> findTop10ByOrderByVoteCountDesc(){ return  courseRepository.findTop10ByOrderByVoteCountDesc();}
+
 }

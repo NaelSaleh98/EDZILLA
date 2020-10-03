@@ -5,10 +5,12 @@
 <body>
     <nav th:replace="~{layouts/main_layout :: nav}"></nav>
 
-    <div class="container register" th:fragment="content">
+    <div class="container" th:fragment="content">
 
         <!-- Course -->
-        <div class="row link" th:each="course : ${courses}">
+        <div class="main-container topTen">
+            <h2 class="content-h2">Top 10</h2>
+            <div class="row link" th:each="course : ${topTen}">
 
             <div class="col-1">
     <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
@@ -36,7 +38,7 @@
                 </p>
             </div>
         </div>
-
+        </div>
     </div>
     <script sec:authorize="isFullyAuthenticated()">
 

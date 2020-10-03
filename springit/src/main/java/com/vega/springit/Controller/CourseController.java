@@ -53,7 +53,8 @@ public class CourseController {
 
     @GetMapping("/")
     public String list(Model model){
-        model.addAttribute("courses", courseService.findAll());
+
+        model.addAttribute("topTen", courseService.findTop10ByOrderByVoteCountDesc());
         return "Course/list";
     }
     @GetMapping("/course/{id}")

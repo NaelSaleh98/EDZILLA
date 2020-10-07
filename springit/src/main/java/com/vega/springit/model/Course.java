@@ -1,6 +1,7 @@
 package com.vega.springit.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vega.springit.service.BeanUtil;
 import lombok.*;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -38,18 +39,22 @@ public class Course extends Auditable{
 
 
         //ON
+        @JsonIgnore
         @ManyToOne
         private User user;
 
         //<for vote>
+        @JsonIgnore
         @OneToMany(mappedBy = "course")
         private List<Vote> votes = new ArrayList<>();
         private int voteCount = 0;
         //</for vote>
 
+        @JsonIgnore
         @OneToMany(mappedBy = "course")
         private List<Comment> comments = new ArrayList<>();
 
+        @JsonIgnore
         @OneToMany(mappedBy = "course")
         private List<CourseCard> courseCards = new ArrayList<>();
 

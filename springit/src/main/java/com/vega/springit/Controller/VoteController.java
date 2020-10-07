@@ -6,7 +6,6 @@ import com.vega.springit.Repository.UserRepository;
 import com.vega.springit.Repository.VoteRepository;
 import com.vega.springit.model.*;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;

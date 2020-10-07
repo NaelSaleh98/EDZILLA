@@ -6,6 +6,7 @@ import com.vega.springit.model.*;
 import com.vega.springit.service.CourseCardService;
 import com.vega.springit.service.CourseService;
 import com.vega.springit.service.RecommendationService;
+import com.vega.springit.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +31,6 @@ import java.util.Optional;
 @Controller
 public class CourseController {
 
-    private String logedInUserEmail;
     private  int count = 0;
     static public Course currentCourseForComment;
     static public Course currentCourseForCard;
@@ -41,12 +42,10 @@ public class CourseController {
     private CourseCardRepository courseCardRepository;
     private CourseCardService courseCardService;
     private RecommendationService recommendationService;
-    private VoteRepository voteRepository;
+    private  String logedInUserEmail;
+    private UserService userService;
 
-
-    public CourseController(String logedInUserEmail, int count, CourseRepository courseRepository, CommentRepository commentRepository, CourseService courseService, UserRepository userRepository, CourseCardRepository courseCardRepository, CourseCardService courseCardService, RecommendationService recommendationService, VoteRepository voteRepository) {
-        this.logedInUserEmail = logedInUserEmail;
-        this.count = count;
+    public CourseController(CourseRepository courseRepository, CommentRepository commentRepository, CourseService courseService, UserRepository userRepository, CourseCardRepository courseCardRepository, CourseCardService courseCardService, RecommendationService recommendationService, UserService userService) {
         this.courseRepository = courseRepository;
         this.commentRepository = commentRepository;
         this.courseService = courseService;
@@ -54,41 +53,14 @@ public class CourseController {
         this.courseCardRepository = courseCardRepository;
         this.courseCardService = courseCardService;
         this.recommendationService = recommendationService;
-        this.voteRepository = voteRepository;
+        this.userService = userService;
     }
 
-    public List<Course> getRecommindedCourses(){
-
-        short userA[],userB[];
-        Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logedInUserEmail= ((UserDetails)auth).getUsername();
-
-        Optional<User> optionalUser = userRepository.findByEmail(logedInUserEmail);
-        if(optionalUser.isPresent()) {
-            User loggedInUser =optionalUser.get();
-            List<Vote> currentUserVotes = voteRepository.findAllByUserId(loggedInUser.getId());
-            List<User> groupOfUser = userRepository.findAllByEmailNot(logedInUserEmail);
-
-            userA = new short[currentUserVotes.size()];
-            userB = new short[currentUserVotes.size()];
-            groupOfUser.forEach(user -> {
-
-                //fill userA and userB
-                for(int i =0 ; i< currentUserVotes.size(); i ++){
-                    userA[i]=currentUserVotes.get(i).getDirection();
-                    Optional<Vote> voteB = voteRepository.findByUserIdAndCourseId(user.getId(),currentUserVotes.get(i).getCourse().getId());
-                    userB[i]=userA[i];
-                    if(voteB.isPresent()){
-                        userB[i]=voteB.get().getDirection();
-                    }
-                }
-                float coorelation = recommendationService.personCorrelation(userA , userB , userA.length);
-            });
-        }
-    }
     @GetMapping("/")
     public String list(Model model){
-        getRecommindedCourses();
+        if (userService.isLogged()){
+            model.addAttribute("recommendations", recommendationService.getRecommindedCourses(userService.loggedInUserEmail()));
+        }
         model.addAttribute("topTen", courseService.findTop10ByOrderByVoteCountDesc());
         return "Course/list";
     }

@@ -4,6 +4,9 @@ import com.vega.springit.Repository.UserRepository;
 import com.vega.springit.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +68,13 @@ public class UserService {
     public Optional<User> findByAlias(String alias){
         return  userRepository.findByAlias(alias);
     }
+    public  boolean isLogged(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !(authentication instanceof AnonymousAuthenticationToken);
+    }
 
-
+    public String loggedInUserEmail(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
 }

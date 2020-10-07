@@ -4,7 +4,7 @@
 </head>
 <body>
 
-    <nav th:replace="~{layouts/main_layout :: nav}"></nav>
+    <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
     <div class="container main-container">
         <form id="frmAddCourse" method="POST" th:action="@{/course/submit}" th:object="${course}">
             <div class="row">

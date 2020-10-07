@@ -112,3 +112,4 @@ function chk_password(inputTxt){
 }
 
 /* ------------------------------- */
+/* Search */

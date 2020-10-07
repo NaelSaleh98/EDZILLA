@@ -286,3 +286,29 @@ a.share {
     padding-left:10px;
 }
 
+/*Search */
+
+.search-course{
+  position:relative;
+  display:inline-block;
+}
+
+.search-course #search-result{
+  display: none;
+  max-height: 220px;
+  overflow: auto;
+  position: absolute;
+  padding: 11px;
+  background-color: white;
+  border-radius: 1px 1px 11px 11px;
+  z-index:1;
+  border: 1px solid #000080;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.search-course #search-result a{
+  display:block;
+  color: #000080;
+}
+.search-course #search-result hr{
+    background-color: #000;
+}

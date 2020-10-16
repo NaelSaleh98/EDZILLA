@@ -312,3 +312,21 @@ a.share {
 .search-course #search-result hr{
     background-color: #000;
 }
+
+.favorite-class{
+    font-size:150%;
+    color:yellow;
+}
+
+.not-favorite-class{
+    font-size:150%;
+    color:gray;
+}
+.color_red{
+color:red
+
+}
+
+.not_color_red{
+color:darkgray
+}

@@ -66,6 +66,16 @@ public class Course extends Auditable{
                 this.courseCards.add(courseCard);
         }
 
+        //for add to favorite button
+        @Transient
+        public boolean isFavorite ;
+
+        @Transient
+        public boolean isUp ;
+
+        @Transient
+        public boolean isDown ;
+
 ///////////////////////// the following 3 method for pretty time
 
         public String getPrettyTime() {

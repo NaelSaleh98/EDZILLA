@@ -33,7 +33,7 @@
                     <span class="domain" th:text="${recommendations.description}"></span>
                     <p>
                         <a th:href="@{'/course/' + ${recommendations.id} + '#comments'}" class="comments" th:text="|${recommendations.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
-                        <a href="/" class="share"><i class="fas fa-share-square"></i> share</a>
+                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to favorite</a>
                     </p>
                 </div>
             </div>
@@ -45,9 +45,9 @@
 
                 <div class="col-1">
                     <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up"></i></a></div>
+                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" th:class="${course.isUp} ? color_red: not_color_red" >^</i></a></div>
                     <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
-                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"></i></a></div>
+                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" th:class="${course.isDown} ? color_red : not_color_red " class="fas fa-arrow-down"></i></a></div>
                 </div>
 
                 <div class="col-11">
@@ -65,7 +65,7 @@
                     <span class="domain" th:text="${course.description}"></span>
                     <p>
                         <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
-                        <a href="/" class="share"><i class="fas fa-share-square"></i> share</a>
+                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to favorite</a>
                     </p>
                 </div>
             </div>
@@ -75,7 +75,36 @@
         <!-- Course -->
     <script sec:authorize="isFullyAuthenticated()">
 
-    //sec:authorize="isFullyAuthenticated()" ->protect from clint side
+//for add to favorite:
+//1- for course not added yet to favorite
+const allNotFavoriteCourse = document.querySelectorAll(".favorite")
+
+    for(let i=0; i<allNotFavoriteCourse.length; i++) {
+        let classNameNotFavorite = allNotFavoriteCourse[i].className;
+        allNotFavoriteCourse[i].addEventListener('click', function (event) {
+            const courseIDForNotfavorite = this.getAttribute("data-id");
+
+            if (document.getElementById('fav_'+courseIDForNotfavorite).classList.contains('not-favorite-class') ){
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('not-favorite-class');
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.add('favorite-class');
+
+
+            //to make a request to FavoriteCourseController
+             fetch(`http://localhost:8080/addtofavorite/course/id/${courseIDForNotfavorite}`)
+             .catch(err => console.error(err));
+            }else{
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('favorite-class');
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.add('not-favorite-class');
+
+            //to make a request to FavoriteCourseController
+             fetch(`http://localhost:8080/removefromfavorite/course/id/${courseIDForNotfavorite}`)
+               .catch(err => console.error(err));
+            }
+        })
+    }
+
+
+//for up and down vote
         const allvotes = document.querySelectorAll(".upvote, .downvote");
         for(let i=0; i<allvotes.length; i++) {
             let className = allvotes[i].className;
@@ -85,18 +114,38 @@
                 const courseID = this.getAttribute("data-id");
                 const voteSum = document.getElementById('votecount-' + courseID);
                 const voteSumValue = voteSum.innerHTML;
-                if(direction == 1){
-                document.getElementById('up-' + courseID).style.color="red";
-                document.getElementById('down-' + courseID).style.color="darkgray";
+                ///// for color
+                if(document.getElementById('up-' + courseID).classList.contains('color_red') && direction ==-1){
+                document.getElementById('up-' + courseID).classList.remove("color_red");
+                document.getElementById('up-' + courseID).classList.add("not_color_red");
+
+                document.getElementById('down-' + courseID).classList.remove=("not_color_red");
+                document.getElementById('down-' + courseID).classList.add=("color_red");
                 }
-                else{
-                document.getElementById('up-' + courseID).style.color="darkgray";
-                document.getElementById('down-' + courseID).style.color="red";
-                }
-                //to make a requist to voteController
+                else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
+                        document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
+                        direction ==-1
+                        ){
+                         document.getElementById('down-' + courseID).classList.remove=("not_color_red");
+                         document.getElementById('down-' + courseID).classList.add=("color_red");
+                        }
+                else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
+                        document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
+                        direction ==1
+                        ){
+                        document.getElementById('up-' + courseID).classList.remove=("not_color_red");
+                        document.getElementById('up-' + courseID).classList.add=("color_red");
+                        }
+                 else if(document.getElementById('down-' + courseID).classList.contains('color_red') && direction ==1){
+                 document.getElementById('up-' + courseID).classList.remove("not_color_red");
+                document.getElementById('up-' + courseID).classList.add("color_red");
+
+                document.getElementById('down-' + courseID).classList.remove=("color_red");
+                document.getElementById('down-' + courseID).classList.add=("not_color_red");
+                 }
+                ////end for color
+                //to make a request to voteController
                 fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
-                    .then(response => response.json())
-                    .then(data =>voteSum.innerHTML = data)
                     .catch(err => console.error(err));
             });
         }

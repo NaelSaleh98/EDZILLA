@@ -11,4 +11,6 @@ public interface VoteRepository extends JpaRepository<Vote,Long> {
     public Optional<Vote> findByUserIdAndCourseId(long userId, long courseId);
     public List<Vote> findAllByUserId(long userId);
     List<Vote> findAllByUserIdAndDirection(long userId , short direction);
+
+    public Optional<Vote> findByuserIdAndDirectionAndCourseId(long userId, short direction, long courseId);
 }

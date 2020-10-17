@@ -45,9 +45,9 @@
 
                 <div class="col-1">
                     <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" th:class="${course.isUp} ? color_red: not_color_red" >^</i></a></div>
+                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
                     <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
-                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" th:class="${course.isDown} ? color_red : not_color_red " class="fas fa-arrow-down"></i></a></div>
+                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
                 </div>
 
                 <div class="col-11">
@@ -119,29 +119,29 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
                 document.getElementById('up-' + courseID).classList.remove("color_red");
                 document.getElementById('up-' + courseID).classList.add("not_color_red");
 
-                document.getElementById('down-' + courseID).classList.remove=("not_color_red");
-                document.getElementById('down-' + courseID).classList.add=("color_red");
+                document.getElementById('down-' + courseID).classList.remove("not_color_red");
+                document.getElementById('down-' + courseID).classList.add("color_red");
                 }
                 else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
                         document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
                         direction ==-1
                         ){
-                         document.getElementById('down-' + courseID).classList.remove=("not_color_red");
-                         document.getElementById('down-' + courseID).classList.add=("color_red");
+                         document.getElementById('down-' + courseID).classList.remove("not_color_red");
+                         document.getElementById('down-' + courseID).classList.add("color_red");
                         }
                 else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
                         document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
                         direction ==1
                         ){
-                        document.getElementById('up-' + courseID).classList.remove=("not_color_red");
-                        document.getElementById('up-' + courseID).classList.add=("color_red");
+                        document.getElementById('up-' + courseID).classList.remove('not_color_red');
+                        document.getElementById('up-' + courseID).classList.add('color_red');
                         }
                  else if(document.getElementById('down-' + courseID).classList.contains('color_red') && direction ==1){
                  document.getElementById('up-' + courseID).classList.remove("not_color_red");
                 document.getElementById('up-' + courseID).classList.add("color_red");
 
-                document.getElementById('down-' + courseID).classList.remove=("color_red");
-                document.getElementById('down-' + courseID).classList.add=("not_color_red");
+                document.getElementById('down-' + courseID).classList.remove("color_red");
+                document.getElementById('down-' + courseID).classList.add("not_color_red");
                  }
                 ////end for color
                 //to make a request to voteController

@@ -10,8 +10,6 @@ import com.vega.springit.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -61,7 +57,7 @@ public class CourseController {
         if (userService.isLogged()){
             model.addAttribute("recommendations",  recommendationService.getRecommindedCourses(userService.loggedInUserEmail()));
         }
-        model.addAttribute("topTen",courseService.addIsFavoriteattribute( courseService.findTop10ByOrderByVoteCountDesc() ));
+        model.addAttribute("topTen",courseService.addIsFavoriteIsUpIsDownAttributes( courseService.findTop10ByOrderByVoteCountDesc() ));
         return "Course/list";
     }
     @GetMapping("/course/{id}")

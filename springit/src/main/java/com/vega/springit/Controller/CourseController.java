@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -69,7 +71,10 @@ public class CourseController {
             currentCourseForComment = currentCourse;
             comment.setCourse(currentCourse);
             model.addAttribute("comment",comment);
-            model.addAttribute("course", currentCourse);
+
+            List<Course> courseListContainOneCourse = new ArrayList<>();
+            courseListContainOneCourse.add(currentCourse);
+            model.addAttribute("course",courseService.addIsFavoriteIsUpIsDownAttributes(courseListContainOneCourse).get(0) );
             model.addAttribute("success", model.containsAttribute("success"));
             return "Course/view";
         } else {

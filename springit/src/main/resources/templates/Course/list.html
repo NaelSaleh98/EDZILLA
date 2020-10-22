@@ -146,6 +146,8 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
                 ////end for color
                 //to make a request to voteController
                 fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
+                    .then(response => response.json())
+                    .then(data =>voteSum.innerHTML = data)
                     .catch(err => console.error(err));
             });
         }

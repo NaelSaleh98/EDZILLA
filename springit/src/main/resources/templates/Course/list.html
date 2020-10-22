@@ -13,9 +13,9 @@
 
                 <div class="col-1">
                     <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${recommendations.id}"><i th:id="|up-${recommendations.id}|" class="fas fa-arrow-up"></i></a></div>
+                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${recommendations.id}"><i th:id="|up-${recommendations.id}|" class="fas fa-arrow-up" th:classappend="${recommendations.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
                     <div><span th:id="|votecount-${recommendations.id}|" class="votecount" th:text="${recommendations.getVoteCount()}">0</span></div>
-                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${recommendations.id}" th:disabled="true"><i th:id="|down-${recommendations.id}|" class="fas fa-arrow-down"></i></a></div>
+                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${recommendations.id}" th:disabled="true"><i th:id="|down-${recommendations.id}|" class="fas fa-arrow-down"th:classappend="${recommendations.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
                 </div>
 
                 <div class="col-11">
@@ -33,7 +33,7 @@
                     <span class="domain" th:text="${recommendations.description}"></span>
                     <p>
                         <a th:href="@{'/course/' + ${recommendations.id} + '#comments'}" class="comments" th:text="|${recommendations.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
-                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to favorite</a>
+                        <a href="javascript:void(0);" th:id="|a_${recommendations.id}|" th:data-id="${recommendations.id}" class="favorite"><span  th:id="|fav_${recommendations.id}|" th:class="${recommendations.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
                     </p>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <span class="domain" th:text="${course.description}"></span>
                     <p>
                         <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
-                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to favorite</a>
+                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
                     </p>
                 </div>
             </div>

@@ -55,9 +55,9 @@ public class CourseController {
     @GetMapping("/")
     public String list(Model model){
         if (userService.isLogged()){
-            model.addAttribute("recommendations",  recommendationService.getRecommindedCourses(userService.loggedInUserEmail()));
+            model.addAttribute("recommendations",  courseService.addIsFavoriteIsUpIsDownAttributes(recommendationService.getRecommindedCourses(userService.loggedInUserEmail())));
         }
-        model.addAttribute("topTen",courseService.addIsFavoriteIsUpIsDownAttributes( courseService.findTop10ByOrderByVoteCountDesc() ));
+        model.addAttribute("topTen",courseService.addIsFavoriteIsUpIsDownAttributes( courseService.findTop10ByOrderByVoteCountDescNotIn(recommendationService.getRecommindedCourses(userService.loggedInUserEmail())) ));
         return "Course/list";
     }
     @GetMapping("/course/{id}")

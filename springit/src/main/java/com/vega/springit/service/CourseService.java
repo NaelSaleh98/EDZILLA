@@ -7,6 +7,7 @@ import com.vega.springit.Repository.VoteRepository;
 import com.vega.springit.model.Course;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,7 +30,14 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public  List<Course> findTop10ByOrderByVoteCountDesc(){ return  courseRepository.findTop10ByOrderByVoteCountDesc();}
+    public  List<Course> findTop10ByOrderByVoteCountDescNotIn(List<Course> courseList){
+        List<Long> coursesIDS =new ArrayList<>();
+
+        courseList.forEach((course) ->{
+            coursesIDS.add(course.getId());
+        } );
+        return  courseRepository.findTop10ByOrderByVoteCountDescNot(coursesIDS);
+    }
 
     /**
      * add IsFavorite attribute in order to make the star colored when re loading the page
@@ -70,34 +78,6 @@ public class CourseService {
     }
 
 
-    /**
-     *
-     * @param courseList
-     * @return List<Course>
-     */
-    public List<Course> addIsUpAndIsDownAttribute (List<Course> courseList){
-        if(!userService.isLogged()){
-            return courseList;
-        }
 
-        long userId = userRepository.findByEmail(userService.loggedInUserEmail()).get().getId();
 
-        courseList.forEach((course)->{
-            if(voteRepository.findByuserIdAndDirectionAndCourseId(userId,(short) 1,course.getId()).isPresent()){
-                course.isUp = true;
-            }else{
-                course.isUp = false;
-            }
-
-            if(voteRepository.findByuserIdAndDirectionAndCourseId(userId,(short) -1,course.getId()).isPresent()){
-                course.isDown = true;
-            }else{
-                course.isDown = false;
-            }
-
-        });
-
-        return courseList;
-
-    }
 }

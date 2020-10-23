@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +35,9 @@ import java.util.Optional;
 @Controller
 public class CourseController {
 
+    private final String UPLOAD_DIR_IMAGE = "D:\\\\images\\";
+    private final String UPLOAD_DIR_VIDEO = "D:\\\\videos\\";
+    private final String UPLOAD_DIR_READ = "/";
     private  int count = 0;
     static public Course currentCourseForComment;
     static public Course currentCourseForCard;
@@ -136,42 +145,55 @@ public class CourseController {
 
     @PostMapping("/courseCard/submit")
     public String addCourseCard(@Valid CourseCard courseCard, BindingResult bindingResult , Model model,
-                                @RequestParam("image") MultipartFile multipartFile){
-        String fileName = "photos/image" + count + "." + multipartFile.getContentType().substring(6);
+                                @RequestParam("image") MultipartFile imagefile,
+                                @RequestParam("video") MultipartFile videofile){
+
         if( bindingResult.hasErrors() ) {
             logger.info(bindingResult.getAllErrors().toString());
             return "redirect:/";
-        } else {
-            logger.info("New Card Saved!");
-            courseCard.setCourse(currentCourseForCard);
-            String oldVideo = courseCard.getVideoUrl();
-            if (oldVideo.equals("")){
-                courseCard.setVideoUrl("");
-            }else{
-                String newUrl =  convertUrl(oldVideo);
-                courseCard.setVideoUrl(newUrl);
+        }
+        else{
+            if (!imagefile.isEmpty()) {
+                logger.info("File is empty");
+                String imageName = StringUtils.cleanPath(imagefile.getOriginalFilename());
+                Path imagePath = Paths.get(UPLOAD_DIR_IMAGE + imageName);
+                try {
+                    Files.copy(imagefile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+                    courseCard.setImagePath(UPLOAD_DIR_READ + imageName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
-            courseCard.setImagePath("/" + fileName);
+            else if(!videofile.isEmpty()){
+                String videoName = StringUtils.cleanPath(videofile.getOriginalFilename());
+                Path videoPath = Paths.get(UPLOAD_DIR_VIDEO + videoName);
+                try {
+                    Files.copy(videofile.getInputStream(), videoPath, StandardCopyOption.REPLACE_EXISTING);
+                    courseCard.setVideoPath(UPLOAD_DIR_READ + videoName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            courseCard.setCourse(currentCourseForCard);
             courseCardRepository.save(courseCard);
             currentCourseForCard.addCard(courseCard);
+            logger.info("new Card was saved successfully!");
 
-            //
-            try {
-                courseCardService.saveImage(multipartFile , fileName);
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.error("Photo cant upload." , e);
-            }
+
+//            //
+//            try {
+//                courseCardService.saveImage(multipartFile , fileName);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                logger.error("Photo cant upload." , e);
+//            }
             count++;
             //
             model.addAttribute("course", currentCourseForCard);
             model.addAttribute("courseCard", new CourseCard());
         }
         return "Course/editCourse";
-    }
-
-    private String convertUrl(String oldUrl) {
-        String[] urlSplit = oldUrl.split("watch\\?v=");
-        return urlSplit[0] + "embed/" + urlSplit[1];
     }
 }

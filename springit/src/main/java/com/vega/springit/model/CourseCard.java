@@ -25,7 +25,7 @@ public class CourseCard extends Auditable{
     private String text;
 
     @NonNull//server side protection
-    private String videoUrl;
+    private String videoPath;
 
 
     @NonNull//server side protection

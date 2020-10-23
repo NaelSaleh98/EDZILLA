@@ -46,15 +46,15 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-2 field-label-responsive">
-                            <label for="videoUrl">Video URL</label>
+                            <label for="videoPath">Video</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fab fa-youtube"></i></div>
-                                    <input type="url"              name="videoUrl"
-                                           class="form-control"     id="videoUrl"
-                                           placeholder="Youtube video if exist" th:field="*{videoUrl}">
+                                    <input type="file"              name="video"
+                                           class="form-control"     id="videoPath"
+                                            accept="video/*">
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fab fa-youtube"></i></div>
                                     <input type="file"              name="image"
                                            class="form-control"     id="imagePath"
-                                           placeholder="Photo"      accept="image/*">
+                                           accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -122,9 +122,8 @@
                 </div>
                 <div class="col-md-6 cards-img-video">
                     <img th:src="@{${card.getImagePath()}}" width="100%" height="350px" th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'>
-                    <iframe width="100%" height="350px" th:src="${card.getVideoUrl()}" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                    encrypted-media; gyroscope;  picture-in-picture" allowfullscreen>
-                    </iframe>
+                    <video width="100%" height="350px" controls th:src="@{${card.getVideoPath()}}">
+                    </video>
                 </div>
             </div>
         </div>

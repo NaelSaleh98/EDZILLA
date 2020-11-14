@@ -83,6 +83,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Vote> votes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Report> reports = new ArrayList<>();
+
     ////***************
     @ManyToMany(fetch = FetchType.EAGER)//(fetch = FetchType.EAGER) bring all roles , because number of roles is small
     @JoinTable(

@@ -45,6 +45,9 @@ public class RecommendationService {
             User loggedInUser =optionalUser.get();
             List<Vote> currentUserVotes = voteRepository.findAllByUserId(loggedInUser.getId());
             List<User> groupOfUser = userRepository.findAllByEmailNot(loggedInUserEmail);
+            if (groupOfUser.size() > 50){
+                groupOfUser = groupOfUser.subList(0 , 49);
+            }
             userA = new short[currentUserVotes.size()];
             userB = new short[currentUserVotes.size()];
             groupOfUser.forEach(user -> {
@@ -78,6 +81,9 @@ public class RecommendationService {
 
                 if (correlation > 0.80){
                     for (int j=0 ; j< likedCoursesByOther.size() ; j++){
+                        if (courseList.size() > 10){
+                            break;
+                        }
                         if (!likedCoursesByuser.contains(likedCoursesByOther.get(j))){ // only courses liked by other and not by user
                             if (!courseList.contains(likedCoursesByOther.get(j))){ // not exist in whole course list
                                 courseList.add(likedCoursesByOther.get(j));

@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Registration')}">
-</head>
+<head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Registration')}"></head>
 <body>
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
     <div class="container main-container">
         <!-- ON -->
-
         <div class="alert alert-success" role="alert" th:if="${success}">
             <h4 class="alert-heading text-center">Well done!</h4>
             <hr>
@@ -166,7 +164,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2 field-label-responsive">
-                    <label for="password">Confirm Password</label>
+                    <label for="confirmPassword">Confirm Password</label>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">

@@ -1,117 +1,63 @@
-/* Reset  */
-*{
-    margin: 0;
-    padding: 0;
-    border: none;
+:root{
+    --Aprimary: #00154F;
+    --Asecondary: #F4AF1B;
+    --Athirdly: #F2BC94;
 }
-/*------------------------------ */
 /* Body */
 body {
-    background-color: #FFF;
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
 }
 .main-container{
-    padding:22px;
+    padding:25px;
 }
 .content-h2 {
     text-align:center;
-    color: #000080;
+    color: #EC4D37;
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .main-container .field-label-responsive{
     text-align: center;
-    color: #000;
+    color: #1D1B1B;
     align-self:center;
+    font-size: large;
 }
 .main-container .input-group-addon{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
-
+    color: #1D1B1B;
 }
 .main-container input{
     border-radius: 6px !important;
-    border-color: #C0C0C0;
+    border-color: #EC4D37;
 }
-.main-container .content-btn button{
-    background-color: #000080;
-    color: #FFF;
-    border: 1px outset #000;
-}
-.main-container .content-btn button:hover{
-    color: #C0C0C0;
-    border:none;
-    border: 2px inset #000;
+.main-container input:focus{
+    border-color:#1D1B1B;
+    box-shadow:none;
 }
 @media(max-width: 768px) {
     .main-container .field-label-responsive {
         padding-top: .5rem;
-        text-align: right;
+        text-align: center;
     }
+}
+.main-container .content-btn button{
+    background-color: #EC4D37;
+    color: #1D1B1B;
+    border: 1px outset #000;
+}
+.main-container .content-btn button:hover{
+    color: #FFFFFF;
+    border:none;
+    border: 2px inset #000;
 }
 .main-container .content-pad{
     padding-left: 3.6rem
 }
-.main-container .form-control:focus{
-    border-color:#000080;
-    box-shadow:none;
-}
+/*------------------------------ */
 textarea {
     resize: none;
-}
-/*------------------------------ */
-/* Navbar */
-.navbar{
-    background-color:#000;
-}
-.navbar-brand{
-    color: #FFF;
-    font-family:"Comic Sans MS", cursive, sans-serif;
-    letter-spacing:1px;
-    font-size:22px;
-}
-.navbar-brand:hover{
-    color:#000080;
-}
-.nav-item {
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    text-transform: uppercase;
-    font-size: 16px;
-    border: 1px outset #000080;
-    border-radius: 50%;
-    margin: 0px 6px;
-    padding: 11px;
-}
-.nav-item:hover {
-    border:none;
-    border: 1px inset #000080;
-}
-@media (max-width:767px) {
-    .nav-item {
-        border:0px solid !important
-    }
-}
-.nav-course{
-    color: #FFF;
-    letter-spacing:1px;
-}
-.nav-course:hover{
-    text-decoration:none;
-    color: #000080;
-}
-.nav-item button{
-    background:none;
-}
-button:focus{
-    outline:none;
-}
-.navbar-toggler{
-    border:1px solid #000080;
-}
-.navbar-toggler i:hover{
-    color:#000080;
 }
 /*------------------------------ */
 
@@ -132,12 +78,6 @@ button:focus{
 }
 .jumbotron abbr{
     text-decoration:none;
-}
-/*------------------------------ */
-
-/* Registration */
-.reg-terms{
-    color: darkorange;
 }
 /*------------------------------ */
 
@@ -286,33 +226,6 @@ a.share {
     padding-left:10px;
 }
 
-/*Search */
-
-.search-course{
-  position:relative;
-  display:inline-block;
-}
-
-.search-course #search-result{
-  display: none;
-  max-height: 220px;
-  overflow: auto;
-  position: absolute;
-  padding: 11px;
-  background-color: white;
-  border-radius: 1px 1px 11px 11px;
-  z-index:1;
-  border: 1px solid #000080;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-.search-course #search-result a{
-  display:block;
-  color: #000080;
-}
-.search-course #search-result hr{
-    background-color: #000;
-}
-
 .favorite-class{
     font-size:150%;
     color:yellow;
@@ -331,4 +244,8 @@ color:red
 
 .not_color_red{
 color:darkgray
+}
+/*---------------------------------- */
+.reported-courses , .reported-view{
+    border: 1px solid black;
 }

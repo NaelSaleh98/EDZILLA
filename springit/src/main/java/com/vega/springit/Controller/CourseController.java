@@ -83,7 +83,7 @@ public class CourseController {
 
             List<Course> courseListContainOneCourse = new ArrayList<>();
             courseListContainOneCourse.add(currentCourse);
-            model.addAttribute("course",courseService.addIsFavoriteIsUpIsDownAttributes(courseListContainOneCourse).get(0) );
+            model.addAttribute("course",courseService.addIsReportedAttribute(courseService.addIsFavoriteIsUpIsDownAttributes(courseListContainOneCourse).get(0)) );
             model.addAttribute("success", model.containsAttribute("success"));
             return "Course/view";
         } else {

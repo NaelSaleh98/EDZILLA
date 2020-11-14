@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Spring Boot Reddit Clone')}">
 </head>
-<body>
+<body onload="updateReport()">
 
 <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 
@@ -16,7 +16,7 @@
             <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
             <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
         </div>
-        <div class="col-11">
+        <div class="col-10">
             <p class="title">
                 <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
                     Title Goes Here
@@ -34,6 +34,30 @@
                 <a href="#comments" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 8 comments</a>
                 <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
             </p>
+        </div>
+        <div class="col-1" sec:authorize="isAuthenticated()">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#reportAria"
+                    aria-controls="reportAria" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="reportAria" role="full-horizontal" sec:authorize="hasRole('ROLE_USER')">
+                <a href="javascript:void(0);" onclick="showReasonCard()" th:class="${course.isReported} ? 'Reported' : 'Report'" id="reported" th:data-id="${course.id}">Report</a>
+            </div>
+        </div>
+        <div class="new-card-parent" id="reportCard">
+            <div class="new-card-son">
+                <form class="form-horizontal" role="form" method="POST" th:action="@{/report}">
+                    <p>Please select your reason:</p>
+                    <input type="radio" id="Public_shaming" name="reason" value="Public shaming">
+                    <label for="Public_shaming">Public shaming</label><br>
+                    <input type="radio" id="Inappropriate_Content" name="reason" value="Inappropriate content">
+                    <label for="Inappropriate_Content">Inappropriate content</label><br>
+                    <input type="radio" id="Hate_Speech" name="reason" value="Hate speech">
+                    <label for="Hate_Speech">Hate speech</label>
+                    <hr>
+                    <a href="javascript:void(0);" class="reportDone" th:data-id="${course.id}" id="reportDone">OK</a>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -94,6 +118,19 @@
 </body>
 <script sec:authorize="isFullyAuthenticated()">
 
+    var rd = document.getElementById("reportDone").addEventListener('click' , function (event) {
+        if( document.querySelector('input[name="reason"]:checked') == null){
+            return false;
+        }
+        var reason = document.querySelector('input[name="reason"]:checked').value;
+        var courseidd = this.getAttribute("data-id");
+        fetch(`http://localhost:8080/report/${reason}/${courseidd}`)
+            .catch(err => console.error(err));
+        document.getElementById("reportCard").style.display = "none";
+        alert("Thank you for your contribution, reported successfully.");
+        document.getElementById("reported").innerHTML = "Reported";
+        document.getElementById("reported").className = "Reported"
+    });
 //for add to favorite:
 //1- for course not added yet to favorite
 const allNotFavoriteCourse = document.querySelectorAll(".favorite")
@@ -170,6 +207,23 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
                     .catch(err => console.error(err));
             });
         }
+
+
+        function showReasonCard(){
+            if (document.getElementById("reported").className == "Report"){
+            document.getElementById("reportCard").style.display = "flex";
+            }
+        }
+            var modal = document.getElementById('reportCard');
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            function updateReport() {
+                document.getElementById("reported").innerHTML = document.getElementById("reported").className;
+            }
     </script>
 </html>
 

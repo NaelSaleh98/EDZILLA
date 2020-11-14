@@ -4,6 +4,7 @@ package com.vega.springit.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vega.springit.service.BeanUtil;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Course extends Auditable{
+public class Course extends Auditable implements Comparable<Course>{
 
         @Id //make the bellow member as primary key
         @GeneratedValue //The @GeneratedValue annotation specifies that the primary key is automatically allocated by ObjectDB.
@@ -48,6 +49,10 @@ public class Course extends Auditable{
         @OneToMany(mappedBy = "course")
         private List<Vote> votes = new ArrayList<>();
         private int voteCount = 0;
+
+        @OneToMany(mappedBy = "course")
+        private List<Report> reports = new ArrayList<>();
+        private int reportCount = 0;
         //</for vote>
 
         @JsonIgnore
@@ -71,10 +76,16 @@ public class Course extends Auditable{
         public boolean isFavorite ;
 
         @Transient
+        public boolean isReported ;
+
+        @Transient
         public boolean isUp ;
 
         @Transient
         public boolean isDown ;
+
+        @Transient
+        public String publisherName;
 
 ///////////////////////// the following 3 method for pretty time
 
@@ -89,4 +100,8 @@ public class Course extends Auditable{
         }
 
 
+        @Override
+        public int compareTo(@NotNull Course o) {
+                return o.reportCount - this.reportCount;
+        }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Reported Courses')}">
+</head>
+<body>
+    <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-4 container reported-courses">
+                <div class="row">
+                        Reported Courses
+                </div>
+                    <div class="row" th:each="reported : ${reportedCourse}">
+                        <div th:text="|Course Title: ${reported.title}|"> </div>
+                        <div th:text="|Publisher User: ${reported.publisherName}|"></div>
+                        <div th:text="|Reports Count: ${reported.reportCount}|"></div>
+                    </div>
+            </div>
+            <div class="col-8 reported-view">
+                asdsa
+            </div>
+        </div>
+    </div>
+</body>
+</html>

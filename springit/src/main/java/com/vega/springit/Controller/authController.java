@@ -1,9 +1,15 @@
 package com.vega.springit.Controller;
 
+import com.vega.springit.Repository.CourseRepository;
+import com.vega.springit.Repository.ReportRepository;
+import com.vega.springit.Repository.UserRepository;
+import com.vega.springit.model.Course;
+import com.vega.springit.model.Report;
 import com.vega.springit.model.User;
 import com.vega.springit.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,18 +20,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class authController {
 
     private static final Logger logger = LoggerFactory.getLogger(authController.class);
     private UserService userService;
+    private ReportRepository reportRepository;
+    private CourseRepository courseRepository;
+    private UserRepository userRepository;
 
-    public authController(UserService userService) {
+    public authController(UserService userService, ReportRepository reportRepository, CourseRepository courseRepository, UserRepository userRepository) {
         this.userService = userService;
+        this.reportRepository = reportRepository;
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
     @GetMapping("/login")
     public String login(){
@@ -37,7 +47,7 @@ public class authController {
         return "auth/profile";
     }
 
-    // ON
+    // Ready
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user",new User());
@@ -115,4 +125,23 @@ public class authController {
         return "redirect:/";
     }
 
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("/course/reportAdmin")
+    public String reportCourse(Model model){
+        List<Report> reportList = reportRepository.findAll();
+        List<Course> courseList = new ArrayList<>();
+        reportList.forEach(reported->{
+            Optional<Course> optionalCourse = courseRepository.findById(reported.getCourse().getId());
+            if (optionalCourse.isPresent()){
+                Course course =  optionalCourse.get();
+                Optional<User> courseUser = userRepository.findById(course.getUser().getId());
+                course.setPublisherName(courseUser.get().getAlias());
+                courseList.add(course);
+            }
+        });
+        Collections.sort(courseList);
+        model.addAttribute("reportedCourse" , courseList);
+        return "auth/reportedCourses";
+    }
 }

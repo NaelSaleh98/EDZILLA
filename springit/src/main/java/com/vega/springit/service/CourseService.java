@@ -1,14 +1,13 @@
 package com.vega.springit.service;
 
-import com.vega.springit.Repository.CourseRepository;
-import com.vega.springit.Repository.FavoriteCourseRepository;
-import com.vega.springit.Repository.UserRepository;
-import com.vega.springit.Repository.VoteRepository;
+import com.vega.springit.Repository.*;
 import com.vega.springit.model.Course;
+import com.vega.springit.model.Report;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -17,13 +16,15 @@ public class CourseService {
     private UserService userService;
     private UserRepository userRepository;
     private VoteRepository voteRepository;
+    private ReportRepository reportRepository;
 
-    public CourseService( VoteRepository voteRepository, UserService userService,UserRepository userRepository,FavoriteCourseRepository favoriteCourseRepository, CourseRepository courseRepository) {
+    public CourseService(ReportRepository reportRepository, VoteRepository voteRepository, UserService userService,UserRepository userRepository,FavoriteCourseRepository favoriteCourseRepository, CourseRepository courseRepository) {
         this.favoriteCourseRepository = favoriteCourseRepository;
         this.courseRepository = courseRepository;
         this.userRepository=userRepository;
         this.userService=userService;
         this.voteRepository =voteRepository;
+        this.reportRepository = reportRepository;
     }
 
     public List<Course> findAll(){
@@ -77,7 +78,19 @@ public class CourseService {
         return courseList;
     }
 
-
-
-
+    public Course addIsReportedAttribute(Course course){
+        if(!userService.isLogged()){
+            return course;
+        }
+        long userId = userRepository.findByEmail(userService.loggedInUserEmail()).get().getId();
+        Optional<Report> reportOptional = reportRepository.findByUserIdAndCourseId(userId , course.getId());
+        if (reportOptional.isPresent()){
+            course.isReported = true;
+            return course;
+        }
+        else {
+            course.isReported = false;
+            return course;
+        }
+    }
 }

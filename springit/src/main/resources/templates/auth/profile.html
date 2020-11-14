@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layouts/main_layout :: head(title = 'Springit - Account Profile Page')}">
+<head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Account Profile Page')}">
 </head>
 <body>
 
-<nav th:replace="~{layouts/main_layout :: nav}"></nav>
-<div th:replace="~{layouts/main_layout :: jumbotron}"></div>
-
+<nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 <!-- profile -->
 <div id="profile" class="container">
 
@@ -90,7 +88,7 @@
         <div class="col-3 offset-1">
             <div class="row">
                 <div class="card col-12">
-                    <img class="card-img-top" th:src="" alt="Card image cap">
+                    <img class="card-img-top" src="/" alt="Card image cap">
                     <div class="card-body">
                         <p class="card-text">
                             <a href="/u/therealdanvega">/u/therealdanvega</a>

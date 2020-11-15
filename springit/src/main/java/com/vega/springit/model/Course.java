@@ -4,6 +4,8 @@ package com.vega.springit.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vega.springit.service.BeanUtil;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -47,22 +49,31 @@ public class Course extends Auditable implements Comparable<Course>{
         //<for vote>
         @JsonIgnore
         @OneToMany(mappedBy = "course")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private List<Vote> votes = new ArrayList<>();
         private int voteCount = 0;
 
         @JsonIgnore
         @OneToMany(mappedBy = "course")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private List<Report> reports = new ArrayList<>();
         private int reportCount = 0;
         //</for vote>
 
         @JsonIgnore
         @OneToMany(mappedBy = "course")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private List<Comment> comments = new ArrayList<>();
 
         @JsonIgnore
         @OneToMany(mappedBy = "course")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private List<CourseCard> courseCards = new ArrayList<>();
+
+        @JsonIgnore
+        @OneToMany(mappedBy = "course")
+        @OnDelete(action = OnDeleteAction.CASCADE)
+        private List<FavoriteCourse> favoriteCourses = new ArrayList<>();
 
         public void addComment(Comment comment){
                 this.comments.add(comment);

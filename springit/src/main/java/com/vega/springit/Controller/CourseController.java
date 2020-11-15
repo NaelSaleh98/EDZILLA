@@ -63,6 +63,8 @@ public class CourseController {
         this.userService = userService;
     }
 
+
+
     @GetMapping("/")
     public String list(Model model){
         if (userService.isLogged()){

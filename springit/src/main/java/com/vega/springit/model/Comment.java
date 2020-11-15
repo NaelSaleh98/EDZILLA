@@ -2,6 +2,8 @@ package com.vega.springit.model;
 
 import com.vega.springit.service.BeanUtil;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ public class Comment extends Auditable{
     @GeneratedValue //The @GeneratedValue annotation specifies that the primary key is automatically allocated by ObjectDB.
     private Long id;
     private String body;
+
 
     @ManyToOne
     private Course course;

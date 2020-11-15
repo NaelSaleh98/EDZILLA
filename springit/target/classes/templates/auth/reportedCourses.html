@@ -13,14 +13,19 @@
                 </div>
                     <div class="row " th:each="reported : ${reportedCourse}">
                         <div class="reportClick" th:data-id="${reported.id}">
-                            <div th:text="|Course Title: ${reported.title}|"> </div>
-                            <div th:text="|Publisher User: ${reported.publisherName}|"></div>
-                            <div th:text="|Reports Count: ${reported.reportCount}|"></div>
+                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|"> </div>
+                            <div th:id="|publisherName-${reported.id}|" th:text="|Publisher User: ${reported.publisherName}|"></div>
+                            <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|"></div>
                         </div>
                     </div>
             </div>
             <div class="col-8 reported-view">
                 <div id="reportsContent"></div>
+
+                <div id="deleteCourse" style="display:none" >
+                <button onclick="deleteCourse()">delete course</button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -29,17 +34,47 @@
         const reportedCourses = document.querySelectorAll(".reportClick")
         for(let i=0; i<reportedCourses.length; i++) {
             reportedCourses[i].addEventListener('click', function (event) {
+
                 const reportedCourseId = this.getAttribute("data-id");
                 let reportsContent = document.getElementById("reportsContent")
                 reportsContent.innerHTML = "";
                 fetch(`http://localhost:8080/reportCourse/${reportedCourseId}`)
                     .then(response => response.json())
                     .then(data =>{
-                        reportsContent.innerHTML = data.title
+                    let reporterDetails = ""
+                    let index = 0
+
+                    for(let i =0;i<data.number_of_reporter; i++){
+                    reporterDetails += "Reporter Name: " + data["reporter_name"+index] + ", " + "Reason: " +  data["reason"+index++] + "<br>"
+                    }
+                    let reportedCourseDetails = "<br>" + document.getElementById("title-"+reportedCourseId).innerText + "<br>" +
+                                                 document.getElementById("publisherName-"+reportedCourseId).innerText + "<br>" +
+                                                 document.getElementById("reportsCount-"+reportedCourseId).innerText;
+
+                    let hiddenDivContainCourseId ='<div style="display:none" id="CourseId" data-id="'+ reportedCourseId + '"></div>'
+
+                     reportsContent.innerHTML = reporterDetails + reportedCourseDetails + hiddenDivContainCourseId
+                      document.getElementById("deleteCourse").style="display:block"
+
                     })
                     .catch(err => console.error(err));
             })
         }
+
+        const deleteCourse = ( )=>{
+
+         let divContainCourseID = document.querySelector("#CourseId")
+         const courseId = divContainCourseID.getAttribute("data-id");
+
+         fetch(`http://localhost:8080/deleteCourse/${courseId}`)
+                    .then(response => response.json())
+                    .then(data =>{
+
+                    })
+                    .catch(err => console.error(err));
+        }
     </script>
 </body>
 </html>
+
+

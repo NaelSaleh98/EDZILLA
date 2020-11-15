@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class ReportController {
@@ -26,6 +23,7 @@ public class ReportController {
     private ReportRepository reportRepository;
     private CourseRepository courseRepository;
     private UserRepository userRepository;
+    private int index = 0;
 
     public ReportController(ReportRepository reportRepository, CourseRepository courseRepository, UserRepository userRepository) {
         this.reportRepository = reportRepository;
@@ -58,9 +56,25 @@ public class ReportController {
     @GetMapping("/reportCourse/{reportedCourseId}")
     public Map<String, String>  getReports(@PathVariable long reportedCourseId){
         List<Report> reportList = reportRepository.findByCourseId(reportedCourseId);
-        List<Map<String, String>> mapList = new ArrayList<>();
-        reportList.forEach(report -> {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("number_of_reporter", reportList.size()+"");
 
+        reportList.forEach((report) -> {
+            Optional<User> reportingUserOptional = userRepository.findById(report.getUser().getId());
+            if(reportingUserOptional.isPresent()){
+                User reportingUser = reportingUserOptional.get();
+                map.put("reporter_name" + index , reportingUser.getAlias());
+                map.put("reason" + index++, report.getReportReason());
+            }
         });
+        index=0;
+        return map;
+    }
+
+
+    @GetMapping("/deleteCourse/{courseId}")
+    public String deleteCourse(@PathVariable Long courseId){
+        courseRepository.deleteById(courseId);
+    return "success";
     }
 }

@@ -15,7 +15,7 @@ public interface CourseRepository extends JpaRepository<Course,Long>{
     //PagingAndSortingRepository extends CrudRepository
 
     List<Course> findAllByOrderByVoteCountDesc();
-    @Query(nativeQuery =true,value = "SELECT TOP 10 * FROM Course as c WHERE c.id NOT IN (:coursesIDS)")   // Spring JPA In cause using native query
+    @Query(nativeQuery =true,value = "SELECT TOP 10 * FROM Course as c WHERE c.id NOT IN (:coursesIDS) ORDER BY VOTE_COUNT DESC")   // Spring JPA In cause using native query
     List<Course> findTop10ByOrderByVoteCountDescNot(@Param("coursesIDS") List<Long> courseListIDS);
     List<Course> findByTitleContaining(String title);
     Optional<Course> findById(Long Id);

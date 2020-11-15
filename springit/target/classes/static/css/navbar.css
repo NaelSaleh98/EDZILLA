@@ -1,0 +1,108 @@
+.navbar{
+    background-color: var(--Aprimary);
+}
+.navbar-brand{
+    color: var(--Asecondary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    letter-spacing:2px;
+    font-size:xx-large;
+    transition: color ease-in-out 1s;
+}
+.navbar-brand:hover{
+    color: #FFFFFF;
+    animation: logo 1s ease-in-out alternate;
+}
+.navbar-toggler{
+    border:1px solid var(--Asecondary);
+}
+.navbar-toggler .fa-bars{
+    color: var(--Asecondary) !important;
+}
+.nav-item {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-transform: uppercase;
+    font-size: medium;
+    margin: 0 0.37rem;
+}
+.nav-item:hover {
+    animation: logo 1s ease-in-out alternate;
+}
+@media (max-width:767px) {
+    .nav-item {
+        margin-bottom: 10px;
+    }
+}
+.nav-course{
+    color: var(--Asecondary);
+    letter-spacing:1px;
+    transition: color ease-in-out 1s;
+}
+.nav-course:hover{
+    text-decoration:none;
+    color: #FFFFFF;
+}
+.nav-item button{
+    background:none;
+    border: none;
+    text-transform: uppercase;
+}
+button:focus{
+    outline:none;
+}
+@keyframes logo{
+    0%   {transform: skewY(1deg);}
+    25%  {transform: skewY(3deg);}
+    50%  {transform: skewY(6deg);}
+    75% {transform: skewY(3deg);}
+    100% {transform: skewY(1deg);}
+}
+
+.search-course{
+    position:relative;
+    display:inline-block;
+    width: 35%;
+}
+.search-course #search-result{
+    display: none;
+    max-height: 250px;
+    overflow: auto;
+    position: absolute;
+    padding: 10px;
+    background-color: var(--Athirdly);
+    border-radius: 5px 5px 10px 10px;
+    z-index:1;
+    box-shadow: -10px 10px 20px -5px rgba(0,0,0,0.3);
+}
+.search-course #search-result a{
+    display:inline-block;
+    color: var(--Aprimary);
+}
+.search-course #search-result a:hover{
+    text-decoration: none !important;
+    color: #FFFFFF;
+    transition: color linear 1s;
+}
+.search-course #search-result hr{
+    background-color: black;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--Aprimary);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--Asecondary);
+}

@@ -71,6 +71,7 @@ public class CourseController {
         model.addAttribute("topTen",courseService.addIsFavoriteIsUpIsDownAttributes( courseService.findTop10ByOrderByVoteCountDescNotIn(recommendationService.getRecommindedCourses(userService.loggedInUserEmail())) ));
         return "Course/list";
     }
+
     @GetMapping("/course/{id}")
     public String read(@PathVariable Long id,Model model) {
         Optional<Course> course = courseRepository.findById(id);

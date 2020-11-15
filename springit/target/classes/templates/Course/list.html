@@ -7,7 +7,7 @@
 
     <div class="container" th:fragment="content">
 
-        <div class="main-container topTen" sec:authorize="isAuthenticated()">
+        <div class="main-container" sec:authorize="isAuthenticated()">
             <h2 class="content-h2">Recommended for you</h2>
             <div class="row link" th:each="recommendations : ${recommendations}">
 
@@ -39,34 +39,37 @@
             </div>
         </div>
 
-        <div class="main-container topTen">
-            <h2 class="content-h2">Top 10</h2>
-            <div class="row link" th:each="course : ${topTen}">
-
-                <div class="col-1">
-                    <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
-                    <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
-                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+        <div class="topTen">
+            <h2></h2>
+            <div class="container link" th:each="course : ${topTen}">
+                <div class=" row course">
+                    <div class="col-1">
+                        <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+                        <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
+                        <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+                        <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+                    </div>
+                    <div class="col-11">
+                        <p class="title">
+                            <a class="title" th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
+                                Title Goes Here
+                            </a>
+                        </p>
+                        <!-- ON -->
+                        <p class="tagline ">submitted
+                            <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                                  th:text="${course.getPrettyTime()}"></time> by
+                            <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
+                        </p>
+                        <p class="description" th:text="${course.description}"></p>
+                    </div>
                 </div>
-
-                <div class="col-11">
-                    <p class="title">
-                        <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
-                            Title Goes Here
-                        </a>
-                    </p>
-                    <!-- ON -->
-                    <p class="tagline ">submitted
-                        <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
-                              th:text="${course.getPrettyTime()}"></time> by
-                        <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
-                    </p>
-                    <span class="domain" th:text="${course.description}"></span>
-                    <p>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="comment-favorit col-11">
                         <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
-                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
-                    </p>
+                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to Favorite</a>
+                    </div>
                 </div>
             </div>
         </div>

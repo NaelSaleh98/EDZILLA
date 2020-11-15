@@ -129,10 +129,10 @@ public class authController {
     @Secured({"ROLE_ADMIN"})
     @GetMapping("/course/reportAdmin")
     public String reportCourse(Model model){
-        List<Report> reportList = reportRepository.findAll();
+        List<Long> courseIdList = reportRepository.findReportsByCourseId();
         List<Course> courseList = new ArrayList<>();
-        reportList.forEach(reported->{
-            Optional<Course> optionalCourse = courseRepository.findById(reported.getCourse().getId());
+        courseIdList.forEach(coursId->{
+            Optional<Course> optionalCourse = courseRepository.findById(coursId);
             if (optionalCourse.isPresent()){
                 Course course =  optionalCourse.get();
                 Optional<User> courseUser = userRepository.findById(course.getUser().getId());
@@ -144,4 +144,5 @@ public class authController {
         model.addAttribute("reportedCourse" , courseList);
         return "auth/reportedCourses";
     }
+
 }

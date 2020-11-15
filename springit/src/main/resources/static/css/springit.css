@@ -8,14 +8,7 @@ body {
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
 }
-.main-container{
-    padding:25px;
-}
-.content-h2 {
-    text-align:center;
-    color: #EC4D37;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-}
+
 .main-container .field-label-responsive{
     text-align: center;
     color: #1D1B1B;
@@ -158,50 +151,6 @@ textarea {
 .position {
     color:darkgray;
 
-}
-.votecount {
-    color:darkgray;
-    clear: both;
-    font-size: 18px;
-    vertical-align: middle;
-}
-
-.upvote {
-    vertical-align: top;
-}
-
-.downvote {
-    vertical-align: bottom;
-}
-
-a.upvote , a.downvote {
-    color:darkgrey;
-}
-
-.title {
-    margin:0px;
-}
-.tagline {
-    font-size:14px;
-}
-
-
-a.comments {
-    color: #000000
-}
-a.share {
-    padding-left: 10px;
-    color: #000000
-}
-
-
-.domain  {
-    color:darkgrey;
-    font-size:13px;
-    padding-left:10px;
-}
-.domain a, .domain a:hover, .domain a:visited {
-    color:darkgrey;
 }
 
 /* comments */

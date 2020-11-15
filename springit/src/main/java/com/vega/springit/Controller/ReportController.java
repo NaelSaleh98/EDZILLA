@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -50,5 +52,15 @@ public class ReportController {
             course.setReportCount(++count);
             courseRepository.save(course);
         }
+    }
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("/reportCourse/{reportedCourseId}")
+    public Map<String, String>  getReports(@PathVariable long reportedCourseId){
+        List<Report> reportList = reportRepository.findByCourseId(reportedCourseId);
+        List<Map<String, String>> mapList = new ArrayList<>();
+        reportList.forEach(report -> {
+
+        });
     }
 }

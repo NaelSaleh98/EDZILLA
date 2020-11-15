@@ -50,6 +50,7 @@ public class Course extends Auditable implements Comparable<Course>{
         private List<Vote> votes = new ArrayList<>();
         private int voteCount = 0;
 
+        @JsonIgnore
         @OneToMany(mappedBy = "course")
         private List<Report> reports = new ArrayList<>();
         private int reportCount = 0;

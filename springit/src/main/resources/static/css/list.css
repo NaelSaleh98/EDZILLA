@@ -1,0 +1,71 @@
+.topTen{
+    padding-top: 25px;
+}
+.topTen h2{
+    height: 150px;
+    background-image: url("https://amdurproductions.com/wp-content/uploads/2020/01/TopTen2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-clip: border-box;
+}
+.topTen .link{
+    width: 48%;
+    height: 200px;
+    padding: 5px;
+    float: left;
+    margin: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.topTen .course{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height: 80%;
+    width: 100%;
+    overflow: auto;
+}
+.votecount {
+    color:darkgray;
+    clear: both;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.upvote {
+    vertical-align: top;
+}
+.downvote {
+    vertical-align: bottom;
+}
+a.upvote , a.downvote {
+    color:darkgrey;
+}
+.topTen .link .col-11 .title , .tagline a{
+    color: var(--Aprimary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    text-align: justify;
+}
+.topTen .link .col-11 .tagline{
+    font-size: 14px;
+    color: var(--Asecondary);
+    text-shadow: 1px 1px 0.5px #000000;
+}
+.topTen .link .col-11 .tagline .author{
+    text-shadow: none;
+}
+.topTen .link .col-11 .description{
+    color: gray;
+    text-align: justify;
+    text-indent: 20px;
+    font-size:13px;
+}
+.comment-favorit .favorite{
+    color: var(--Aprimary);
+}
+a.comments {
+    color: #000000
+}

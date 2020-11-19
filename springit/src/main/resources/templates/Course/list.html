@@ -7,40 +7,44 @@
 
     <div class="container" th:fragment="content">
 
-        <div class="main-container" sec:authorize="isAuthenticated()">
-            <h2 class="content-h2">Recommended for you</h2>
-            <div class="row link" th:each="recommendations : ${recommendations}">
+        <div class="main-list" sec:authorize="isAuthenticated()">
+            <h2>Recommended for You</h2>
+            <div class="container link" th:each="recommendations : ${recommendations}">
+                <div class=" row course">
+                    <div class="col-1">
+                        <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+                        <div><a href="javascript:void(0);" class="upvote" th:data-id="${recommendations.id}"><i th:id="|up-${recommendations.id}|" class="fas fa-arrow-up" th:classappend="${recommendations.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
+                        <div><span th:id="|votecount-${recommendations.id}|" class="votecount" th:text="${recommendations.getVoteCount()}">0</span></div>
+                        <div><a href="javascript:void(0);" class="downvote" th:data-id="${recommendations.id}" th:disabled="true"><i th:id="|down-${recommendations.id}|" class="fas fa-arrow-down"th:classappend="${recommendations.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+                    </div>
 
-                <div class="col-1">
-                    <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-                    <div><a href="javascript:void(0);" class="upvote" th:data-id="${recommendations.id}"><i th:id="|up-${recommendations.id}|" class="fas fa-arrow-up" th:classappend="${recommendations.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
-                    <div><span th:id="|votecount-${recommendations.id}|" class="votecount" th:text="${recommendations.getVoteCount()}">0</span></div>
-                    <div><a href="javascript:void(0);" class="downvote" th:data-id="${recommendations.id}" th:disabled="true"><i th:id="|down-${recommendations.id}|" class="fas fa-arrow-down"th:classappend="${recommendations.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+                    <div class="col-11">
+                        <p class="title">
+                            <a class="title " th:href="@{'/course/' + ${recommendations.id}}" th:text="${recommendations.title}">
+                                Title Goes Here
+                            </a>
+                        </p>
+                        <!-- ON -->
+                        <p class="tagline ">submitted
+                            <time th:title="${recommendations.getCreationDate()}" th:datetime="${recommendations.getCreationDate()}" class="live-timestamp"
+                                  th:text="${recommendations.getPrettyTime()}"></time> by
+                            <a th:href="@{'/u/' + ${recommendations.getUser().getAlias()}}"  class="author" th:text="${recommendations.getUser().getAlias()}"></a>
+                        </p>
+                        <p class="description" th:text="${recommendations.description}"></p>
+                    </div>
                 </div>
-
-                <div class="col-11">
-                    <p class="title">
-                        <a class="title " th:href="@{'/course/' + ${recommendations.id}}" th:text="${recommendations.title}">
-                            Title Goes Here
-                        </a>
-                    </p>
-                    <!-- ON -->
-                    <p class="tagline ">submitted
-                        <time th:title="${recommendations.getCreationDate()}" th:datetime="${recommendations.getCreationDate()}" class="live-timestamp"
-                              th:text="${recommendations.getPrettyTime()}"></time> by
-                        <a th:href="@{'/u/' + ${recommendations.getUser().getAlias()}}"  class="author" th:text="${recommendations.getUser().getAlias()}"></a>
-                    </p>
-                    <span class="domain" th:text="${recommendations.description}"></span>
-                    <p>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="comment-favorit col-11">
                         <a th:href="@{'/course/' + ${recommendations.id} + '#comments'}" class="comments" th:text="|${recommendations.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
                         <a href="javascript:void(0);" th:id="|a_${recommendations.id}|" th:data-id="${recommendations.id}" class="favorite"><span  th:id="|fav_${recommendations.id}|" th:class="${recommendations.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="topTen">
-            <h2></h2>
+        <div class="main-list">
+            <h2>Top 10</h2>
             <div class="container link" th:each="course : ${topTen}">
                 <div class=" row course">
                     <div class="col-1">

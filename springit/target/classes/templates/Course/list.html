@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="comment-favorit col-11">
-                        <a th:href="@{'/course/' + ${recommendations.id} + '#comments'}" class="comments" th:text="|${recommendations.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                        <a th:href="@{'/course/' + ${recommendations.id} + '#comments'}" class="comments"><i class="fas fa-comments"></i> <span th:text="|${recommendations.getComments().size()} comments|"></span></a>
                         <a href="javascript:void(0);" th:id="|a_${recommendations.id}|" th:data-id="${recommendations.id}" class="favorite"><span  th:id="|fav_${recommendations.id}|" th:class="${recommendations.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="comment-favorit col-11">
-                        <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                        <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments"><i class="fas fa-comments"></i> <span th:text="|${course.getComments().size()} comments|"></span></a>
                         <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to Favorite</a>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
         </div>
 
     </div>
-        <!-- Course -->
+
     <script sec:authorize="isFullyAuthenticated()">
 
 //for add to favorite:

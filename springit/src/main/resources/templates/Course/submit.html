@@ -5,7 +5,7 @@
 <body>
 
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
-    <div class="container main-container">
+    <div class="container newCourse">
         <form id="frmAddCourse" method="POST" th:action="@{/course/submit}" th:object="${course}">
             <div class="row">
                 <div class="col-md-3"></div>

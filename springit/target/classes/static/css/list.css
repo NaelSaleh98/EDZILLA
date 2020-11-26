@@ -1,5 +1,6 @@
 .main-list{
     padding-top: 25px;
+    padding-bottom: 25px;
     clear: both;
 }
 .main-list h2{
@@ -8,7 +9,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 50px;
-    color: var(--Athirdly);
+    color: var(--Aprimary);
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     font-family:"Comic Sans MS", cursive, sans-serif;
 }
@@ -20,6 +21,7 @@
     margin: 20px 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #00154FAA;
 }
 .main-list .course{
     display: flex;
@@ -55,10 +57,9 @@ a.upvote , a.downvote {
 .main-list .link .col-11 .tagline{
     font-size: 14px;
     color: var(--Asecondary);
-    text-shadow: 1px 1px 0.5px #000000;
 }
-.main-list .link .col-11 .tagline .author{
-    text-shadow: none;
+.tagline a {
+    text-decoration: underline double var(--Asecondary) ;
 }
 .main-list .link .col-11 .description{
     color: gray;

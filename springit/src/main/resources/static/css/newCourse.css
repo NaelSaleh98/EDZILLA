@@ -1,0 +1,50 @@
+.newCourse{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.newCourse h2{
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: var(--Aprimary);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+}
+.newCourse .field-label-responsive{
+    text-align: center;
+    align-self:center;
+    font-size: large;
+    text-shadow: 1px 1px 1px var(--Asecondary);
+}
+.newCourse .input-group-addon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.newCourse input , .newCourse textarea{
+    border-radius: 6px !important;
+    border-color: var(--Aprimary);
+}
+.newCourse input:focus , .newCourse textarea:focus{
+    border-color:var(--Asecondary);
+    box-shadow:none;
+}
+.newCourse .content-pad{
+    padding-left: 3.6rem
+}
+.newCourse .content-btn button{
+    background-color: var(--Asecondary);
+    color: var(--Aprimary);
+    border: 1px outset var(--Aprimary);
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 1s ease-in-out;
+}
+.newCourse .content-btn button:hover{
+    color: var(--Asecondary);
+    background-color: var(--Aprimary);
+    border:none;
+    border: 2px inset var(--Asecondary);
+}

@@ -4,163 +4,150 @@
 </head>
 <body onload="updateReport()">
 
-<nav th:replace="~{layouts/main_layout :: navigation}"></nav>
+    <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 
-<div class="container">
-
-<div class="alert alert-success" role="alert" th:if="${success}">your new course was created!</div>
-    <!-- course -->
-    <div class="row course">
-        <div class="col-1">
-            <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
-            <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
-            <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
-        </div>
-        <div class="col-10">
-            <p class="title">
-                <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
-                    Title Goes Here
-                </a>
-            </p>
-            <!-- ON -->
-            <p class="tagline ">submitted
-                <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
-                      th:text="${course.getPrettyTime()}"></time> by
-                <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
-            </p>
-
-            <p><span class="domain"  th:text="${course.description}" ></span></p>
-            <p>
-                <a href="#comments" class="comments" th:text="|${course.getComments().size()} comments|"><i class="fas fa-comments"></i> 8 comments</a>
-                <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
-            </p>
-        </div>
-        <div class="col-1" sec:authorize="isAuthenticated()">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#reportAria"
-                    aria-controls="reportAria" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-ellipsis-h"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="reportAria" role="full-horizontal" sec:authorize="hasRole('ROLE_USER')">
-                <a href="javascript:void(0);" onclick="showReasonCard()" th:class="${course.isReported} ? 'Reported' : 'Report'" id="reported" th:data-id="${course.id}">Report</a>
+    <div class="container view-course">
+        <!-- course -->
+        <div class="row course">
+            <div class="col-1">
+                <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
+                <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+                <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+            </div>
+            <div class="col-10">
+                <p class="title">
+                    <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
+                        Title Goes Here
+                    </a>
+                </p>
+                <!-- ON -->
+                <p class="tagline ">submitted
+                    <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                          th:text="${course.getPrettyTime()}"></time> by
+                    <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
+                </p>
+                <p class="description"  th:text="${course.description}" ></p>
+                <p>
+                    <a href="#comments" class="comments"><i class="fas fa-comments"></i> <span th:text="|${course.getComments().size()} comments|"></span></a>
+                    <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add To Favorite</a>
+                </p>
+            </div>
+            <div class="col-1" sec:authorize="isAuthenticated()">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#reportAria"
+                        aria-controls="reportAria" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="reportAria" role="full-horizontal" sec:authorize="hasRole('ROLE_USER')">
+                    <a href="javascript:void(0);" onclick="showReasonCard()" th:class="${course.isReported} ? 'Reported' : 'Report'" id="reported" th:data-id="${course.id}">Report</a>
+                </div>
+            </div>
+            <div class="reason-parent" id="reportCard">
+                <div class="reason-son">
+                    <form class="form-horizontal" role="form" method="POST" th:action="@{/report}">
+                        <p class="select-reason">Please select your reason:</p>
+                        <input type="radio" id="Public_shaming" name="reason" value="Public shaming">
+                        <label for="Public_shaming">Public shaming</label><br>
+                        <input type="radio" id="Inappropriate_Content" name="reason" value="Inappropriate content">
+                        <label for="Inappropriate_Content">Inappropriate content</label><br>
+                        <input type="radio" id="Hate_Speech" name="reason" value="Hate speech">
+                        <label for="Hate_Speech">Hate speech</label>
+                        <hr>
+                        <a href="javascript:void(0);" class="reportDone" th:data-id="${course.id}" id="reportDone">OK</a>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="new-card-parent" id="reportCard">
-            <div class="new-card-son">
-                <form class="form-horizontal" role="form" method="POST" th:action="@{/report}">
-                    <p>Please select your reason:</p>
-                    <input type="radio" id="Public_shaming" name="reason" value="Public shaming">
-                    <label for="Public_shaming">Public shaming</label><br>
-                    <input type="radio" id="Inappropriate_Content" name="reason" value="Inappropriate content">
-                    <label for="Inappropriate_Content">Inappropriate content</label><br>
-                    <input type="radio" id="Hate_Speech" name="reason" value="Hate speech">
-                    <label for="Hate_Speech">Hate speech</label>
+
+        <hr style="background-color: #EDF5E1">
+
+        <div class="container card-container" th:each="card : ${course.getCourseCards()}">
+            <div class="row cards-in">
+                <div class="col-md-6">
+                    <h2 th:text="${card.getSubTitle()}" class="cards-title"></h2>
                     <hr>
-                    <a href="javascript:void(0);" class="reportDone" th:data-id="${course.id}" id="reportDone">OK</a>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <hr style="background-color: #EDF5E1">
-
-    <div class="container card-container" th:each="card : ${course.getCourseCards()}">
-        <div class="row cards-in">
-            <div class="col-md-6">
-                <h2 th:text="${card.getSubTitle()}" class="content-h2"></h2>
-                <hr>
-                <p th:text="${card.getText()}" class="card-description"></p>
-            </div>
-            <div class="col-md-6 cards-img-video">
-                <img th:src="@{${card.getImagePath()}}" width="100%" height="350px" th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'>
-                <video width="100%" height="350px" controls th:src="@{${card.getVideoPath()}}">
-                </video>
-            </div>
-        </div>
-    </div>
-
-     course comments
-    <div id="comments" class="comments">
-        <div class="row header">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-11 title" th:text="|all ${course.getComments().size()} comments|">
-                all 21 comments
-            </div>
-        </div>
-        <div class="row addcomment" sec:authorize="hasRole('ROLE_USER')">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-11">
-                <form id="frmAddComment" method="POST" th:action="@{/course/comments}" th:object="${comment}">
-<!--                    <input type="hidden"  th:field="*{course}"/>-->
-                    <div class="form-group">
-                        <textarea class="form-control" id="comment" rows="3" th:field="*{body}"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Comment</button>
-                </form>
+                    <p th:text="${card.getText()}" class="card-description"></p>
+                </div>
+                <div class="col-md-6 cards-img-video">
+                    <img th:src="@{${card.getImagePath()}}" class="iv" width="100%" height="100%" th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'>
+                    <video width="100%" class="iv" height="100%" controls th:src="@{${card.getVideoPath()}}" onerror='this.style.display = "none"'>
+                    </video>
+                </div>
             </div>
         </div>
 
-        <!-- single comment -->
-        <div class="row comment" th:each="comment : ${course.getComments()}">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-11">
-                <span><a href="#" th:text="${comment.getCreatedBy()}"><i class="far fa-user"></i> therealdanvega</a></span>
-                <span th:text="${comment.getPrettyTime()}"><i class="far fa-clock"></i> 4 hours ago</span>
-                <p class="body" th:text="${comment.getBody()}">It’s one thing I never care about, new releases of maven. Yet I do for most other things.. I really should take a look at any features released in the last while! Pull my dependencies, run my tests and upload to nexus. I don’t care for much else, I wonder what if any I’m missing.</p>
-                <a href="#" class="permalink"><i class="fas fa-course"></i> permalink</a>
-                <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+        <div id="comments" class="comments">
+
+            <!-- single comment -->
+            <div class="row comment" th:each="comment : ${course.getComments()}">
+                <div class="col-12">&nbsp;
+                    <a href="#" class="comment-user"><i class="far fa-user"></i> <span th:text="${comment.getCreatedBy()}"></span></a>
+                    <span><i class="far fa-clock"></i>&nbsp;<span th:text="${comment.getPrettyTime()}"></span></span>
+                    <p class="body" th:text="${comment.getBody()}"></p>
+                </div>
+            </div>
+
+
+            <div class="row addcomment" sec:authorize="hasRole('ROLE_USER')">
+                <div class="col-1">&nbsp;</div>
+                <div class="col-10">
+                    <form id="frmAddComment" method="POST" th:action="@{/course/comments}" th:object="${comment}" onsubmit="comment_Validate()">
+    <!--                    <input type="hidden"  th:field="*{course}"/>-->
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment" rows="3" th:field="*{body}" required></textarea>
+                        </div>
+                        <button type="submit" class="btn comment-btn form-control">Add Comment</button>
+                    </form>
+                </div>
+                <div class="col-1">&nbsp;</div>
             </div>
         </div>
 
     </div>
+    <script sec:authorize="isFullyAuthenticated()">
 
-</div>
-
-</body>
-<script sec:authorize="isFullyAuthenticated()">
-
-    var rd = document.getElementById("reportDone").addEventListener('click' , function (event) {
-        if( document.querySelector('input[name="reason"]:checked') == null){
-            return false;
-        }
-        var reason = document.querySelector('input[name="reason"]:checked').value;
-        var courseidd = this.getAttribute("data-id");
-        fetch(`http://localhost:8080/report/${reason}/${courseidd}`)
-            .catch(err => console.error(err));
-        document.getElementById("reportCard").style.display = "none";
-        alert("Thank you for your contribution, reported successfully.");
-        document.getElementById("reported").innerHTML = "Reported";
-        document.getElementById("reported").className = "Reported"
-    });
-//for add to favorite:
-//1- for course not added yet to favorite
-const allNotFavoriteCourse = document.querySelectorAll(".favorite")
-
-    for(let i=0; i<allNotFavoriteCourse.length; i++) {
-        let classNameNotFavorite = allNotFavoriteCourse[i].className;
-        allNotFavoriteCourse[i].addEventListener('click', function (event) {
-            const courseIDForNotfavorite = this.getAttribute("data-id");
-
-            if (document.getElementById('fav_'+courseIDForNotfavorite).classList.contains('not-favorite-class') ){
-            document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('not-favorite-class');
-            document.getElementById('fav_'+courseIDForNotfavorite).classList.add('favorite-class');
-
-
-            //to make a request to FavoriteCourseController
-             fetch(`http://localhost:8080/addtofavorite/course/id/${courseIDForNotfavorite}`)
-             .catch(err => console.error(err));
-            }else{
-            document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('favorite-class');
-            document.getElementById('fav_'+courseIDForNotfavorite).classList.add('not-favorite-class');
-
-            //to make a request to FavoriteCourseController
-             fetch(`http://localhost:8080/removefromfavorite/course/id/${courseIDForNotfavorite}`)
-               .catch(err => console.error(err));
+        var rd = document.getElementById("reportDone").addEventListener('click' , function (event) {
+            if( document.querySelector('input[name="reason"]:checked') == null){
+                return false;
             }
-        })
-    }
+            var reason = document.querySelector('input[name="reason"]:checked').value;
+            var courseidd = this.getAttribute("data-id");
+            fetch(`http://localhost:8080/report/${reason}/${courseidd}`)
+                .catch(err => console.error(err));
+            document.getElementById("reportCard").style.display = "none";
+            alert("Thank you for your contribution, reported successfully.");
+            document.getElementById("reported").innerHTML = "Reported";
+            document.getElementById("reported").className = "Reported"
+        });
+        //for add to favorite:
+        //1- for course not added yet to favorite
+        const allNotFavoriteCourse = document.querySelectorAll(".favorite")
+
+        for(let i=0; i<allNotFavoriteCourse.length; i++) {
+            let classNameNotFavorite = allNotFavoriteCourse[i].className;
+            allNotFavoriteCourse[i].addEventListener('click', function (event) {
+                const courseIDForNotfavorite = this.getAttribute("data-id");
+
+                if (document.getElementById('fav_'+courseIDForNotfavorite).classList.contains('not-favorite-class') ){
+                    document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('not-favorite-class');
+                    document.getElementById('fav_'+courseIDForNotfavorite).classList.add('favorite-class');
 
 
-//for up and down vote
+                    //to make a request to FavoriteCourseController
+                    fetch(`http://localhost:8080/addtofavorite/course/id/${courseIDForNotfavorite}`)
+                        .catch(err => console.error(err));
+                }else{
+                    document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('favorite-class');
+                    document.getElementById('fav_'+courseIDForNotfavorite).classList.add('not-favorite-class');
+
+                    //to make a request to FavoriteCourseController
+                    fetch(`http://localhost:8080/removefromfavorite/course/id/${courseIDForNotfavorite}`)
+                        .catch(err => console.error(err));
+                }
+            })
+        }
+
+
+        //for up and down vote
         const allvotes = document.querySelectorAll(".upvote, .downvote");
         for(let i=0; i<allvotes.length; i++) {
             let className = allvotes[i].className;
@@ -172,33 +159,33 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
                 const voteSumValue = voteSum.innerHTML;
                 ///// for color
                 if(document.getElementById('up-' + courseID).classList.contains('color_red') && direction ==-1){
-                document.getElementById('up-' + courseID).classList.remove("color_red");
-                document.getElementById('up-' + courseID).classList.add("not_color_red");
+                    document.getElementById('up-' + courseID).classList.remove("color_red");
+                    document.getElementById('up-' + courseID).classList.add("not_color_red");
 
-                document.getElementById('down-' + courseID).classList.remove("not_color_red");
-                document.getElementById('down-' + courseID).classList.add("color_red");
+                    document.getElementById('down-' + courseID).classList.remove("not_color_red");
+                    document.getElementById('down-' + courseID).classList.add("color_red");
                 }
                 else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
-                        document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
-                        direction ==-1
-                        ){
-                         document.getElementById('down-' + courseID).classList.remove("not_color_red");
-                         document.getElementById('down-' + courseID).classList.add("color_red");
-                        }
+                    document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
+                    direction ==-1
+                ){
+                    document.getElementById('down-' + courseID).classList.remove("not_color_red");
+                    document.getElementById('down-' + courseID).classList.add("color_red");
+                }
                 else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
-                        document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
-                        direction ==1
-                        ){
-                        document.getElementById('up-' + courseID).classList.remove('not_color_red');
-                        document.getElementById('up-' + courseID).classList.add('color_red');
-                        }
-                 else if(document.getElementById('down-' + courseID).classList.contains('color_red') && direction ==1){
-                 document.getElementById('up-' + courseID).classList.remove("not_color_red");
-                document.getElementById('up-' + courseID).classList.add("color_red");
+                    document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
+                    direction ==1
+                ){
+                    document.getElementById('up-' + courseID).classList.remove('not_color_red');
+                    document.getElementById('up-' + courseID).classList.add('color_red');
+                }
+                else if(document.getElementById('down-' + courseID).classList.contains('color_red') && direction ==1){
+                    document.getElementById('up-' + courseID).classList.remove("not_color_red");
+                    document.getElementById('up-' + courseID).classList.add("color_red");
 
-                document.getElementById('down-' + courseID).classList.remove("color_red");
-                document.getElementById('down-' + courseID).classList.add("not_color_red");
-                 }
+                    document.getElementById('down-' + courseID).classList.remove("color_red");
+                    document.getElementById('down-' + courseID).classList.add("not_color_red");
+                }
                 ////end for color
                 //to make a request to voteController
                 fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
@@ -211,19 +198,20 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
 
         function showReasonCard(){
             if (document.getElementById("reported").className == "Report"){
-            document.getElementById("reportCard").style.display = "flex";
+                document.getElementById("reportCard").style.display = "flex";
             }
         }
-            var modal = document.getElementById('reportCard');
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
+        var modal = document.getElementById('reportCard');
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
+        }
 
-            function updateReport() {
-                document.getElementById("reported").innerHTML = document.getElementById("reported").className;
-            }
+        function updateReport() {
+            document.getElementById("reported").innerHTML = document.getElementById("reported").className;
+        }
     </script>
+</body>
 </html>
 

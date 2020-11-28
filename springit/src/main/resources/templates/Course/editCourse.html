@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layouts/main_layout :: head(title = 'Springit - Spring Boot Reddit Clone')}">
+<head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Edit Course')}">
 </head>
 <body>
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
-    <div class="container main-container">
+    <div class="container newCourse">
         <div class="new-card-parent" id="nc">
             <div class="new-card-son">
                 <form  method="post" class="container" th:object="${courseCard}"
@@ -14,14 +14,14 @@
                         <div class="col-md-2 field-label-responsive">
                             <label for="subtitle">Subtitle</label>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="form-group">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-heading"></i></div>
                                     <input type="text"              name="subtitle"
                                            class="form-control"     id="subtitle"
                                            placeholder="Card subtitle" th:field="*{subTitle}"
-                                           required autofocus>
+                                           required >
                                 </div>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                         <div class="col-md-2 field-label-responsive">
                             <label for="description">Description</label>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="form-group">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-audio-description"></i></div>
@@ -44,43 +44,56 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2 field-label-responsive">
-                            <label for="videoPath">Video</label>
+                        <div class="col-md-6 field-label-responsive">
+                            <input type="radio" name="video-img" checked value="video" id="radio-video">
+                            <span  style="width: 2.6rem"><i class="fab fa-youtube"></i></span>
+                            <label for="radio-video">Video</label>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 field-label-responsive">
+                            <input type="radio" name="video-img" value="img" id="radio-img">
+                            <span  style="width: 2.6rem"><i class="fas fa-images"></i></span>
+                            <label for="radio-img">Photo</label>
+                        </div>
+                    </div>
+                    <div class="row" id="ivid">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fab fa-youtube"></i></div>
-                                    <input type="file"              name="video"
-                                           class="form-control"     id="videoPath"
-                                            accept="video/*">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Video</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file"              name="video"
+                                               class="form-control custom-file-input"     id="videoPath"
+                                               accept="video/*">
+                                        <label class="custom-file-label" for="videoPath">Choose file</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2 field-label-responsive">
-                            <label for="imagePath">Photo</label>
-                        </div>
-                        <div class="col-md-6">
+                    <div class="row" id="iimg">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fab fa-youtube"></i></div>
-                                    <input type="file"              name="image"
-                                           class="form-control"     id="imagePath"
-                                           accept="image/*">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Photo</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file"              name="image"
+                                               class="form-control custom-file-input"     id="imagePath"
+                                               accept="image/*" >
+                                        <label class="custom-file-label" for="videoPath">Choose file</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row content-btn">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6 content-pad">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 content-pad">
                             <button type="submit" class="btn form-control"><i class="fas fa-address-card"></i>Confirm</button>
                         </div>
-                        <div class="col-md-3"></div>
                     </div>
                 </form>
             </div>
@@ -89,26 +102,24 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2 class="content-h2">Course Info</h2>
+                <h2>Course Info</h2>
                 <hr/>
             </div>
             <div class="col-md-3"></div>
         </div>
         <div class="row course-info">
-            <div class="col-md-6">
-                <h1 th:text="${course.title}" class="content-h2"></h1>
-                <hr>
-                <p th:text="${course.description}" class="course-description"></p>
+            <div class="col-md-5">
+                <h1 th:text="${course.title}" class="course-title"></h1>
             </div>
-            <div class="col-md-6 course-img">
-                <img src="https://via.placeholder.com/350/000000/FFFFFF?text=Course+Image" th:alt="${course.title}">
+            <div class="col-md-7">
+                <h4 th:text="${course.description}" class="course-description"></h4>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2 class="content-h2">Course Cards</h2>
+                <h2 >Course Cards</h2>
                 <hr/>
             </div>
             <div class="col-md-3"></div>
@@ -116,38 +127,51 @@
         <div class="container card-container" th:each="card : ${course.getCourseCards()}">
             <div class="row cards-in">
                 <div class="col-md-6">
-                    <h2 th:text="${card.getSubTitle()}" class="content-h2"></h2>
+                    <h2 th:text="${card.getSubTitle()}" class="cards-title"></h2>
                     <hr>
                     <p th:text="${card.getText()}" class="card-description"></p>
                 </div>
                 <div class="col-md-6 cards-img-video">
-                    <img th:src="@{${card.getImagePath()}}" width="100%" height="350px" th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'>
-                    <video width="100%" height="350px" controls th:src="@{${card.getVideoPath()}}">
+                    <img th:src="@{${card.getImagePath()}}" class="iv" width="100%" height="100%" th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'>
+                    <video width="100%" class="iv" height="100%" controls th:src="@{${card.getVideoPath()}}" onerror='this.style.display = "none"'>
                     </video>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="row card-info">
+        <div class="row ">
             <div class="col-md-12">
-                <button class="btn form-control" onclick="showCard();">Add New Card</button>
+                <button class="btn btn-warning form-control" onclick="showCard();">Add New Card</button>
             </div>
         </div>
 
     </div>
 
-<script >
-    function showCard(){
-        document.getElementById("nc").style.display = "flex";
-    }
-    var modal = document.getElementById('nc');
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+    <script >
+        function showCard(){
+            document.getElementById("nc").style.display = "flex";
         }
-    };
+        var modal = document.getElementById('nc');
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
 
-</script>
+        var rvid = document.getElementById("radio-video");
+        var rimg = document.getElementById("radio-img");
+        var ivid = document.getElementById("ivid");
+        var iimg = document.getElementById("iimg");
+        iimg.style.display = "none";
+        rimg.onclick = function (event){
+            ivid.style.display = "none";
+            iimg.style.display = "block";
+        }
+        rvid.onclick = function (event){
+            ivid.style.display = "block";
+            iimg.style.display = "none";
+        }
+    </script>
 
 </body>
 </html>

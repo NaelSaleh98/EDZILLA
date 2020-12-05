@@ -5,25 +5,23 @@
 <body>
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class=" col-4 container reported-courses">
-                <div class="row">
-                        Reported Courses
-                </div>
-                    <div class="row " th:each="reported : ${reportedCourse}">
+    <div class="container-fluid main-report">
+        <h2>Reported Courses</h2>
+        <hr>
+        <div class="row report">
+            <div class=" col-4 container">
+                    <div class="row reported-course" th:each="reported : ${reportedCourse}">
                         <div class="reportClick" th:data-id="${reported.id}">
-                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|"> </div>
-                            <div th:id="|publisherName-${reported.id}|" th:text="|Publisher User: ${reported.publisherName}|"></div>
-                            <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|"></div>
+                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|" class="report-course-title"> </div>
+                            <div th:id="|publisherName-${reported.id}|" th:text="|Publisher User: ${reported.publisherName}|" class="report-course-publisher"></div>
+                            <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|" class="report-course-count"></div>
                         </div>
                     </div>
             </div>
             <div class="col-8 reported-view">
-                <div id="reportsContent"></div>
-
+                <div id="reportsContent" class="reportContent"></div>
                 <div id="deleteCourse" style="display:none" >
-                <button onclick="deleteCourse()">delete course</button>
+                    <button onclick="deleteCourse()" class="btn">Delete Course</button>
                 </div>
 
             </div>
@@ -34,26 +32,38 @@
         const reportedCourses = document.querySelectorAll(".reportClick")
         for(let i=0; i<reportedCourses.length; i++) {
             reportedCourses[i].addEventListener('click', function (event) {
-
                 const reportedCourseId = this.getAttribute("data-id");
                 let reportsContent = document.getElementById("reportsContent")
                 reportsContent.innerHTML = "";
                 fetch(`http://localhost:8080/reportCourse/${reportedCourseId}`)
                     .then(response => response.json())
                     .then(data =>{
-                    let reporterDetails = ""
-                    let index = 0
-
-                    for(let i =0;i<data.number_of_reporter; i++){
-                    reporterDetails += "Reporter Name: " + data["reporter_name"+index] + ", " + "Reason: " +  data["reason"+index++] + "<br>"
-                    }
-                    let reportedCourseDetails = "<br>" + document.getElementById("title-"+reportedCourseId).innerText + "<br>" +
-                                                 document.getElementById("publisherName-"+reportedCourseId).innerText + "<br>" +
-                                                 document.getElementById("reportsCount-"+reportedCourseId).innerText;
-
-                    let hiddenDivContainCourseId ='<div style="display:none" id="CourseId" data-id="'+ reportedCourseId + '"></div>'
-
-                     reportsContent.innerHTML = reporterDetails + reportedCourseDetails + hiddenDivContainCourseId
+                        let reporterDetails = ""
+                        let index = 0
+                        for(let i =0;i<data.number_of_reporter; i++){
+                            let reporter = document.createElement("div");
+                            let reason = document.createElement("div");
+                            reporter.classList.add('reporter');
+                            reason.classList.add('report-reason');
+                            reporter.innerHTML = "Reporter Name: " + data["reporter_name"+index] ;
+                            reason.innerHTML = "Reason: " +  data["reason"+index++];
+                            reportsContent.appendChild(reporter);
+                            reportsContent.appendChild(reason);
+                        }
+                        let title = document.createElement("div");
+                        let publisher = document.createElement("div");
+                        let count = document.createElement("div");
+                        title.classList.add('report-course-title');
+                        publisher.classList.add('report-course-publisher');
+                        count.classList.add('report-course-count');
+                        title.innerHTML = document.getElementById("title-"+reportedCourseId).innerText;
+                        publisher.innerHTML = document.getElementById("publisherName-"+reportedCourseId).innerText;
+                        count.innerHTML = document.getElementById("reportsCount-"+reportedCourseId).innerText;
+                        reportsContent.appendChild(title);
+                        reportsContent.appendChild(publisher);
+                        reportsContent.appendChild(count);
+                        let hiddenDivContainCourseId ='<div style="display:none" id="CourseId" data-id="'+ reportedCourseId + '"></div>'
+                        reportsContent.innerHTML += hiddenDivContainCourseId;
                       document.getElementById("deleteCourse").style="display:block"
 
                     })
@@ -69,9 +79,10 @@
          fetch(`http://localhost:8080/deleteCourse/${courseId}`)
                     .then(response => response.json())
                     .then(data =>{
-
                     })
                     .catch(err => console.error(err));
+         alert("Course Deleted Successfully!");
+         location.reload();
         }
     </script>
 </body>

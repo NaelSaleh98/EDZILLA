@@ -1,0 +1,64 @@
+.main-report h2{
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: var(--Aprimary);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+}
+.report{
+    padding: 10px;
+}
+.report .container{
+    border-right: 5px inset var(--Aprimary);
+    border-radius: 5px;
+}
+.report .reported-course, .report .reportContent{
+    padding: 10px;
+}
+.report .reportClick{
+    cursor: pointer;
+    border-left:10px solid var(--Asecondary) ;
+    border-radius: 5px;
+    padding: 5px;
+}
+.report .report-course-title, .report .reporter{
+    color: var(--Aprimary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    text-align: justify;
+    font-size: 17.5px;
+    margin-bottom: 5px;
+}
+.report .report-course-publisher , .report .report-reason{
+    color: var(--Asecondary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    text-align: justify;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.report .report-course-count{
+    color: var(--Asecondary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    text-align: justify;
+    font-size: 12.5px;
+    margin-bottom: 5px;
+}
+#deleteCourse button{
+    background-color: var(--Asecondary);
+    color: var(--Aprimary);
+    border: 1px outset var(--Aprimary);
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 1s ease-in-out;
+}
+#deleteCourse button:hover{
+    color: var(--Asecondary);
+    background-color: var(--Aprimary);
+    border:none;
+    border: 2px inset var(--Asecondary);
+}

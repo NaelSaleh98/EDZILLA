@@ -23,5 +23,7 @@ public interface CourseRepository extends JpaRepository<Course,Long>{
     @Query(nativeQuery = true, value = "SELECT * FROM Course as c WHERE c.REPORT_COUNT > 2")
     List<Course> findReportedCourses();
 
+    List<Course> findByUserId(long userId);
+
 
 }

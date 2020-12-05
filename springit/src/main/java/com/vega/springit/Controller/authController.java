@@ -42,11 +42,6 @@ public class authController {
         return "auth/login";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "auth/profile";
-    }
-
     // Ready
     @GetMapping("/register")
     public String register(Model model) {

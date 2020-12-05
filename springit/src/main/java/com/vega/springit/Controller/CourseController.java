@@ -119,13 +119,25 @@ public class CourseController {
 
         model.addAttribute("course", course);
         model.addAttribute("courseCard", new CourseCard());
-            //FlashAttribute available once redirect occur, after we do page reload FlashAttribute will disappear
        return "Course/editCourse";
        //or -> return "redirect:/link/{id}";
         }
 
+    }
 
+    @GetMapping("/edit/course/{id}")
+    public String showEditCourse(@PathVariable Long id,Model model) {
+        Optional<Course> courseOptional = courseRepository.findById(id);
+        Course course;
+        if(courseOptional.isPresent()){
+            course = courseOptional.get();
+            currentCourseForCard = course;
+            model.addAttribute("course", course);
+            model.addAttribute("courseCard", new CourseCard());
+        }
 
+        //FlashAttribute available once redirect occur, after we do page reload FlashAttribute will disappear
+        return "Course/editCourse";
     }
 
     @Secured({"ROLE_USER"})//to protect from server side,it mean only logged in user with ROLE_USER can initat this requist

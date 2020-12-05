@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Account Profile Page')}">
 </head>
 <body>
@@ -17,116 +17,149 @@
                 <a class="nav-course" href="#">Posts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-course" href="#">Comments</a>
+                <a class="nav-course" href="#">My Courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-course" href="#">Preferences</a>
+                <a class="nav-course" id="show-favorite-courses" onclick="showFavorite()" href="#">My Favorite Courses</a>
             </li>
         </ul>
     </div>
 
-    <div class="row">
+    <div id="favorite-courses" style="display: none">
+
+    </div>
+
+    <div id="user-courses" class="row">
 
         <div class="col-8">
             <div class="row">
-                <div class="card col-12" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">What's new in Spring Boot 2</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">submitted 7 days ago by therealdanvega</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-course">8 Comments</a>
-                        <a href="#" class="card-course">Share</a>
+                <div class="container link" th:each="course : ${userCourseList}">
+                    <div class=" row course">
+                        <div class="col-1">
+                            <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+                            <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
+                            <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+                            <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+                        </div>
+                        <div class="col-11">
+                            <p class="title">
+                                <a class="title" title="Course Edit" th:href="@{'/edit/course/' + ${course.id}}" th:text="${course.title}">
+                                    Title Goes Here
+                                </a>
+                            </p>
+                            <!-- ON -->
+                            <p class="tagline ">submitted
+                                <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                                      th:text="${course.getPrettyTime()}"></time> by
+                                <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
+                            </p>
+                            <p class="description" th:text="${course.description}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="comment-favorit col-11">
+                            <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments"><i class="fas fa-comments"></i> <span th:text="|${course.getComments().size()} comments|"></span></a>
+                            <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to Favorite</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="card col-12" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">What's new in Spring Boot 2</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">submitted 7 days ago by therealdanvega</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-course">8 Comments</a>
-                        <a href="#" class="card-course">Share</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card col-12" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">What's new in Spring Boot 2</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">submitted 7 days ago by therealdanvega</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-course">8 Comments</a>
-                        <a href="#" class="card-course">Share</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card col-12" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">What's new in Spring Boot 2</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">submitted 7 days ago by therealdanvega</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-course">8 Comments</a>
-                        <a href="#" class="card-course">Share</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card col-12" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">What's new in Spring Boot 2</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">submitted 7 days ago by therealdanvega</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-course">8 Comments</a>
-                        <a href="#" class="card-course">Share</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Right Side -->
-        <div class="col-3 offset-1">
-            <div class="row">
-                <div class="card col-12">
-                    <img class="card-img-top" src="/" alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text">
-                            <a href="/u/therealdanvega">/u/therealdanvega</a>
-                        </p>
-                        <a href="../course/submit.html"><button type="button" class="btn btn-primary btn-lg btn-block">New Post</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card col-12">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                    <div class="card-body">
-                        <h5 class="card-title">Your Information</h5>
-                        <p class="card-text">
-                            Posts: 10<br/>
-                            Comments: 3<br/>
-                            User Since: November 23, 2017<br/>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card col-12">
-                    <h5 class="card-title recentLinks">Recent Links Clicked</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="#">What's new in Spring Boot 2</a></li>
-                        <li class="list-group-item"><a href="#">10 Features in Java 10</a></li>
-                        <li class="list-group-item"><a href="#">9 Features in Java 9</a></li>
-                        <li class="list-group-item"><a href="#">8 Features in Java 8</a></li>
-                        <li class="list-group-item"><a href="#">7 Reasons not to use Java 7</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
     </div> <!-- // row -->
 
 </div><!-- // profile -->
-
 </body>
+
+<script sec:authorize="isFullyAuthenticated()">
+//********for show favorite courses**************
+ let showFavorite = () =>{
+
+  document.getElementById("user-courses").style.display = "none";
+   fetch(`http://localhost:8080/FavoriteCourses`)
+                    .then(response => response.json())
+                    .then(data =>document.getElementById("favorite-courses").innerHTML = data)
+                    .catch(err => console.error(err));
+
+    document.getElementById("favorite-courses").style.display = "block";
+
+ }
+
+
+//********for add to favorite******************
+//1- for course not added yet to favorite
+const allNotFavoriteCourse = document.querySelectorAll(".favorite")
+
+    for(let i=0; i<allNotFavoriteCourse.length; i++) {
+        let classNameNotFavorite = allNotFavoriteCourse[i].className;
+        allNotFavoriteCourse[i].addEventListener('click', function (event) {
+            const courseIDForNotfavorite = this.getAttribute("data-id");
+
+            if (document.getElementById('fav_'+courseIDForNotfavorite).classList.contains('not-favorite-class') ){
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('not-favorite-class');
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.add('favorite-class');
+
+
+            //to make a request to FavoriteCourseController
+             fetch(`http://localhost:8080/addtofavorite/course/id/${courseIDForNotfavorite}`)
+             .catch(err => console.error(err));
+            }else{
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('favorite-class');
+            document.getElementById('fav_'+courseIDForNotfavorite).classList.add('not-favorite-class');
+
+            //to make a request to FavoriteCourseController
+             fetch(`http://localhost:8080/removefromfavorite/course/id/${courseIDForNotfavorite}`)
+               .catch(err => console.error(err));
+            }
+        })
+    }
+
+
+//for up and down vote
+        const allvotes = document.querySelectorAll(".upvote, .downvote");
+        for(let i=0; i<allvotes.length; i++) {
+            let className = allvotes[i].className;
+            allvotes[i].addEventListener('click', function (event) {
+                const direction = className === 'upvote' ? 1 : -1;
+
+                const courseID = this.getAttribute("data-id");
+                const voteSum = document.getElementById('votecount-' + courseID);
+                const voteSumValue = voteSum.innerHTML;
+                ///// for color
+                if(document.getElementById('up-' + courseID).classList.contains('color_red') && direction ==-1){
+                document.getElementById('up-' + courseID).classList.remove("color_red");
+                document.getElementById('up-' + courseID).classList.add("not_color_red");
+
+                document.getElementById('down-' + courseID).classList.remove("not_color_red");
+                document.getElementById('down-' + courseID).classList.add("color_red");
+                }
+                else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
+                        document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
+                        direction ==-1
+                        ){
+                         document.getElementById('down-' + courseID).classList.remove("not_color_red");
+                         document.getElementById('down-' + courseID).classList.add("color_red");
+                        }
+                else if(document.getElementById('up-' + courseID).classList.contains('not_color_red') &&
+                        document.getElementById('down-' + courseID).classList.contains('not_color_red') &&
+                        direction ==1
+                        ){
+                        document.getElementById('up-' + courseID).classList.remove('not_color_red');
+                        document.getElementById('up-' + courseID).classList.add('color_red');
+                        }
+                 else if(document.getElementById('down-' + courseID).classList.contains('color_red') && direction ==1){
+                 document.getElementById('up-' + courseID).classList.remove("not_color_red");
+                document.getElementById('up-' + courseID).classList.add("color_red");
+
+                document.getElementById('down-' + courseID).classList.remove("color_red");
+                document.getElementById('down-' + courseID).classList.add("not_color_red");
+                 }
+                ////end for color
+                //to make a request to voteController
+                fetch(`http://localhost:8080/vote/course/${courseID}/direction/${direction}/votecount/${voteSumValue}`)
+                    .then(response => response.json())
+                    .then(data =>voteSum.innerHTML = data)
+                    .catch(err => console.error(err));
+            });
+        }
+    </script>
 </html>

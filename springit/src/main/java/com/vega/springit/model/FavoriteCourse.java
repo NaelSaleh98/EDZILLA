@@ -1,5 +1,6 @@
 package com.vega.springit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -21,10 +22,12 @@ public class FavoriteCourse extends Auditable{
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @NonNull
     @ManyToOne
     private Course course;
 
+    @JsonIgnore
     @NonNull
     @ManyToOne
     private User user;

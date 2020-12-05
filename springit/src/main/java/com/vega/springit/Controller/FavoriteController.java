@@ -12,10 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,5 +69,24 @@ public class FavoriteController {
         }
     }
 
+    @GetMapping("/FavoriteCourses")
+    public List<Course> getFavoriteCourses(Model model){
+        Optional<User>  userOptional = userRepository.findByEmail(userService.loggedInUserEmail());
+        User user;
+        List<FavoriteCourse> favoriteCourseList;
+        List<Course> courseList = new ArrayList<>();
+
+        if(userOptional.isPresent()){
+            user = userOptional.get();
+            favoriteCourseList = favoriteCourseRepository.findByUserId(user.getId());
+           favoriteCourseList.forEach(favoriteCourse -> {
+               courseList.add(favoriteCourse.getCourse());
+           });
+
+        }
+        model.addAttribute("userFavoriteCourse",courseList);
+        return courseList;
+
+    }
 
 }

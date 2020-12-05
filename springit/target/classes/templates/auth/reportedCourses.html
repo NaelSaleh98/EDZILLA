@@ -12,7 +12,7 @@
             <div class=" col-4 container">
                     <div class="row reported-course" th:each="reported : ${reportedCourse}">
                         <div class="reportClick" th:data-id="${reported.id}">
-                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|" class="report-course-title"> </div>
+                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|" class="report-course-title"><a></a> </div>
                             <div th:id="|publisherName-${reported.id}|" th:text="|Publisher User: ${reported.publisherName}|" class="report-course-publisher"></div>
                             <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|" class="report-course-count"></div>
                         </div>
@@ -50,7 +50,7 @@
                             reportsContent.appendChild(reporter);
                             reportsContent.appendChild(reason);
                         }
-                        let title = document.createElement("div");
+                        let title = document.createElement("a");
                         let publisher = document.createElement("div");
                         let count = document.createElement("div");
                         title.classList.add('report-course-title');
@@ -59,6 +59,8 @@
                         title.innerHTML = document.getElementById("title-"+reportedCourseId).innerText;
                         publisher.innerHTML = document.getElementById("publisherName-"+reportedCourseId).innerText;
                         count.innerHTML = document.getElementById("reportsCount-"+reportedCourseId).innerText;
+                        title.href = '/course/' + reportedCourseId
+                        title.title = 'View Course'
                         reportsContent.appendChild(title);
                         reportsContent.appendChild(publisher);
                         reportsContent.appendChild(count);

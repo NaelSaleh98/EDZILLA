@@ -14,10 +14,10 @@
                 <a class="nav-course active" href="#">Overview</a>
             </li>
             <li class="nav-item">
-                <a class="nav-course" href="#">Posts</a>
+                <a class="nav-course" onclick="showProfileSetting()" id="setting" href="#">Profile Setting </a>
             </li>
             <li class="nav-item">
-                <a class="nav-course" href="#">My Courses</a>
+                <a class="nav-course" onclick="showMyCourses()" href="#">My Courses</a>
             </li>
             <li class="nav-item">
                 <a class="nav-course" id="show-favorite-courses" onclick="showFavorite()" href="#">My Favorite Courses</a>
@@ -26,6 +26,11 @@
     </div>
 
     <div id="favorite-courses" style="display: none">
+
+    </div>
+
+
+    <div id="profile-setting" style="display: none">
 
     </div>
 
@@ -71,13 +76,65 @@
 </body>
 
 <script sec:authorize="isFullyAuthenticated()">
+
+
+//*******for profile setting *********
+let showProfileSetting = () => {
+    document.getElementById("user-courses").style.display = "none";
+    document.getElementById("favorite-courses").style.display = "none";
+    let profileSetting = document.getElementById("profile-setting")
+
+      fetch(`http://localhost:8080/profile/setting`)
+                    .then(response => response.json())
+                    .then(data =>{
+
+                        profileSetting.innerHTML = `
+                         <form method="POST" action="/edit/user/details" th:object="\$\{EditUser\}">
+                             <label for="firstName">First name:</label>
+                             <input type="text" id="firstName" name="firstName" value=${data["firstName"]} th:field="*{firstName}" required><br><br>
+
+                             <label for="lastName">Last name:</label>
+                             <input type="text" id="lastName" name="lastName" value =${data["lastName"]} th:field="*{lastName}" required ><br><br>
+
+                             <label for="alias">Alis:</label>
+                             <input type="text" id="alias" name="alias" value =${data["alias"]} th:field="*{alias}" required><br><br>
+
+                             <label for="email">email:</label>
+                             <input type="email" id="email" name="email" value =${data["email"]} th:field="*{email}" required ><br><br>
+
+                             <input type="submit" value="save">
+                         </form>`
+
+                    })
+                    .catch(err => console.error(err));
+
+    profileSetting.style.display = "block";
+
+
+
+}
+
+//*******for show my courses ***********
+let showMyCourses = () =>{
+    document.getElementById("user-courses").style.display = "block";
+    document.getElementById("favorite-courses").style.display = "none";
+    document.getElementById("profile-setting").style.display = "none";
+
+}
+
 //********for show favorite courses**************
  let showFavorite = () =>{
 
   document.getElementById("user-courses").style.display = "none";
+  document.getElementById("profile-setting").style.display = "none";
    fetch(`http://localhost:8080/FavoriteCourses`)
                     .then(response => response.json())
-                    .then(data =>document.getElementById("favorite-courses").innerHTML = data)
+                    .then(data =>{
+                    document.getElementById("favorite-courses").innerHTML =`
+                    fuck nael
+                    `
+
+                    })
                     .catch(err => console.error(err));
 
     document.getElementById("favorite-courses").style.display = "block";

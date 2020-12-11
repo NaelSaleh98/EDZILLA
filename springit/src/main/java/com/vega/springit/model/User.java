@@ -1,5 +1,6 @@
 package com.vega.springit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vega.springit.model.validator.PasswordsMatch;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,20 +32,23 @@ public class User implements UserDetails {
     private String email;
 
     @NonNull
+    @JsonIgnore
     @NotEmpty(message = "Please, Enter Password.")
     @Size(min = 8, max = 128, message = "Please, Password size should be between 8 and 128.")
     @Column(length = 128)
     private String password;
 
     @NonNull
+    @JsonIgnore
     @Column(nullable = false)
     private boolean enabled;
 
     // ON
+    @JsonIgnore
     @Transient
-    @NotEmpty(message = "You must enter Password Confirmation.")
     private String confirmPassword;
 
+    @JsonIgnore
     private String activationCode;
 
 /////more detail about user
@@ -80,13 +84,16 @@ public class User implements UserDetails {
     }
 
     //<for vote>
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Vote> votes = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Report> reports = new ArrayList<>();
 
     ////***************
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)//(fetch = FetchType.EAGER) bring all roles , because number of roles is small
     @JoinTable(
             name = "users_roles",

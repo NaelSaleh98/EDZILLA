@@ -130,9 +130,7 @@ let showMyCourses = () =>{
    fetch(`http://localhost:8080/FavoriteCourses`)
                     .then(response => response.json())
                     .then(data =>{
-                    document.getElementById("favorite-courses").innerHTML =`
-                    fuck nael
-                    `
+                    document.getElementById("favorite-courses").innerHTML =`data`
 
                     })
                     .catch(err => console.error(err));

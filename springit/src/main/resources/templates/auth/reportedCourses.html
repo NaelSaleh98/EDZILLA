@@ -5,15 +5,17 @@
 <body>
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 
-    <div class="container-fluid main-report">
+    <div class="container-fluid main-report" >
         <h2>Reported Courses</h2>
         <hr>
         <div class="row report">
             <div class=" col-4 container">
                     <div class="row reported-course" th:each="reported : ${reportedCourse}">
                         <div class="reportClick" th:data-id="${reported.id}">
-                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|" class="report-course-title"><a></a> </div>
-                            <div th:id="|publisherName-${reported.id}|" th:text="|Publisher User: ${reported.publisherName}|" class="report-course-publisher"></div>
+                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|" class="report-course-title"> </div>
+                            <div th:id="|publisherName-${reported.id}|" class="report-course-publisher">
+                                <a th:text="${reported.publisherName}" th:href="@{'/user/'+${reported.publisherName}}"></a>
+                            </div>
                             <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|" class="report-course-count"></div>
                         </div>
                     </div>
@@ -51,7 +53,7 @@
                             reportsContent.appendChild(reason);
                         }
                         let title = document.createElement("a");
-                        let publisher = document.createElement("div");
+                        let publisher = document.createElement("a");
                         let count = document.createElement("div");
                         title.classList.add('report-course-title');
                         publisher.classList.add('report-course-publisher');
@@ -61,6 +63,7 @@
                         count.innerHTML = document.getElementById("reportsCount-"+reportedCourseId).innerText;
                         title.href = '/course/' + reportedCourseId
                         title.title = 'View Course'
+                        publisher.href = '/user/'+document.getElementById("publisherName-"+reportedCourseId).innerText;
                         reportsContent.appendChild(title);
                         reportsContent.appendChild(publisher);
                         reportsContent.appendChild(count);

@@ -140,4 +140,19 @@ public class authController {
         return "auth/reportedCourses";
     }
 
+    @GetMapping("/user/{userName}")
+    public String userProfile(@PathVariable String userName,Model model){
+        Optional<User> optionalUser = userRepository.findByAlias(userName);
+        if (optionalUser.isPresent()){
+            User user = optionalUser.get();
+            List<Course> courseList = courseRepository.findByUserId(user.getId());
+            model.addAttribute("userName" , userName);
+            model.addAttribute("userCourseList" , courseList);
+            model.addAttribute("error" , false);
+        }
+        else {
+            model.addAttribute("error" , true);
+        }
+        return "auth/account";
+    }
 }

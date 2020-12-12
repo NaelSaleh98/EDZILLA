@@ -3,76 +3,173 @@
 <head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Account Profile Page')}">
 </head>
 <body>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
 
-<nav th:replace="~{layouts/main_layout :: navigation}"></nav>
-<!-- profile -->
-<div id="profile" class="container">
+    <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
+    <!-- profile -->
+    <div id="profile" class="container">
 
-    <div class="row">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-course active" href="#">Overview</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-course" onclick="showProfileSetting()" id="setting" href="#">Profile Setting </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-course" onclick="showMyCourses()" href="#">My Courses</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-course" id="show-favorite-courses" onclick="showFavorite()" href="#">My Favorite Courses</a>
-            </li>
-        </ul>
-    </div>
+        <div class="row">
+            <h1 class="col-12" th:text="${userName}"></h1>
+        </div>
+        <div class="row">
+            <small th:text="|${userCourseList.size()} Courses|" class="col-12"></small>
+        </div>
+        <div class="row">
+            <ul class="nav col-12">
+                <li class="nav-item">
+                    <a class="nav-course" onclick="showMyCourses()" href="#">My Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-course" id="show-favorite-courses" onclick="showFavorite()" href="#">My Favorite Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-course" onclick="showProfileSetting()" id="setting" href="#">Profile Setting </a>
+                </li>
+            </ul>
+        </div>
 
-    <div id="favorite-courses" style="display: none">
-
-    </div>
-
-
-    <div id="profile-setting" style="display: none">
-
-    </div>
-
-    <div id="user-courses" class="row">
-
-        <div class="col-8">
-            <div class="row">
-                <div class="container link" th:each="course : ${userCourseList}">
-                    <div class=" row course">
-                        <div class="col-1">
-                            <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
-                            <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
-                            <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
-                            <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
-                        </div>
-                        <div class="col-11">
-                            <p class="title">
-                                <a class="title" title="Course Edit" th:href="@{'/edit/course/' + ${course.id}}" th:text="${course.title}">
-                                    Title Goes Here
-                                </a>
-                            </p>
-                            <!-- ON -->
-                            <p class="tagline ">submitted
-                                <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
-                                      th:text="${course.getPrettyTime()}"></time> by
-                                <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
-                            </p>
-                            <p class="description" th:text="${course.description}"></p>
-                        </div>
+        <div class="row" id="profile-setting" style="display: none">
+            <form method="POST" th:action="@{/edit/user/details}" th:object="${EditUser}"
+                  class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 field-label-responsive">
+                        <label for="firstName">First Name</label>
                     </div>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="comment-favorit col-11">
-                            <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments"><i class="fas fa-comments"></i> <span th:text="|${course.getComments().size()} comments|"></span></a>
-                            <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to Favorite</a>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                <input type="text" id="firstName" name="firstName"  th:field="*{firstName}"
+                                       class="form-control" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    </div> <!-- // row -->
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 field-label-responsive">
+                        <label for="lastName">Last Name</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                <input type="text" id="lastName" name="lastName"  th:field="*{lastName}"
+                                       class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 field-label-responsive">
+                        <label for="alias">Alias</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                <input type="text" id="alias" name="alias"  th:field="*{alias}"
+                                       class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 field-label-responsive">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                <input type="email" id="email" name="email"  th:field="*{email}"
+                                       class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row content-btn">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 content-pad">
+                        <button type="submit" class="btn form-control"><i class="fa fa-user-plus"></i> Save</button>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </form>
+        </div>
 
-</div><!-- // profile -->
+        <div id="favorite-courses" style="display: none">
+            <div class=" link" th:id="|link-${course.id}|" th:each="course : ${favoriteCourseList}">
+                <div class=" row course">
+                    <div class="col-1">
+                        <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+                        <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
+                        <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+                        <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+                    </div>
+                    <div class="col-11">
+                        <p class="title">
+                            <a class="title" title="Course Edit" th:href="@{'/edit/course/' + ${course.id}}" th:text="${course.title}">
+                                Title Goes Here
+                            </a>
+                        </p>
+                        <!-- ON -->
+                        <p class="tagline ">submitted
+                            <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                                  th:text="${course.getPrettyTime()}"></time>
+                        </p>
+                        <p class="description" th:text="${course.description}"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="comment-favorit col-11">
+                        <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments"><i class="fas fa-comments"></i> <span th:text="|${course.getComments().size()} comments|"></span></a>
+                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to Favorite</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="user-courses" class="row">
+            <div class=" link" th:each="course : ${userCourseList}">
+                <div class=" row course">
+                    <div class="col-1">
+                        <!--to add atribute to tag -> th:data-id="${course.id}" ,attribue name:data-id, attrubute value "${course.id}"-->
+                        <div><a href="javascript:void(0);" class="upvote" th:data-id="${course.id}"><i th:id="|up-${course.id}|" class="fas fa-arrow-up" th:classappend="${course.isUp} ? 'color_red' : 'not_color_red'"></i></a></div>
+                        <div><span th:id="|votecount-${course.id}|" class="votecount" th:text="${course.getVoteCount()}">0</span></div>
+                        <div><a href="javascript:void(0);" class="downvote" th:data-id="${course.id}" th:disabled="true"><i th:id="|down-${course.id}|" class="fas fa-arrow-down"th:classappend="${course.isDown} ? 'color_red' : 'not_color_red'"></i></a></div>
+                    </div>
+                    <div class="col-11">
+                        <p class="title">
+                            <a class="title" title="Course Edit" th:href="@{'/edit/course/' + ${course.id}}" th:text="${course.title}">
+                                Title Goes Here
+                            </a>
+                        </p>
+                        <!-- ON -->
+                        <p class="tagline ">submitted
+                            <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
+                                  th:text="${course.getPrettyTime()}"></time>
+                        </p>
+                        <p class="description" th:text="${course.description}"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="comment-favorit col-11">
+                        <a th:href="@{'/course/' + ${course.id} + '#comments'}" class="comments"><i class="fas fa-comments"></i> <span th:text="|${course.getComments().size()} comments|"></span></a>
+                        <a href="javascript:void(0);" th:id="|a_${course.id}|" th:data-id="${course.id}" class="favorite"><span  th:id="|fav_${course.id}|" th:class="${course.isFavorite} ? favorite-class : not-favorite-class ">&starf;</span> Add to Favorite</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- // row -->
+
+    </div><!-- // profile -->
 </body>
 
 <script sec:authorize="isFullyAuthenticated()">
@@ -82,29 +179,14 @@
 let showProfileSetting = () => {
     document.getElementById("user-courses").style.display = "none";
     document.getElementById("favorite-courses").style.display = "none";
-    let profileSetting = document.getElementById("profile-setting")
-
+    let profileSetting = document.getElementById("profile-setting");
       fetch(`http://localhost:8080/profile/setting`)
                     .then(response => response.json())
                     .then(data =>{
-
-                        profileSetting.innerHTML = `
-                         <form method="POST" action="/edit/user/details" th:object="\$\{EditUser\}">
-                             <label for="firstName">First name:</label>
-                             <input type="text" id="firstName" name="firstName" value=${data["firstName"]} th:field="*{firstName}" required><br><br>
-
-                             <label for="lastName">Last name:</label>
-                             <input type="text" id="lastName" name="lastName" value =${data["lastName"]} th:field="*{lastName}" required ><br><br>
-
-                             <label for="alias">Alis:</label>
-                             <input type="text" id="alias" name="alias" value =${data["alias"]} th:field="*{alias}" required><br><br>
-
-                             <label for="email">email:</label>
-                             <input type="email" id="email" name="email" value =${data["email"]} th:field="*{email}" required ><br><br>
-
-                             <input type="submit" value="save">
-                         </form>`
-
+                        document.getElementById("firstName").value = data["firstName"];
+                        document.getElementById("lastName").value = data["lastName"];
+                        document.getElementById("alias").value = data["alias"];
+                        document.getElementById("email").value = data["email"];
                     })
                     .catch(err => console.error(err));
 
@@ -127,14 +209,6 @@ let showMyCourses = () =>{
 
   document.getElementById("user-courses").style.display = "none";
   document.getElementById("profile-setting").style.display = "none";
-   fetch(`http://localhost:8080/FavoriteCourses`)
-                    .then(response => response.json())
-                    .then(data =>{
-                    document.getElementById("favorite-courses").innerHTML =`data`
-
-                    })
-                    .catch(err => console.error(err));
-
     document.getElementById("favorite-courses").style.display = "block";
 
  }
@@ -148,7 +222,6 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
         let classNameNotFavorite = allNotFavoriteCourse[i].className;
         allNotFavoriteCourse[i].addEventListener('click', function (event) {
             const courseIDForNotfavorite = this.getAttribute("data-id");
-
             if (document.getElementById('fav_'+courseIDForNotfavorite).classList.contains('not-favorite-class') ){
             document.getElementById('fav_'+courseIDForNotfavorite).classList.remove('not-favorite-class');
             document.getElementById('fav_'+courseIDForNotfavorite).classList.add('favorite-class');
@@ -165,6 +238,7 @@ const allNotFavoriteCourse = document.querySelectorAll(".favorite")
              fetch(`http://localhost:8080/removefromfavorite/course/id/${courseIDForNotfavorite}`)
                .catch(err => console.error(err));
             }
+            document.getElementById("link-" +courseIDForNotfavorite ).innerHTML="";
         })
     }
 

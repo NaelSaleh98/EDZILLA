@@ -69,24 +69,5 @@ public class FavoriteController {
         }
     }
 
-    @GetMapping("/FavoriteCourses")
-    public List<Course> getFavoriteCourses(Model model){
-        Optional<User>  userOptional = userRepository.findByEmail(userService.loggedInUserEmail());
-        User user;
-        List<FavoriteCourse> favoriteCourseList;
-        List<Course> courseList = new ArrayList<>();
-
-        if(userOptional.isPresent()){
-            user = userOptional.get();
-            favoriteCourseList = favoriteCourseRepository.findByUserId(user.getId());
-           favoriteCourseList.forEach(favoriteCourse -> {
-               courseList.add(favoriteCourse.getCourse());
-           });
-
-        }
-        model.addAttribute("userFavoriteCourse",courseList);
-        return courseList;
-
-    }
 
 }

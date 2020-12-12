@@ -10,6 +10,7 @@ import javax.persistence.Id;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
 public class EditUser {
     @Id
     @GeneratedValue

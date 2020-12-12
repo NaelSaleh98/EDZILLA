@@ -63,7 +63,7 @@
                         <p class="tagline ">submitted
                             <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
                                   th:text="${course.getPrettyTime()}"></time> by
-                            <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
+                            <a th:href="@{'/user/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
                         </p>
                         <p class="description" th:text="${course.description}"></p>
                     </div>

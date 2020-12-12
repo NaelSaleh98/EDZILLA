@@ -2,8 +2,11 @@ package com.vega.springit.service;
 
 import com.vega.springit.Repository.*;
 import com.vega.springit.model.Course;
+import com.vega.springit.model.FavoriteCourse;
 import com.vega.springit.model.Report;
+import com.vega.springit.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,4 +96,24 @@ public class CourseService {
             return course;
         }
     }
+
+
+    public List<Course> getFavoriteCourses(){
+        Optional<User>  userOptional = userRepository.findByEmail(userService.loggedInUserEmail());
+        User user;
+        List<FavoriteCourse> favoriteCourseList;
+        List<Course> courseList = new ArrayList<>();
+
+        if(userOptional.isPresent()){
+            user = userOptional.get();
+            favoriteCourseList = favoriteCourseRepository.findByUserId(user.getId());
+            favoriteCourseList.forEach(favoriteCourse -> {
+                courseList.add(favoriteCourse.getCourse());
+            });
+
+        }
+        return courseList;
+
+    }
+
 }

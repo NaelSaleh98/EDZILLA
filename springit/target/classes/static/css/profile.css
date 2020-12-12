@@ -1,26 +1,34 @@
-body {
-    background: #EBF0F4;
+#profile{
+    padding: 20px;
 }
+#profile h1{
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    padding: 10px;
+    text-align: center;
+}
+#profile small{
+    display: block;
+    text-align: center;
+}
+#profile-setting form{
+    margin-top: 20px;
+}
+#profile ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+#profile ul li{
+    font-size: 18px;
+}
+#user-courses{
+    margin-top: 15px;
+    display: flex;
+    justify-content: left;
 
-#profile a.nav-link {
-    text-transform: uppercase;
 }
-#profile a.nav-link.active {
-    border-bottom: 1px solid blue;
-}
-
-#profile > .row:first-child {
-    margin-bottom:20px;
-}
-
-.card {
-    margin-bottom: 5px;
-}
-
-.card-img-top {
-    padding-top:10px;
-}
-
-.recentLinks {
-    padding-top:10px;
+#user-courses > div{
+    width: 50%;
+    padding: 20px;
 }

@@ -1,0 +1,17 @@
+#profile{
+    padding: 20px;
+}
+#profile h1{
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    padding: 10px;
+    text-align: center;
+}
+#user-courses{
+    margin-top: 15px;
+    display: flex;
+
+}
+#user-courses > div{
+    width: 50%;
+    padding: 20px;
+}

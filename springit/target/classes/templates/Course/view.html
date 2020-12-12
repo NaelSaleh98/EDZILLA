@@ -24,7 +24,7 @@
                 <p class="tagline ">submitted
                     <time th:title="${course.getCreationDate()}" th:datetime="${course.getCreationDate()}" class="live-timestamp"
                           th:text="${course.getPrettyTime()}"></time> by
-                    <a th:href="@{'/u/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
+                    <a th:href="@{'/user/' + ${course.getUser().getAlias()}}"  class="author" th:text="${course.getUser().getAlias()}"></a>
                 </p>
                 <p class="description"  th:text="${course.description}" ></p>
                 <p>
@@ -80,7 +80,7 @@
             <!-- single comment -->
             <div class="row comment" th:each="comment : ${course.getComments()}">
                 <div class="col-12">&nbsp;
-                    <a href="#" class="comment-user"><i class="far fa-user"></i> <span th:text="${comment.getCreatedBy()}"></span></a>
+                    <a th:href="@{'/user/'+${comment.getCreatedBy()}}" class="comment-user"><i class="far fa-user"></i> <span th:text="${comment.getCreatedBy()}"></span></a>
                     <span><i class="far fa-clock"></i>&nbsp;<span th:text="${comment.getPrettyTime()}"></span></span>
                     <p class="body" th:text="${comment.getBody()}"></p>
                 </div>

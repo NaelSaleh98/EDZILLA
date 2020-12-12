@@ -48,6 +48,9 @@ public class AccountController {
                 user = userOptional.get();
                 courseList = courseRepository.findByUserId(user.getId());
                 model.addAttribute("userCourseList", courseService.addIsFavoriteIsUpIsDownAttributes(courseList));
+                model.addAttribute("userName", user.getAlias());
+                model.addAttribute("EditUser", new EditUser());
+                model.addAttribute("favoriteCourseList" , courseService.addIsFavoriteIsUpIsDownAttributes(courseService.getFavoriteCourses()));
                 return "auth/profile";
             }
 

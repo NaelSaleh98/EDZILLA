@@ -1,6 +1,7 @@
 .navbar{
     background-color: var(--Aprimary);
 }
+
 .navbar-brand{
     color: var(--Asecondary);
     font-family:"Comic Sans MS", cursive, sans-serif;
@@ -9,23 +10,21 @@
     transition: color ease-in-out 1s;
 }
 .navbar-brand:hover{
-    color: #FFFFFF;
-    animation: logo 1s ease-in-out alternate;
+    color: #fff;
 }
+
 .navbar-toggler{
     border:1px solid var(--Asecondary);
 }
 .navbar-toggler .fa-bars{
     color: var(--Asecondary) !important;
 }
+
 .nav-item {
     font-family: "Comic Sans MS", cursive, sans-serif;
     text-transform: uppercase;
     font-size: medium;
     margin: 0 0.37rem;
-}
-.nav-item:hover {
-    animation: logo 1s ease-in-out alternate;
 }
 @media (max-width:767px) {
     .nav-item {
@@ -39,7 +38,7 @@
 }
 .nav-course:hover{
     text-decoration:none;
-    color: #FFFFFF;
+    color: #fff;
 }
 .nav-item button{
     background:none;
@@ -49,18 +48,14 @@
 button:focus{
     outline:none;
 }
-@keyframes logo{
-    0%   {transform: skewY(1deg);}
-    25%  {transform: skewY(3deg);}
-    50%  {transform: skewY(6deg);}
-    75% {transform: skewY(3deg);}
-    100% {transform: skewY(1deg);}
-}
 
 .search-course{
     position:relative;
     display:inline-block;
     width: 35%;
+}
+.search-course #search-input{
+    border: none;
 }
 .search-course #search-result{
     display: none;
@@ -68,7 +63,7 @@ button:focus{
     overflow: auto;
     position: absolute;
     padding: 10px;
-    background-color: var(--Athirdly);
+    background-color: var(--Asecondary);
     border-radius: 5px 5px 10px 10px;
     z-index:1;
     box-shadow: -10px 10px 20px -5px rgba(0,0,0,0.3);
@@ -79,7 +74,7 @@ button:focus{
 }
 .search-course #search-result a:hover{
     text-decoration: none !important;
-    color: #FFFFFF;
+    color: #fff;
     transition: color linear 1s;
 }
 .search-course #search-result hr{

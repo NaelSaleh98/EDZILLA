@@ -4,6 +4,7 @@
 </head>
 <body>
     <nav th:replace="~{layouts/main_layout :: home-navigation}"></nav>
+    <div th:replace="~{layouts/main_layout :: jumbotron}" sec:authorize="!isAuthenticated()"></div>
 
     <div class="container" th:fragment="content">
 
@@ -20,9 +21,7 @@
 
                     <div class="col-11">
                         <p class="title">
-                            <a class="title " th:href="@{'/course/' + ${recommendations.id}}" th:text="${recommendations.title}">
-                                Title Goes Here
-                            </a>
+                            <a class="title " th:href="@{'/course/' + ${recommendations.id}}" th:text="${recommendations.title}"></a>
                         </p>
                         <!-- ON -->
                         <p class="tagline ">submitted

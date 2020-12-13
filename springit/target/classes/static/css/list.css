@@ -1,11 +1,36 @@
+.jumbotron {
+    padding: 66px;
+    background-color: var(--Asecondary);
+    margin-bottom: 0 !important;
+}
+.jumbotron h2 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-style: italic;
+    color: var(--Aprimary);
+}
+.jumbotron p, .jumbotron div {
+    font-size: 16px;
+    color: var(--Aprimary);
+}
+.jumbotron abbr{
+    text-decoration: none;
+}
+.jumbotron a{
+    color: var(--Aprimary);
+    border-bottom: 1px solid;
+}
+.jumbotron a:hover{
+    color: #FFFFFF;
+}
+
 .main-list{
     padding-top: 25px;
     padding-bottom: 25px;
     clear: both;
 }
 .main-list h2{
-    height: 130px;
-    line-height: 130px;
+    height: 100px;
+    line-height: 100px;
     text-align: center;
     font-weight: bold;
     font-size: 50px;
@@ -16,18 +41,17 @@
 .main-list .link{
     width: 48%;
     height: 200px;
-    padding: 5px;
+    padding: 10px;
     float: left;
     margin: 20px 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #00154FAA;
 }
 .main-list .course{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
     height: 80%;
     width: 100%;
     overflow: auto;
@@ -72,4 +96,28 @@ a.upvote , a.downvote {
 }
 a.comments {
     color: #000000
+}
+.position {
+    color:darkgray;
+
+}
+
+.favorite-class{
+    font-size:150%;
+    color:yellow;
+}
+
+.not-favorite-class{
+    font-size:150%;
+    color:gray;
+}
+
+
+.color_red{
+    color:red
+
+}
+
+.not_color_red{
+    color:darkgray
 }

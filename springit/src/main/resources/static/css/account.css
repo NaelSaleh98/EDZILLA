@@ -1,17 +1,60 @@
-#profile{
-    padding: 20px;
+.account{
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
-#profile h1{
-    font-family:"Comic Sans MS", cursive, sans-serif;
-    padding: 10px;
+.account h1{
+    height: 100px;
+    line-height: 100px;
     text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    color: var(--Asecondary);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    font-family:"Comic Sans MS", cursive, sans-serif;
 }
-#user-courses{
+.account #user-courses{
     margin-top: 15px;
-    display: flex;
-
 }
-#user-courses > div{
-    width: 50%;
-    padding: 20px;
+.account .link{
+    width: 48%;
+    height: 200px;
+    padding: 10px;
+    float: left;
+    margin: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.account .course{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 80%;
+    width: 100%;
+    overflow: auto;
+}
+.account .link .col-11 .title {
+    color: var(--Aprimary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    text-align: justify;
+}
+.account .link .col-11 .tagline{
+    font-size: 14px;
+    color: var(--Asecondary);
+    font-weight: bold;
+}
+.account .link .col-11 .description{
+    color: gray;
+    text-align: justify;
+    text-indent: 20px;
+    font-size:13px;
+}
+
+.noUser h1{
+    text-align: center;
+    line-height: 200px;
+    height: 200px;
+    font-size: 100px;
+    color: var(--danger);
 }

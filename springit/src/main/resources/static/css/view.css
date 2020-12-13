@@ -17,6 +17,7 @@
     font-weight: bold;
     text-align: justify;
     font-size: 20px;
+    text-transform: capitalize;
 }
 .view-course .tagline{
     font-size: 18px;
@@ -26,7 +27,6 @@
     color: gray;
     text-align: justify;
     text-indent: 20px;
-    font-size:13px;
     font-size: 16px;
 }
 .view-course .favorite{
@@ -105,8 +105,8 @@
     border-bottom: 1px solid #EDF5E1;
 }
 .view-course .cards-in{
-    background-color: #00154F33;
     border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .view-course .cards-in .col-md-6{
     padding: 20px;
@@ -140,4 +140,17 @@
 .view-course textarea:focus{
     border-color:var(--Asecondary);
     box-shadow:none;
+}
+.view-course .full-img{
+    display: none;
+    justify-content:center;
+    align-items:center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
 }

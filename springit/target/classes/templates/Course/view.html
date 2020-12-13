@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Course')}">
 </head>
-<body onload="updateReport()">
+<body id="body">
+    <link rel="stylesheet" th:href="@{/css/view.css}">
 
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 
@@ -16,9 +17,7 @@
             </div>
             <div class="col-10">
                 <p class="title">
-                    <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}">
-                        Title Goes Here
-                    </a>
+                    <a class="title " th:href="@{'/course/' + ${course.id}}" th:text="${course.title}"></a>
                 </p>
                 <!-- ON -->
                 <p class="tagline ">submitted
@@ -68,13 +67,17 @@
                     <p th:text="${card.getText()}" class="card-description"></p>
                 </div>
                 <div class="col-md-6 cards-img-video">
-                    <img th:src="@{${card.getImagePath()}}" class="iv" width="100%" height="100%" th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'>
-                    <video width="100%" class="iv" height="100%" controls th:src="@{${card.getVideoPath()}}" onerror='this.style.display = "none"'>
-                    </video>
+                    <img th:src="@{${card.getImagePath()}}" class="iv realImg" width="100%" height="100%"
+                         th:alt="${card.getSubTitle()}" onerror='this.style.display = "none"'
+                         style="cursor: zoom-in;">
+                    <video width="100%" class="iv" height="100%" controls th:src="@{${card.getVideoPath()}}" onerror='this.style.display = "none"'></video>
+                    <div class="full-img" th:id="${card.getSubTitle()}">
+                        <img th:src="@{${card.getImagePath()}}" class="iv minimizeImg" width="70%" height="60%"
+                             th:alt="${card.getSubTitle()}" style="cursor: zoom-out;" >
+                    </div>
                 </div>
             </div>
         </div>
-
         <div id="comments" class="comments">
 
             <!-- single comment -->
@@ -104,7 +107,7 @@
 
     </div>
     <script sec:authorize="isFullyAuthenticated()">
-
+        document.getElementById("body").addEventListener("load", updateReport);
         var rd = document.getElementById("reportDone").addEventListener('click' , function (event) {
             if( document.querySelector('input[name="reason"]:checked') == null){
                 return false;
@@ -210,6 +213,30 @@
 
         function updateReport() {
             document.getElementById("reported").innerHTML = document.getElementById("reported").className;
+        }
+    </script>
+    <script>
+
+        const realImages = document.querySelectorAll(".realImg")
+        for (let i=0; i< realImages.length; i++){
+            realImages[i].addEventListener("click", function (event){
+                document.getElementById(realImages[i].alt).style.display= "flex";
+            });
+        }
+
+        const fullImages = document.querySelectorAll(".full-img")
+        window.onclick = function(event) {
+            for (let i=0; i< fullImages.length; i++){
+                if (event.target == fullImages[i]) {
+                    fullImages[i].style.display = "none";
+                }
+            }
+        }
+        const minimizeImages = document.querySelectorAll(".minimizeImg")
+        for (let i=0; i< minimizeImages.length; i++){
+            minimizeImages[i].addEventListener("click", function (event){
+                document.getElementById(minimizeImages[i].alt).style.display= "none";
+            });
         }
     </script>
 </body>

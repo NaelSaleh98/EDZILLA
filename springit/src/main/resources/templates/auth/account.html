@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/account.css}">
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
     <!-- profile -->
-    <div id="profile" class="container" th:if="!${error}">
+    <div  class="container account" th:if="!${error}">
 
         <div class="row">
             <h1 th:text="${userName}" class="col-12"></h1>
@@ -45,7 +45,8 @@
             </div>
         </div>
         </div><!-- // profile -->
-    <div th:if="${error}">
+
+    <div th:if="${error}" class="noUser">
         <h1>User Not Found</h1>
     </div>
 </body>

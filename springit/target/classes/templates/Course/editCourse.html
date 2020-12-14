@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Edit Course')}">
 </head>
 <body>
+    <link rel="stylesheet" th:href="@{/css/newCourse.css}">
+
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
     <div class="container newCourse">
         <div class="new-card-parent" id="nc">
@@ -45,7 +47,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 field-label-responsive">
-                            <input type="radio" name="video-img" checked value="video" id="radio-video">
+                            <input type="radio" name="video-img" checked value="video" id="radio-video" >
                             <span  style="width: 2.6rem"><i class="fab fa-youtube"></i></span>
                             <label for="radio-video">Video</label>
                         </div>
@@ -65,7 +67,7 @@
                                     <div class="custom-file">
                                         <input type="file"              name="video"
                                                class="form-control custom-file-input"     id="videoPath"
-                                               accept="video/*">
+                                               accept="video/*" onchange="alert('upload done')">
                                         <label class="custom-file-label" for="videoPath">Choose file</label>
                                     </div>
                                 </div>
@@ -82,7 +84,7 @@
                                     <div class="custom-file">
                                         <input type="file"              name="image"
                                                class="form-control custom-file-input"     id="imagePath"
-                                               accept="image/*" >
+                                               accept="image/*" onchange="alert('upload done')">
                                         <label class="custom-file-label" for="videoPath">Choose file</label>
                                     </div>
                                 </div>
@@ -115,7 +117,7 @@
                 <h4 th:text="${course.description}" class="course-description"></h4>
             </div>
         </div>
-        <hr>
+        <hr style="background-color: var(--Aprimary)">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -147,7 +149,7 @@
 
     </div>
 
-    <script >
+    <script sec:authorize="isAuthenticated()">
         function showCard(){
             document.getElementById("nc").style.display = "flex";
         }

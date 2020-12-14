@@ -8,7 +8,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 40px;
-    color: var(--Aprimary);
+    color: var(--Asecondary);
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     font-family:"Comic Sans MS", cursive, sans-serif;
 }
@@ -87,6 +87,9 @@
 }
 .newCourse .course-info{
     margin-bottom: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+    border-radius: 10px;
 }
 .newCourse .course-info .course-title{
     font-weight: bold;
@@ -104,7 +107,7 @@
     border-bottom: 1px solid #EDF5E1;
 }
 .newCourse .cards-in{
-    background-color: #00154F33;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
 }
 .newCourse .cards-in .col-md-6{

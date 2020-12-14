@@ -1,3 +1,7 @@
+.main-report{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
 .main-report h2{
     height: 80px;
     line-height: 80px;
@@ -8,57 +12,71 @@
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     font-family:"Comic Sans MS", cursive, sans-serif;
 }
-.report{
-    padding: 10px;
-}
 .report .container{
-    border-right: 5px inset var(--Aprimary);
-    border-radius: 5px;
+    padding-left: 25px;
 }
-.report .reported-course, .report .reportContent{
-    padding: 10px;
+.report .reported-course{
+    margin-bottom: 20px;
+    border-left:10px solid var(--Asecondary) ;
+    background-color: #F4AF1B88;
+    border-radius: 10px;
 }
 .report .reportClick{
     cursor: pointer;
-    border-left:10px solid var(--Asecondary) ;
-    border-radius: 5px;
-    padding: 5px;
+    width: 100%;
+    padding: 10px;
 }
-.report .report-course-title, .report .reporter{
+.report .reportClick .col-4{
+    color: var(--Aprimary);
+    font-weight: bold;
+    text-align: center;
+}
+.report .reportClick .col-8{
     color: var(--Aprimary);
     font-family:"Comic Sans MS", cursive, sans-serif;
     font-weight: bold;
-    text-align: justify;
-    font-size: 17.5px;
     margin-bottom: 5px;
+    text-align: left;
 }
-.report .report-course-publisher , .report .report-reason{
+.reportes{
+    margin: 20px;
+    background-color: #00154FCC;
+    border-radius: 10px;
+}
+.reportes > div{
     color: var(--Asecondary);
     font-family:"Comic Sans MS", cursive, sans-serif;
     font-weight: bold;
-    text-align: justify;
-    font-size: 15px;
-    margin-bottom: 5px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
 }
-.report .report-course-count{
+.course{
+    text-align: center;
+    border-bottom: 2px ridge var(--Aprimary);
+}
+.course a{
     color: var(--Asecondary);
     font-family:"Comic Sans MS", cursive, sans-serif;
     font-weight: bold;
-    text-align: justify;
-    font-size: 12.5px;
-    margin-bottom: 5px;
+    font-size: 20px;
+    line-height: 50px;
+    padding: 10px;
+}
+.course span{
+    color: var(--Aprimary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 50px;
+    padding: 10px;
 }
 #deleteCourse button{
-    background-color: var(--Asecondary);
-    color: var(--Aprimary);
-    border: 1px outset var(--Aprimary);
-    font-size: 18px;
-    font-weight: bold;
-    transition: all 1s ease-in-out;
+    background-color: var(--Aprimary);
+    color: var(--Asecondary);
+    border: 1px outset #000;
 }
 #deleteCourse button:hover{
-    color: var(--Asecondary);
-    background-color: var(--Aprimary);
-    border:none;
-    border: 2px inset var(--Asecondary);
+    background-color: var(--Asecondary);
+    color: var(--Aprimary);
 }

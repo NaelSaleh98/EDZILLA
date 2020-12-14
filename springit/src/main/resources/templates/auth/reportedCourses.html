@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layouts/main_layout :: head(title = 'EDZILLA - Reported Courses')}">
 </head>
 <body>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+
     <nav th:replace="~{layouts/main_layout :: navigation}"></nav>
 
     <div class="container-fluid main-report" >
@@ -11,26 +13,32 @@
         <div class="row report">
             <div class=" col-4 container">
                     <div class="row reported-course" th:each="reported : ${reportedCourse}">
-                        <div class="reportClick" th:data-id="${reported.id}">
-                            <div th:id="|title-${reported.id}|" th:text="|Course Title: ${reported.title}|" class="report-course-title"> </div>
-                            <div th:id="|publisherName-${reported.id}|" class="report-course-publisher">
-                                <a th:text="${reported.publisherName}" th:href="@{'/user/'+${reported.publisherName}}"></a>
+                        <div class="reportClick container-fluid" th:data-id="${reported.id}">
+                            <div  class="row">
+                                <div class="col-4">Course Title:</div>
+                                <div th:id="|title-${reported.id}|" th:text="${reported.title}" class="col-8"></div>
                             </div>
-                            <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|" class="report-course-count"></div>
+                            <div  class="row">
+                                <div class="col-4">Publisher:</div>
+                                <div th:id="|publisherName-${reported.id}|" th:text="${reported.publisherName}" class="col-8"></div>
+                            </div>
+                            <div  class="row">
+                                <div class="col-4">Reports Count:</div>
+                                <div th:id="|reportsCount-${reported.id}|" th:text="|Reports Count: ${reported.reportCount}|" class="col-8"></div>
+                            </div>
                         </div>
                     </div>
             </div>
-            <div class="col-8 reported-view">
+            <div class="col-8 container">
                 <div id="reportsContent" class="reportContent"></div>
                 <div id="deleteCourse" style="display:none" >
-                    <button onclick="deleteCourse()" class="btn">Delete Course</button>
+                    <button onclick="deleteCourse()" class="btn form-control"><i class="fas fa-trash-alt"></i> Delete Course</button>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <script>
+    <script sec:authorize="hasRole('ROLE_ADMIN')">
         const reportedCourses = document.querySelectorAll(".reportClick")
         for(let i=0; i<reportedCourses.length; i++) {
             reportedCourses[i].addEventListener('click', function (event) {
@@ -41,32 +49,39 @@
                     .then(response => response.json())
                     .then(data =>{
                         let reporterDetails = ""
-                        let index = 0
+                        let index = 0;
+                        let allReporters = document.createElement("div");
+                        allReporters.style.display = "flex";
+                        allReporters.style.justifyContent = "space-around";
                         for(let i =0;i<data.number_of_reporter; i++){
                             let reporter = document.createElement("div");
                             let reason = document.createElement("div");
-                            reporter.classList.add('reporter');
-                            reason.classList.add('report-reason');
-                            reporter.innerHTML = "Reporter Name: " + data["reporter_name"+index] ;
-                            reason.innerHTML = "Reason: " +  data["reason"+index++];
-                            reportsContent.appendChild(reporter);
-                            reportsContent.appendChild(reason);
+                            let reportes = document.createElement("div");
+                            reportes.style.width = "200px";
+                            reportes.style.height = "100px";
+                            reporter.innerHTML =  data["reporter_name"+index] ;
+                            reason.innerHTML =  data["reason"+index++];
+                            reportes.className = "reportes";
+                            reportes.appendChild(reporter);
+                            reportes.appendChild(reason);
+                            allReporters.appendChild(reportes);
                         }
+                        let course = document.createElement("div");
+                        course.className = "course";
                         let title = document.createElement("a");
                         let publisher = document.createElement("a");
-                        let count = document.createElement("div");
-                        title.classList.add('report-course-title');
-                        publisher.classList.add('report-course-publisher');
-                        count.classList.add('report-course-count');
+                        let by = document.createElement("span");
                         title.innerHTML = document.getElementById("title-"+reportedCourseId).innerText;
                         publisher.innerHTML = document.getElementById("publisherName-"+reportedCourseId).innerText;
-                        count.innerHTML = document.getElementById("reportsCount-"+reportedCourseId).innerText;
+                        by.innerHTML = "-->";
                         title.href = '/course/' + reportedCourseId
                         title.title = 'View Course'
                         publisher.href = '/user/'+document.getElementById("publisherName-"+reportedCourseId).innerText;
-                        reportsContent.appendChild(title);
-                        reportsContent.appendChild(publisher);
-                        reportsContent.appendChild(count);
+                        course.appendChild(title);
+                        course.appendChild(by);
+                        course.appendChild(publisher);
+                        reportsContent.appendChild(course);
+                        reportsContent.appendChild(allReporters);
                         let hiddenDivContainCourseId ='<div style="display:none" id="CourseId" data-id="'+ reportedCourseId + '"></div>'
                         reportsContent.innerHTML += hiddenDivContainCourseId;
                       document.getElementById("deleteCourse").style="display:block"

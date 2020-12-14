@@ -1,34 +1,107 @@
-#profile{
-    padding: 20px;
+.profile{
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
-#profile h1{
+.profile .userName{
+    height: 90px;
+    line-height: 90px;
+    font-weight: bold;
+    font-size: 45px;
+    text-align: center;
+    color: var(--Asecondary);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     font-family:"Comic Sans MS", cursive, sans-serif;
+}
+.profile .nav-li{
+    height: 90px;
+    line-height: 90px;
+    font-weight: bold;
+    font-size: 22px;
+
+}
+.profile .nav-li a{
+    color: var(--Aprimary);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    padding-right: 10px;
+}
+.profile .nav-li a:hover{
+    color: var(--Asecondary);
+}
+
+.profile #user-courses{
+    margin-top: 15px;
+}
+.profile .link{
+    width: 48%;
+    height: 200px;
     padding: 10px;
-    text-align: center;
+    float: left;
+    margin: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-#profile small{
-    display: block;
-    text-align: center;
-}
-#profile-setting form{
-    margin-top: 20px;
-}
-#profile ul{
+.profile .course{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+    height: 80%;
+    width: 100%;
+    overflow: auto;
 }
-#profile ul li{
-    font-size: 18px;
+.profile .link .col-11 .title {
+    color: var(--Aprimary);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    text-align: justify;
 }
-#user-courses{
+.profile .link .col-11 .tagline{
+    font-size: 14px;
+    color: var(--Asecondary);
+    font-weight: bold;
+}
+.profile .link .col-11 .description{
+    color: gray;
+    text-align: justify;
+    text-indent: 20px;
+    font-size:13px;
+}
+.profile #favorite-courses{
     margin-top: 15px;
-    display: flex;
-    justify-content: left;
-
 }
-#user-courses > div{
-    width: 50%;
-    padding: 20px;
+.profile #profile-setting{
+    margin-top: 15px;
+}
+.profile .field-label-responsive{
+    text-align: center;
+    color: #1D1B1B;
+    align-self:center;
+    font-size: large;
+}
+.profile .input-group-addon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1D1B1B;
+}
+.profile input{
+    border-radius: 6px !important;
+    border-color: var(--Aprimary);
+}
+.profile input:focus{
+    border-color: var(--Asecondary);
+    box-shadow:none;
+}
+.profile .content-btn button{
+    background-color: var(--Asecondary);
+    color: var(--Aprimary);
+    border: 1px outset #000;
+}
+.profile .content-btn button:hover{
+    background-color: var(--Aprimary);
+    color: var(--Asecondary);
+}
+.profile .content-pad{
+    padding-left: 3.6rem
 }

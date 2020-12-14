@@ -1,3 +1,46 @@
-.reg-terms{
+.main-container{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.main-container h2{
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    color: var(--Aprimary);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    font-family:"Comic Sans MS", cursive, sans-serif;
+}
+.main-container .field-label-responsive{
+    text-align: center;
     color: #1D1B1B;
+    align-self:center;
+    font-size: large;
+}
+.main-container .input-group-addon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1D1B1B;
+}
+.main-container input{
+    border-radius: 6px !important;
+    border-color: var(--Aprimary);
+}
+.main-container input:focus{
+    border-color: var(--Asecondary);
+    box-shadow:none;
+}
+.main-container .content-btn button{
+    background-color: var(--Asecondary);
+    color: var(--Aprimary);
+    border: 1px outset #000;
+}
+.main-container .content-btn button:hover{
+    background-color: var(--Aprimary);
+    color: var(--Asecondary);
+}
+.main-container .content-pad{
+    padding-left: 3.6rem
 }
